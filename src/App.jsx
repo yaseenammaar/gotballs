@@ -130,20 +130,7 @@ function App() {
           ))}
         </div>
 
-        <h2 className="mt-8 mb-8  mt-16 text-2xl font-medium text-center">
-          Skinned Dates
-        </h2>
-
-        <div className="flex flex-wrap items-center justify-center">
-          {new Array(7).fill(1).map((e) => (
-            <div
-              key={e}
-              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-300 rounded-xl"
-            >
-              <img style={{ width: "150px" }} src={nftImg} alt="" />
-            </div>
-          ))}
-        </div>
+       
       </section>
 
       {/* Skins - 2 */}
@@ -158,19 +145,19 @@ function App() {
               key={1}
               className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-300 rounded-xl"
             >
-              <img style={{ width: "200px" }} src={moonnft} alt="" />
+              <img style={{ width: "300px" }} src={moonnft} alt="" />
             </div>
             <div
               key={2}
               className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-300 rounded-xl"
             >
-              <img style={{ width: "200px" }} src={plane} alt="" />
+              <img style={{ width: "300px" }} src={plane} alt="" />
             </div>
             <div
               key={2}
               className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-300 rounded-xl"
             >
-              <img style={{ width: "200px" }} src={picasso} alt="" />
+              <img style={{ width: "300px" }} src={picasso} alt="" />
             </div>
           
         </div>
