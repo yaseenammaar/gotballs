@@ -106,7 +106,10 @@ function App() {
             </a>
           </div>
         </div>
+      
       </section>
+
+      
 
       {/* Skins */}
       <section className="px-8 my-16 md:px-28 sm:px-16">
