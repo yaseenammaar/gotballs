@@ -5,6 +5,8 @@ import moonnft from "../assets/moonnft.png";
 import plane from "../assets/plane.png";
 import picasso from "../assets/picasso.png";
 import { useState } from "react";
+//import { web3 } from '@project-serum/anchor';
+
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -25,6 +27,14 @@ function App() {
     window.solana.disconnect();
   }
 
+ async function mint(){
+    const solConnection = new web3.Connection(getCluster('devnet'));
+    const walletKeyPair = loadWalletKey('./devnet.json');
+    await mintNFT(solConnection, walletKeyPair, "https://gateway.pinata.cloud/ipfs/QmQmvqpZzxPqUHMzuL32S1Pi2eTkF3LYsncWgWK1k52JAQ?preview=1");
+  }
+
+
+
   return (
     <main>
       {/* NavBar */}
@@ -43,6 +53,7 @@ function App() {
           <a
             href="#"
             className="md:px-4 px-1 sm:px-2 py-1 text-sm text-gray-500 hover:text-primary "
+          onClick={mint}
           >
             Contact
           </a>
