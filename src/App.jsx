@@ -4,9 +4,26 @@ import heroImg from "../assets/hero.jpg";
 import moonnft from "../assets/moonnft.png";
 import plane from "../assets/plane.png";
 import picasso from "../assets/picasso.png";
+import { useState } from "react";
 
 function App() {
-  console.log(heroImg);
+  const [isConnected, setIsConnected] = useState(false);
+
+  async function connectWallet(){
+    try {
+      const resp = await window.solana.connect();
+      resp.publicKey.toString()
+      setIsConnected(true);
+      console.log("Wallet Connected:"+resp.publicKey.toString())
+      } catch (err) {
+        console.log("Error:"+err)
+      }
+  }
+
+  function disconnectWallet(){
+    setIsConnected(false);
+    window.solana.disconnect();
+  }
 
   return (
     <main>
@@ -32,8 +49,9 @@ function App() {
           <a
             href="#"
             className="md:px-4 px-1 sm:px-2 py-1 text-sm text-gray-500 hover:text-primary "
+            onClick={isConnected ? disconnectWallet : connectWallet}
           >
-            Connect
+            {isConnected ? 'Disconnect' : 'Connect'}
           </a>
         </div>
       </nav>
