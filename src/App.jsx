@@ -1,6 +1,6 @@
 import nftImg from "../assets/nft.png";
 import godImg from "../assets/god.png";
-import heroImg from "../assets/hero.jpg";
+import hero from "../assets/hero.mp4";
 import moonnft from "../assets/moonnft.png";
 import plane from "../assets/plane.png";
 import picasso from "../assets/picasso.png";
@@ -46,20 +46,20 @@ function App() {
         <div>
           <a
             href="#"
-            className="md:px-4 px-1 sm:px-2 py-1 text-sm text-gray-500 hover:text-primary "
+            className="md:px-4 px-2 sm:px-2 py-2 text-sm text-gray-500 hover:text-primary "
           >
             About
           </a>
           <a
             href="#"
-            className="md:px-4 px-1 sm:px-2 py-1 text-sm text-gray-500 hover:text-primary "
+            className="md:px-4 px-2 sm:px-2 py-2 text-sm text-gray-500 hover:text-primary "
           onClick={mint}
           >
             Contact
           </a>
           <a
             href="#"
-            className="md:px-4 px-1 sm:px-2 py-1 text-sm text-gray-500 hover:text-primary "
+            className="md:px-4 px-2 sm:px-2 py-2 text-sm text-gray-500 hover:text-primary "
             onClick={isConnected ? disconnectWallet : connectWallet}
           >
             {isConnected ? 'Disconnect' : 'Connect'}
@@ -72,10 +72,23 @@ function App() {
         <div
           className="px-8 text-white sm:px-16 py-28 rounded-xl shadow-xl shadow-gray-300"
           style={{
-            backgroundImage: `linear-gradient(rgba(92, 187, 239,0.75), rgba(92, 187, 239,0.75)), url("${heroImg}") `,
+
+            // backgroundImage: `linear-gradient(rgba(92, 187, 239,0.75), rgba(92, 187, 239,0.75)), url("${heroImg}") `,
           }}
         >
-          <h1 className="mb-3 text-4xl ">Pre-Sale Started!</h1>
+          <video
+          autoplay
+          loop
+          muted
+          class="absolute z-10 w-auto min-w-20 min-h-full max-w-none"
+        >
+          <source
+            src={hero}
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+          <h1 className="mb-3 text-4xl">Pre-Sale Started!</h1>
           <p className="mb-6 text-xm">
             Grab the hold of dates close to your heart.
           </p>
@@ -85,7 +98,7 @@ function App() {
 
       {/* About */}
       <section className="px-8 my-24 md:px-28 sm:px-16">
-        <h2 className="mt-8 mb-20 text-lg font-medium text-center">
+        <h2 className="mt-8 mb-20 text-lg text-gray-500 font-medium text-center">
           GoOnDate NFT
         </h2>
 
@@ -133,8 +146,9 @@ function App() {
             className="rounded px-3 py-2 my-8 border border-gray-300 sm:w-2/3 md:w-1/2 w-10/12 text-gray-600"
           />
         </div>
+        
 
-        <h2 className="mt-8 mb-8 text-2xl font-medium text-center">Dates</h2>
+        <h2 className="mt-8 mb-8 text-2xl text-gray-500 font-medium text-center">Dates</h2>
 
         <div className="flex flex-wrap items-center justify-center">
           {new Array(21).fill(1).map((e) => (
@@ -147,7 +161,7 @@ function App() {
           ))}
         </div>
 
-        <h2 className="mt-8 mb-8  mt-16 text-2xl font-medium text-center">
+        <h2 className="mt-8 mb-8 text-gray-500 mt-16 text-2xl font-medium text-center">
           Special Dates
         </h2>
 
@@ -167,7 +181,7 @@ function App() {
 
       {/* Skins - 2 */}
       <section className="px-8 my-16 md:px-28 sm:px-16">
-        <h2 className="mt-8 mb-8 text-lg font-medium text-center">
+        <h2 className="mt-8 mb-8 text-lg text-gray-500 font-medium text-center">
           Skinned NFTs
         </h2>
 
@@ -175,39 +189,39 @@ function App() {
           
             <div
               key={1}
-              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-300 rounded-xl"
+              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
             >
               <img style={{ width: "300px" }} src={moonnft} alt="" />
             </div>
             <div
               key={2}
-              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-300 rounded-xl"
+              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
             >
               <img style={{ width: "300px" }} src={plane} alt="" />
             </div>
             <div
               key={2}
-              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-300 rounded-xl"
+              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
             >
               <img style={{ width: "300px" }} src={picasso} alt="" />
             </div>
           
         </div>
 
-        <div className="flex flex-wrap items-center justify-center">
+        <div className="flex flex-wrap text-gray-500 items-center justify-center">
           <Button className="">Create Skin</Button>
         </div>
       </section>
 
       {/* contact */}
       <section className="px-8 my-16 md:px-28 sm:px-16">
-        <h2 className="mt-8 mb-4 text-lg font-medium text-center">
+        <h2 className="mt-8 mb-4 text-lg text-gray-500 font-medium text-center">
           Contact Us
         </h2>
       </section>
 
       <section className="px-8 my-16 md:px-28 sm:px-16">
-        <h2 className="mt-8 mb-4 text-lg font-medium text-center">
+        <h2 className="mt-8 mb-4 text-lg text-gray-500 font-medium text-center">
           Frequently Asked Questions
         </h2>
       </section>
