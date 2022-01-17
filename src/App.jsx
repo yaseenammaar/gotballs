@@ -11,23 +11,23 @@ import { useState } from "react";
 function App() {
   const [isConnected, setIsConnected] = useState(false);
 
-  async function connectWallet(){
+  async function connectWallet() {
     try {
       const resp = await window.solana.connect();
       resp.publicKey.toString()
       setIsConnected(true);
-      console.log("Wallet Connected:"+resp.publicKey.toString())
-      } catch (err) {
-        console.log("Error:"+err)
-      }
+      console.log("Wallet Connected:" + resp.publicKey.toString())
+    } catch (err) {
+      console.log("Error:" + err)
+    }
   }
 
-  function disconnectWallet(){
+  function disconnectWallet() {
     setIsConnected(false);
     window.solana.disconnect();
   }
 
- async function mint(){
+  async function mint() {
     const solConnection = new web3.Connection(getCluster('devnet'));
     const walletKeyPair = loadWalletKey('./devnet.json');
     await mintNFT(solConnection, walletKeyPair, "https://gateway.pinata.cloud/ipfs/QmQmvqpZzxPqUHMzuL32S1Pi2eTkF3LYsncWgWK1k52JAQ?preview=1");
@@ -53,7 +53,7 @@ function App() {
           <a
             href="#"
             className="md:px-4 px-2 sm:px-2 py-2 text-sm text-gray-500 hover:text-primary "
-          onClick={mint}
+            onClick={mint}
           >
             Contact
           </a>
@@ -77,17 +77,17 @@ function App() {
           }}
         >
           <video
-          autoplay
-          loop
-          muted
-          class="absolute z-10 w-auto min-w-20 min-h-full max-w-none"
-        >
-          <source
-            src={hero}
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
+            autoplay
+            loop
+            muted
+            class="absolute z-10 w-auto min-w-full min-h-full max-w-none"
+          >
+            <source
+              src={hero}
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
           <h1 className="mb-3 text-4xl">Pre-Sale Started!</h1>
           <p className="mb-6 text-xm">
             Grab the hold of dates close to your heart.
@@ -130,10 +130,10 @@ function App() {
             </a>
           </div>
         </div>
-      
+
       </section>
 
-      
+
 
       {/* Skins */}
       <section className="px-8 my-16 md:px-28 sm:px-16">
@@ -146,7 +146,7 @@ function App() {
             className="rounded px-3 py-2 my-8 border border-gray-300 sm:w-2/3 md:w-1/2 w-10/12 text-gray-600"
           />
         </div>
-        
+
 
         <h2 className="mt-8 mb-8 text-2xl text-gray-500 font-medium text-center">Dates</h2>
 
@@ -176,7 +176,7 @@ function App() {
           ))}
         </div>
 
-       
+
       </section>
 
       {/* Skins - 2 */}
@@ -186,26 +186,26 @@ function App() {
         </h2>
 
         <div className="flex flex-wrap items-center justify-center">
-          
-            <div
-              key={1}
-              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
-            >
-              <img style={{ width: "300px" }} src={moonnft} alt="" />
-            </div>
-            <div
-              key={2}
-              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
-            >
-              <img style={{ width: "300px" }} src={plane} alt="" />
-            </div>
-            <div
-              key={2}
-              className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
-            >
-              <img style={{ width: "300px" }} src={picasso} alt="" />
-            </div>
-          
+
+          <div
+            key={1}
+            className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
+          >
+            <img style={{ width: "300px" }} src={moonnft} alt="" />
+          </div>
+          <div
+            key={2}
+            className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
+          >
+            <img style={{ width: "300px" }} src={plane} alt="" />
+          </div>
+          <div
+            key={2}
+            className=" cursor-pointer mx-1 my-2 overflow-hidden shadow hover:shadow-lg transition duration-150 shadow-gray-400 rounded-xl"
+          >
+            <img style={{ width: "300px" }} src={picasso} alt="" />
+          </div>
+
         </div>
 
         <div className="flex flex-wrap text-gray-500 items-center justify-center">
