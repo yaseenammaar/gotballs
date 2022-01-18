@@ -24,6 +24,7 @@ import moonnft from "../assets/moonnft.png";
 import plane from "../assets/plane.png";
 import picasso from "../assets/picasso.png";
 import DateFilter from "./Components/Filter";
+import Skin from "./skin";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -267,6 +268,8 @@ function App() {
         <h2 className="mt-8 mb-8 text-lg font-medium text-center text-gray-500">
           Skinned NFTs
         </h2>
+
+                <Skin/>
 
         <div className="flex flex-wrap items-center justify-center">
           <div>

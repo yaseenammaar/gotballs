@@ -15,3 +15,11 @@ html,
 body {
   scroll-behavior: smooth;
 }
+
+.element{
+  cursor: default;
+}
+
+.image::before{
+  content:url(http://placehold.it/350x150);
+}
