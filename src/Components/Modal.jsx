@@ -13,11 +13,17 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen }) {
   return (
     <>
       {isOpen && (
-        <div className="fixed top-0 z-50 flex items-center justify-center w-full min-h-full bg-black bg-opacity-80 backdrop-blur-md ">
+        <div
+          id="modal-bg"
+          onClick={(e) => {
+            e.target.id === "modal-bg" && setIsOpen(false);
+          }}
+          className="fixed top-0 z-50 flex items-center justify-center w-full min-h-full bg-black bg-opacity-80 backdrop-blur-md "
+        >
           <div class="lg:w-8/12 md:w-2/5 sm:w-1/2 w-3/5 p-2 relative rounded-xl lg:max-h-auto max-h-[75vh] lg:overflow-y-hidden overflow-y-auto mx-auto flex flex-col lg:flex-row bg-white">
             <img
               alt={alt}
-              class="w-full h-full  object-cover lg:h-64 min-h-auto object-center rounded-xl"
+              class="w-full h-full  object-cover lg:h-128 min-h-auto object-center rounded-xl"
               src={imgSrc}
             />
 

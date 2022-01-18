@@ -1,11 +1,18 @@
-
 import { useState } from "react";
 //import { web3 } from '@project-serum/anchor';
 //import DatePicker from "react-date-picker";
+import {
+  TelegramIcon,
+  TwitterIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  DiscordIcon,
+  RedditIcon,
+  PinterestIcon,
+} from "./Components/Icons";
 
 import Modal from "./Components/Modal";
-import Button from './Components/Button'
-
+import Button from "./Components/Button";
 
 import nftImg from "../assets/nft.png";
 import godImg from "../assets/god.png";
@@ -55,13 +62,13 @@ function App() {
 
         <div>
           <a
-            href="#"
+            href="#about"
             className="m-4 px-4 py-2 text-sm text-gray-500 md:px-4 sm:px-2 transition-all duration-500 hover:shadow-lg rounded-md"
           >
             About
           </a>
           <a
-            href="#"
+            href="#contact"
             className="m-4 px-4 py-2 text-sm text-gray-500 md:px-4 sm:px-2 transition-all duration-500 hover:shadow-lg rounded-md"
             onClick={mint}
           >
@@ -87,14 +94,21 @@ function App() {
       {/* Hero */}
       <section className="px-6 my-6 text-center md:px-28 sm:px-12">
         <div className="overflow-hidden shadow-xl rounded-xl shadow-gray-300">
-          <video autoPlay muted={true} loop id="myVideo" class="w-auto min-w-full min-h-full max-w-none">
-            <source src={hero} type="video/mp4"  />
+          <video
+            autoPlay
+            muted={true}
+            loop
+            id="myVideo"
+            class="w-auto min-w-full min-h-full max-w-none"
+          >
+            <source src={hero} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
       </section>
 
       {/* About */}
+      <div id="about"></div>
       <section className="px-8 my-24 md:px-28 sm:px-16">
         <h2 className="mt-8 mb-20 text-lg font-medium text-center text-gray-500">
           GoOnDate NFT
@@ -139,10 +153,7 @@ function App() {
             id="nftDate"
             className="w-10/12 px-3 py-2 my-8 text-gray-600 border border-gray-300 rounded sm:w-2/3 md:w-1/2"
           />
-
-
         </div>
-
 
         <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500">
           Dates
@@ -151,17 +162,19 @@ function App() {
         <div className="flex flex-wrap items-center justify-center">
           {new Array(21).fill(1).map((e) => (
             <div>
-            <div
-              key={e}
-              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-300 rounded-xl"
-              onClick={()=>{setIsModalOpen(true)}}
-            >
-              
-              <img style={{ width: "150px" }} src={nftImg} alt="" />
+              <div
+                key={e}
+                className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-300 rounded-xl"
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
+              >
+                <img style={{ width: "180px" }} src={nftImg} alt="" />
+              </div>
+              <div>
+                <span className="p-3 text-sky-600">◎0.4</span>
+              </div>
             </div>
-            <div><span className="p-3 text-sky-600">◎0.4</span></div>
-            </div>
-            
           ))}
         </div>
 
@@ -172,14 +185,18 @@ function App() {
         <div className="flex flex-wrap items-center justify-center">
           {new Array(7).fill(1).map((e) => (
             <div>
-            <div
-              key={e}
-              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-300 rounded-xl"
-              onClick={()=>{setIsModalOpen(true)}}
-            >
-              <img style={{ width: "150px" }} src={nftImg} alt="" />
-            </div>
-            <div><span className="p-3 text-sky-600">◎5</span></div>
+              <div
+                key={e}
+                className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-300 rounded-xl"
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
+              >
+                <img style={{ width: "150px" }} src={nftImg} alt="" />
+              </div>
+              <div>
+                <span className="p-3 text-sky-600">◎5</span>
+              </div>
             </div>
           ))}
         </div>
@@ -192,37 +209,47 @@ function App() {
         </h2>
 
         <div className="flex flex-wrap items-center justify-center">
+          <div>
+            <div
+              key={1}
+              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-400 rounded-xl"
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              <img style={{ width: "300px" }} src={moonnft} alt="" />
+            </div>
             <div>
-          <div
-            key={1}
-            className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-400 rounded-xl"
-            onClick={()=>{setIsModalOpen(true)}}
-          >
-            <img style={{ width: "300px" }} src={moonnft} alt="" />
-          </div>
-          <div><span className="p-3 text-sky-600">◎5</span></div>
-
+              <span className="p-3 text-sky-600">◎5</span>
+            </div>
           </div>
           <div>
             <div
               key={2}
               className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-400 rounded-xl"
-              onClick={()=>{setIsModalOpen(true)}}
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
             >
               <img style={{ width: "300px" }} src={plane} alt="" />
             </div>
-            <div><span className="p-3 text-sky-600">◎5</span></div>
-
+            <div>
+              <span className="p-3 text-sky-600">◎5</span>
+            </div>
           </div>
           <div>
-          <div
-            key={2}
-            className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-400 rounded-xl"
-            onClick={()=>{setIsModalOpen(true)}}
-          >
-            <img style={{ width: "300px" }} src={picasso} alt="" />
-          </div>
-          <div><span className="p-3 text-sky-600">◎5</span></div>
+            <div
+              key={2}
+              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-400 rounded-xl"
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              <img style={{ width: "300px" }} src={picasso} alt="" />
+            </div>
+            <div>
+              <span className="p-3 text-sky-600">◎5</span>
+            </div>
           </div>
         </div>
 
@@ -231,11 +258,57 @@ function App() {
         </div>
       </section>
 
+      <div id="contact"></div>
       {/* contact */}
       <section className="px-8 my-16 md:px-28 sm:px-16">
         <h2 className="mt-8 mb-4 text-lg font-medium text-center text-gray-500">
-          Contact Us
+          Connect With Us
         </h2>
+
+        <div className="flex justify-center">
+          <a
+            href="#"
+            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+          >
+            <TelegramIcon className="text-primary" />
+          </a>
+          <a
+            href="#"
+            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+          >
+            <TwitterIcon className="text-primary" />
+          </a>
+          <a
+            href="#"
+            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+          >
+            <InstagramIcon className="text-primary" />
+          </a>
+          <a
+            href="#"
+            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+          >
+            <LinkedInIcon className="text-primary" />
+          </a>
+          <a
+            href="#"
+            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+          >
+            <DiscordIcon className="text-primary" />
+          </a>
+          <a
+            href="#"
+            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+          >
+            <RedditIcon className="text-primary" />
+          </a>
+          <a
+            href="#"
+            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+          >
+            <PinterestIcon className="text-primary" />
+          </a>
+        </div>
       </section>
 
       <section className="px-8 my-16 md:px-28 sm:px-16">
@@ -247,7 +320,7 @@ function App() {
       {/* Footer */}
       <footer className="flex flex-wrap items-start justify-center w-full px-8 py-8 my-8 border-t md:px-28 sm:px-16 sm:flex-nowrap ">
         <div className="flex flex-col items-center w-full text-sm sm:items-start lg:w-3/6 sm:w-2/4">
-          <h3 className="mb-3 text-base font-semibold">Go On Date</h3>
+          <img src={godImg} width="150px" alt="" />
         </div>
 
         <div className="flex flex-col items-center w-1/2 text-sm sm:items-start lg:w-1/6 sm:w-1/4">
@@ -334,7 +407,5 @@ function App() {
     </main>
   );
 }
-
-
 
 export default App;
