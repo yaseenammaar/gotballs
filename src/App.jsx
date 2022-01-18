@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 //import { web3 } from '@project-serum/anchor';
 //import DatePicker from "react-date-picker";
+import Select from "react-select";
+
+// components
 import {
   TelegramIcon,
   TwitterIcon,
@@ -10,22 +13,31 @@ import {
   RedditIcon,
   PinterestIcon,
 } from "./Components/Icons";
-
 import Modal from "./Components/Modal";
 import Button from "./Components/Button";
 
+// assets
 import nftImg from "../assets/nft.png";
 import godImg from "../assets/god.png";
 import hero from "../assets/hero.mp4";
 import moonnft from "../assets/moonnft.png";
 import plane from "../assets/plane.png";
 import picasso from "../assets/picasso.png";
+import DateFilter from "./Components/Filter";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState({
+    month: new Date().getMonth(),
+    year: new Date().getFullYear(),
+  });
 
+  useEffect(() => {
+    console.log(startDate);
+  }, [startDate]);
+
+  // IDK What these functions do
   async function connectWallet() {
     try {
       const resp = await window.solana.connect();
@@ -51,11 +63,43 @@ function App() {
       "https://gateway.pinata.cloud/ipfs/QmQmvqpZzxPqUHMzuL32S1Pi2eTkF3LYsncWgWK1k52JAQ?preview=1"
     );
   }
+  // Unknown Function Ends
+
+  // months in a year
+  const months = [
+    { value: "1", label: "January" },
+    { value: "2", label: "February" },
+    { value: "3", label: "March" },
+    { value: "4", label: "April" },
+    { value: "5", label: "May" },
+    { value: "6", label: "June" },
+    { value: "7", label: "July" },
+    { value: "8", label: "August" },
+    { value: "9", label: "September" },
+    { value: "10", label: "October" },
+    { value: "11", label: "November" },
+    { value: "12", label: "December" },
+  ];
+
+  // years
+  const [years, setYears] = useState([]);
+
+  useEffect(() => {
+
+    const tempYears = []
+
+    for (let date = 0; date <= new Date().getFullYear() - 1950; date++) {
+      tempYears.push({label:`${date + 1950}`, value:`${date + 1950}`})
+    }
+
+    setYears(tempYears)
+    console.log(years)
+  }, []);
 
   return (
     <main>
       {/* NavBar */}
-      <nav className="flex justify-between items-center w-full md:px-32 sm:px-8 px-6~ py-4">
+      <nav className="flex items-center justify-between w-full px-6 py-4 md:px-32 sm:px-8">
         <a href="#" className="font-medium ">
           <img src={godImg} width="150px" alt="" />
         </a>
@@ -63,20 +107,20 @@ function App() {
         <div>
           <a
             href="#about"
-            className="m-4 px-4 py-2 text-sm text-gray-500 md:px-4 sm:px-2 transition-all duration-500 hover:shadow-lg rounded-md"
+            className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 md:px-2 sm:px-2 hover:shadow-lg"
           >
             About
           </a>
           <a
             href="#contact"
-            className="m-4 px-4 py-2 text-sm text-gray-500 md:px-4 sm:px-2 transition-all duration-500 hover:shadow-lg rounded-md"
+            className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 md:px-4 sm:px-2 hover:shadow-lg"
             onClick={mint}
           >
             Contact
           </a>
           <a
             href="#"
-            className="m-4 px-2 py-2 text-sm text-blue-500 md:px-4 sm:px-2 hover:text-primary transition-all duration-500 rounded-md shadow-sm top-2 right-2 hover:shadow-lg"
+            className="px-2 py-2 m-1 text-sm text-blue-500 transition-all duration-500 rounded-md shadow-sm sm:m-4 md:px-4 sm:px-2 hover:text-primary top-2 right-2 hover:shadow-lg"
             onClick={isConnected ? disconnectWallet : connectWallet}
           >
             {isConnected ? "Disconnect" : "Connect"}
@@ -99,7 +143,7 @@ function App() {
             muted={true}
             loop
             id="myVideo"
-            class="w-auto min-w-full min-h-full max-w-none"
+            className="w-auto min-w-full min-h-full max-w-none"
           >
             <source src={hero} type="video/mp4" />
             Your browser does not support the video tag.
@@ -145,17 +189,33 @@ function App() {
       </section>
 
       <section className="px-8 my-16 md:px-28 sm:px-16">
-        <div className="flex justify-center w-full">
-          <input
-            placeholder="Enter your Date (DD-MM-YYYY)"
-            type="text"
-            name="nftDate"
-            id="nftDate"
-            className="w-10/12 px-3 py-2 my-8 text-gray-600 border border-gray-300 rounded sm:w-2/3 md:w-1/2"
+        {/* Date Filter */}
+        <div className="flex justify-center w-full mb-16">
+          <DateFilter
+            placeholder="Select A Month"
+            defaultValue={months[new Date().getMonth()]}
+            onChange={(e) => {
+              setStartDate({ ...startDate, month: +e.value });
+            }}
+            className="mx-2 w-36"
+            options={months}
+          />
+
+          <DateFilter
+            placeholder="Select A Year"
+            defaultValue={{
+              value: `${new Date().getFullYear()}`,
+              label: `${new Date().getFullYear()}`,
+            }}
+            onChange={(e) => {
+              setStartDate({ ...startDate, year: e.value });
+            }}
+            className="mx-2 w-36"
+            options={years}
           />
         </div>
 
-        <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500">
+        <h2 className="my-8 text-2xl font-medium text-center text-gray-500">
           Dates
         </h2>
 
@@ -178,7 +238,7 @@ function App() {
           ))}
         </div>
 
-        <h2 className="mt-8 mt-16 mb-8 text-2xl font-medium text-center text-gray-500">
+        <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500 sm:mt-16">
           Special Dates
         </h2>
 
@@ -259,52 +319,54 @@ function App() {
       </section>
 
       <div id="contact"></div>
+
       {/* contact */}
+
       <section className="px-8 my-16 md:px-28 sm:px-16">
         <h2 className="mt-8 mb-4 text-lg font-medium text-center text-gray-500">
           Connect With Us
         </h2>
 
-        <div className="flex justify-center">
+        <div className="flex flex-wrap justify-center">
           <a
             href="#"
-            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <TelegramIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <TwitterIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <InstagramIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <LinkedInIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <DiscordIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <RedditIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className=" p-2 rounded-xl mx-4 hover:shadow-xl transition-all duration-500"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <PinterestIcon className="text-primary" />
           </a>
@@ -319,7 +381,7 @@ function App() {
 
       {/* Footer */}
       <footer className="flex flex-wrap items-start justify-center w-full px-8 py-8 my-8 border-t md:px-28 sm:px-16 sm:flex-nowrap ">
-        <div className="flex flex-col items-center w-full text-sm sm:items-start lg:w-3/6 sm:w-2/4">
+        <div className="flex flex-col items-center w-full mb-8 text-sm sm:mb-0 sm:items-start lg:w-3/6 sm:w-2/4">
           <img src={godImg} width="150px" alt="" />
         </div>
 

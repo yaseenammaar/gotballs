@@ -23,7 +23,7 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen }) {
           <div class="lg:w-8/12 md:w-2/5 sm:w-1/2 w-3/5 p-2 relative rounded-xl lg:max-h-auto max-h-[75vh] lg:overflow-y-hidden overflow-y-auto mx-auto flex flex-col lg:flex-row bg-white">
             <img
               alt={alt}
-              class="w-full h-full  object-cover lg:h-128 min-h-auto object-center rounded-xl"
+              class="w-full h-full object-cover lg:h-96 min-h-auto object-center rounded-xl"
               src={imgSrc}
             />
 
