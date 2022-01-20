@@ -91,7 +91,7 @@ function App() {
     const network = "https://api.devnet.solana.com";
     const connection = new Connection(network);
     const { signature } = await window.solana.signAndSendTransaction(tx);
-    await connection.confirmTransaction(signature);
+    console.log(await connection.confirmTransaction(signature));
   };
 
   useEffect(() => {
