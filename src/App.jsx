@@ -27,8 +27,12 @@ import DateFilter from "./Components/Filter";
 import Skin from "./skin";
 
 // solana Imports
-import {  Connection, PublicKey, Keypair, Transaction } from '@solana/web3.js';
-import {Token , TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID} from '@solana/spl-token';
+import { Connection, PublicKey, Keypair, Transaction } from "@solana/web3.js";
+import {
+  Token,
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
 import bs58 from "bs58";
 
 function App() {
@@ -39,36 +43,39 @@ function App() {
     year: new Date().getFullYear(),
   });
 
-
   const sendNft = async () => {
     const feePayer = Keypair.fromSecretKey(
-      bs58.decode("3DdVyZuANr5en2PQymCPmoFBMsfdhjaRHqnk3ejW16zc2YN2CWjyDTAfi6oYcQHuSa5UWFH9s1Nvme6UWprmJSjH")
+      bs58.decode(
+        "3DdVyZuANr5en2PQymCPmoFBMsfdhjaRHqnk3ejW16zc2YN2CWjyDTAfi6oYcQHuSa5UWFH9s1Nvme6UWprmJSjH"
+      )
     );
-    
+
     // G2FAbFQPFa5qKXCetoFZQEvF9BVvCKbvUZvodpVidnoY
     const alice = Keypair.fromSecretKey(
-      bs58.decode("2YQDdnfxiHPKu9GypLX1yXaQTQojvDSPgFkDxrUrzbtchDsZh4B27aM8dfgrfm5DcTn8MJHenKLYRMuAbFeYsuRr")
+      bs58.decode(
+        "2YQDdnfxiHPKu9GypLX1yXaQTQojvDSPgFkDxrUrzbtchDsZh4B27aM8dfgrfm5DcTn8MJHenKLYRMuAbFeYsuRr"
+      )
     );
-  
-    const mintPubkey = new PublicKey("71Av5YUY8qxvWjKYJvEk4SSwSpBjnyEjpvpKQEXM4Eo1");
-  
+
+    const mintPubkey = new PublicKey(
+      "71Av5YUY8qxvWjKYJvEk4SSwSpBjnyEjpvpKQEXM4Eo1"
+    );
+
     let ataAlice = await Token.getAssociatedTokenAddress(
       ASSOCIATED_TOKEN_PROGRAM_ID,
       TOKEN_PROGRAM_ID,
       mintPubkey,
       alice.publicKey
     );
-  
-  
-   let ataFeePayer = await Token.getAssociatedTokenAddress(
-    ASSOCIATED_TOKEN_PROGRAM_ID,
-    TOKEN_PROGRAM_ID,
-    mintPubkey,
-    feePayer.publicKey
-  );
-  
-  
-   let tx = new Transaction().add(
+
+    let ataFeePayer = await Token.getAssociatedTokenAddress(
+      ASSOCIATED_TOKEN_PROGRAM_ID,
+      TOKEN_PROGRAM_ID,
+      mintPubkey,
+      feePayer.publicKey
+    );
+
+    let tx = new Transaction().add(
       Token.createTransferCheckedInstruction(
         TOKEN_PROGRAM_ID,
         ataAlice,
@@ -99,7 +106,7 @@ function App() {
       setIsConnected(true);
       console.log("Wallet Connected:" + resp.publicKey.toString());
     } catch (err) {
-      console.log("Error:" + err);
+      console.log("Error :" + err);
     }
   }
 
@@ -139,15 +146,14 @@ function App() {
   const [years, setYears] = useState([]);
 
   useEffect(() => {
-
-    const tempYears = []
+    const tempYears = [];
 
     for (let date = 0; date <= new Date().getFullYear() - 1950; date++) {
-      tempYears.push({label:`${date + 1950}`, value:`${date + 1950}`})
+      tempYears.push({ label: `${date + 1950}`, value: `${date + 1950}` });
     }
 
-    setYears(tempYears)
-    console.log(years)
+    setYears(tempYears);
+    console.log(years);
   }, []);
 
   return (
@@ -322,7 +328,7 @@ function App() {
           Skinned NFTs
         </h2>
 
-                <Skin/>
+        <Skin />
 
         <div className="flex flex-wrap items-center justify-center">
           <div>
