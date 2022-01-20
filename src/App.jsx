@@ -26,6 +26,11 @@ import picasso from "../assets/picasso.png";
 import DateFilter from "./Components/Filter";
 import Skin from "./skin";
 
+// solana Imports
+import {  Connection, PublicKey, Keypair, Transaction } from '@solana/web3.js';
+import {Token , TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID} from '@solana/spl-token';
+import bs58 from "bs58";
+
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,6 +38,54 @@ function App() {
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
   });
+
+
+  const sendNft = async () => {
+    const feePayer = Keypair.fromSecretKey(
+      bs58.decode("3DdVyZuANr5en2PQymCPmoFBMsfdhjaRHqnk3ejW16zc2YN2CWjyDTAfi6oYcQHuSa5UWFH9s1Nvme6UWprmJSjH")
+    );
+    
+    // G2FAbFQPFa5qKXCetoFZQEvF9BVvCKbvUZvodpVidnoY
+    const alice = Keypair.fromSecretKey(
+      bs58.decode("2YQDdnfxiHPKu9GypLX1yXaQTQojvDSPgFkDxrUrzbtchDsZh4B27aM8dfgrfm5DcTn8MJHenKLYRMuAbFeYsuRr")
+    );
+  
+    const mintPubkey = new PublicKey("71Av5YUY8qxvWjKYJvEk4SSwSpBjnyEjpvpKQEXM4Eo1");
+  
+    let ataAlice = await Token.getAssociatedTokenAddress(
+      ASSOCIATED_TOKEN_PROGRAM_ID,
+      TOKEN_PROGRAM_ID,
+      mintPubkey,
+      alice.publicKey
+    );
+  
+  
+   let ataFeePayer = await Token.getAssociatedTokenAddress(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
+    mintPubkey,
+    feePayer.publicKey
+  );
+  
+  
+   let tx = new Transaction().add(
+      Token.createTransferCheckedInstruction(
+        TOKEN_PROGRAM_ID,
+        ataAlice,
+        mintPubkey,
+        ataFeePayer,
+        alice.publicKey,
+        [],
+        1,
+        0
+      )
+    );
+
+    const network = "https://api.devnet.solana.com";
+    const connection = new Connection(network);
+    const { signature } = await window.solana.signAndSendTransaction(tx);
+    await connection.confirmTransaction(signature);
+  };
 
   useEffect(() => {
     console.log(startDate);
@@ -115,7 +168,7 @@ function App() {
           <a
             href="#contact"
             className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 md:px-4 sm:px-2 hover:shadow-lg"
-            onClick={mint}
+            onClick={sendNft}
           >
             Contact
           </a>
