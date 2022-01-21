@@ -16,6 +16,7 @@ import {
 import Modal from "./Components/Modal";
 import Button from "./Components/Button";
 import Question from "./Components/Question";
+import NFT from "./Components/NFT";
 
 import moment from "moment";
 
@@ -243,7 +244,8 @@ function App() {
         <div className="flex flex-wrap w-full justify-center lg:justify-between">
           <div className="rounded-xl flex w-full items-center justify-center sm:w-8/12 lg:w-2/5 ">
             <div className="rounded-xl shadow-lg shadow-gray-300 overflow-hidden">
-              <img src={nftImg} alt="" />
+              {/* <img src={nftImg} alt="" /> */}
+              <NFT date="05 January 2022" day="Monday" />
             </div>
           </div>
 
@@ -312,8 +314,9 @@ function App() {
                 onClick={() => {
                   setIsModalOpen(true);
                 }}
+                style={{ width: "165px" }}
               >
-                <img style={{ width: "140px" }} src={nftImg} alt="" />
+                <NFT date="05 January 2022" day="Friday" />
               </div>
               <div>
                 <span className="p-3 text-sky-600">
