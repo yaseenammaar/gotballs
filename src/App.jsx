@@ -15,6 +15,7 @@ import {
 } from "./Components/Icons";
 import Modal from "./Components/Modal";
 import Button from "./Components/Button";
+import moment from "moment";
 
 // assets
 import nftImg from "../assets/nft.png";
@@ -38,6 +39,7 @@ import bs58 from "bs58";
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dates, setDates] = useState([]);
   const [startDate, setStartDate] = useState({
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
@@ -98,6 +100,19 @@ function App() {
     console.log(startDate);
   }, [startDate]);
 
+  function getAllDaysInMonth(year, month) {
+    const date = new Date(year, month, 1);
+
+    const dates = [];
+
+    while (date.getMonth() === month) {
+      dates.push(String(new Date(date)).split(" 00:00:00")[0]);
+      date.setDate(date.getDate() + 1);
+    }
+
+    return dates;
+  }
+
   // IDK What these functions do
   async function connectWallet() {
     try {
@@ -148,12 +163,16 @@ function App() {
   useEffect(() => {
     const tempYears = [];
 
-    for (let date = 0; date <= new Date().getFullYear() - 1950; date++) {
-      tempYears.push({ label: `${date + 1950}`, value: `${date + 1950}` });
+    for (let date = 0; date <= new Date().getFullYear() - 1700; date++) {
+      tempYears.push({ label: `${date + 1700}`, value: `${date + 1700}` });
     }
 
+    var dateList = getAllDaysInMonth(startDate.year, startDate.month);
+    setDates(dateList);
+    console.log(dates);
     setYears(tempYears);
-    console.log(years);
+    console.log("startdate month ", startDate.year);
+    // console.log("years", years);
   }, []);
 
   return (
@@ -256,6 +275,7 @@ function App() {
             defaultValue={months[new Date().getMonth()]}
             onChange={(e) => {
               setStartDate({ ...startDate, month: +e.value });
+              getAllDaysInMonth(startDate.year, startDate.month);
             }}
             className="mx-2 w-36"
             options={months}
@@ -269,6 +289,7 @@ function App() {
             }}
             onChange={(e) => {
               setStartDate({ ...startDate, year: e.value });
+              getAllDaysInMonth(startDate.year, startDate.month);
             }}
             className="mx-2 w-36"
             options={years}
@@ -280,7 +301,7 @@ function App() {
         </h2>
 
         <div className="flex flex-wrap items-center justify-center">
-          {new Array(21).fill(1).map((e) => (
+          {dates.map((e) => (
             <div>
               <div
                 key={e}
@@ -289,16 +310,19 @@ function App() {
                   setIsModalOpen(true);
                 }}
               >
-                <img style={{ width: "180px" }} src={nftImg} alt="" />
+                <img style={{ width: "140px" }} src={nftImg} alt="" />
               </div>
               <div>
-                <span className="p-3 text-sky-600">◎0.4</span>
+                <span className="p-3 text-sky-600">
+                  ◎0.4 <br />
+                  {e}
+                </span>
               </div>
             </div>
           ))}
         </div>
 
-        <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500 sm:mt-16">
+        {/* <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500 sm:mt-16">
           Special Dates
         </h2>
 
@@ -315,11 +339,11 @@ function App() {
                 <img style={{ width: "150px" }} src={nftImg} alt="" />
               </div>
               <div>
-                <span className="p-3 text-sky-600">◎5</span>
+                <span className="p-3 text-sky-600">◎5 </span>
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
 
       {/* Skins - 2 */}
@@ -328,7 +352,7 @@ function App() {
           Skinned NFTs
         </h2>
 
-        <Skin />
+        {/* <Skin /> */}
 
         <div className="flex flex-wrap items-center justify-center">
           <div>
