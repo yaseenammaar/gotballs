@@ -320,7 +320,7 @@ function App() {
                   setNftTitle(e);
                   setIsModalOpen(true);
                 }}
-                style={{ width: "200px" }}
+                style={{ width: "160px" }}
               >
                 <NFT date={e} />
               </div>
