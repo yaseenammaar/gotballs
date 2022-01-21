@@ -27,6 +27,8 @@ import hero from "./assets/hero.mp4";
 import moonnft from "./assets/moonnft.png";
 import plane from "./assets/plane.png";
 import picasso from "./assets/picasso.png";
+import wwst from "./assets/wwst.png";
+import wwen from "./assets/wwen.png";
 import DateFilter from "./Components/Filter";
 import Skin from "./skin";
 
@@ -360,8 +362,8 @@ function App() {
 
       {/* Skins - 2 */}
       <section className="my-16 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-lg text-center mb-8 text-gray-500">
-          Skinned NFTs
+        <h2 className="font-medium mt-8 text-2xl text-center mb-8 text-gray-500">
+          Skinned NFTs - Coming Soon!
         </h2>
 
         {/* <Skin /> */}
@@ -371,48 +373,51 @@ function App() {
             <div
               key={1}
               className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
+              onClick={() => {}}
             >
-              <img style={{ width: "300px" }} src={moonnft} alt="" />
-            </div>
-            <div>
-              <span className="p-3 text-sky-600">◎5</span>
+              <img style={{ width: "200px" }} src={moonnft} alt="" />
             </div>
           </div>
           <div>
             <div
               key={2}
               className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
+              onClick={() => {}}
             >
-              <img style={{ width: "300px" }} src={plane} alt="" />
-            </div>
-            <div>
-              <span className="p-3 text-sky-600">◎5</span>
+              <img style={{ width: "200px" }} src={plane} alt="" />
             </div>
           </div>
           <div>
             <div
               key={2}
               className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
+              onClick={() => {}}
             >
-              <img style={{ width: "300px" }} src={picasso} alt="" />
+              <img style={{ width: "200px" }} src={picasso} alt="" />
             </div>
-            <div>
-              <span className="p-3 text-sky-600">◎5</span>
+          </div>
+          <div>
+            <div
+              key={2}
+              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
+              onClick={() => {}}
+            >
+              <img style={{ width: "200px" }} src={wwst} alt="" />
+            </div>
+          </div>
+          <div>
+            <div
+              key={2}
+              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
+              onClick={() => {}}
+            >
+              <img style={{ width: "200px" }} src={wwen} alt="" />
             </div>
           </div>
         </div>
 
         <div className="flex flex-wrap text-gray-500 items-center justify-center">
-          <Button className="mt-6">Create Skin</Button>
+          <Button className="mt-6 bg-gray-500">Coming Soon</Button>
         </div>
       </section>
 
