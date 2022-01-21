@@ -8,8 +8,9 @@
  */
 
 import Button from "./Button";
+import NFT from "./NFT";
 
-export default function Modal({ imgSrc, alt, isOpen, setIsOpen }) {
+export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
   return (
     <>
       {isOpen && (
@@ -21,24 +22,23 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen }) {
           className="fixed top-0 z-50 flex items-center justify-center w-full min-h-full bg-black bg-opacity-80 backdrop-blur-md "
         >
           <div class="lg:w-8/12 md:w-2/5 sm:w-1/2 w-3/5 p-2 relative rounded-xl lg:max-h-auto max-h-[75vh] lg:overflow-y-hidden overflow-y-auto mx-auto flex flex-col lg:flex-row bg-white">
-            <img
-              alt={alt}
-              class="w-full h-full object-cover lg:h-96 min-h-auto object-center rounded-xl"
-              src={imgSrc}
-            />
+            <div className="rounded-xl flex w-full items-center justify-center sm:w-8/12 lg:w-2/5 ">
+              <div className="rounded-xl shadow-lg shadow-gray-300 overflow-hidden">
+                {/* <img src={nftImg} alt="" /> */}
+                <NFT date={title} />
+              </div>
+            </div>
 
             <div class="md:w-auto w-full mt-6 lg:mt-0 md:p-8 p-4">
-              <p>
-                How beautiful is the memory of a loved one! But what remains
-                with us? A picture? A date? Do you remember the date when you
-                last saw them or when you held your baby in your hands for the
-                first time? We feel the same way and it's our desire that you
-                never get loose of the memory that keeps value to you, that is
-                close to your heart. Let's capture those dates together!
-              </p>
-
+              <p class="text-2xl">{title}</p>
+              <div>
+                <span className="text-sky-600">
+                  ◎0.4 <br />
+                  {/* {e} */}
+                </span>
+              </div>
               <br />
-              <Button>Buy Me</Button>
+              <Button>Buy This Date</Button>
             </div>
 
             <button

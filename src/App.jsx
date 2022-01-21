@@ -42,10 +42,12 @@ import bs58 from "bs58";
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [nftTitle, setNftTitle] = useState("");
+
   const [dates, setDates] = useState([]);
   const [startDate, setStartDate] = useState({
-    month: new Date().getMonth(),
-    year: new Date().getFullYear(),
+    month: 1,
+    year: 2022,
   });
 
   const sendNft = async () => {
@@ -101,6 +103,8 @@ function App() {
 
   useEffect(() => {
     console.log(startDate);
+    var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
+    setDates(dateList);
   }, [startDate]);
 
   function getAllDaysInMonth(year, month) {
@@ -216,6 +220,7 @@ function App() {
         alt="Hello World"
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
+        title={nftTitle}
       />
 
       {/* Hero */}
@@ -245,7 +250,7 @@ function App() {
           <div className="rounded-xl flex w-full items-center justify-center sm:w-8/12 lg:w-2/5 ">
             <div className="rounded-xl shadow-lg shadow-gray-300 overflow-hidden">
               {/* <img src={nftImg} alt="" /> */}
-              <NFT date="05 January 2022" day="Monday" />
+              <NFT date="Mon Jan 01 2022" />
             </div>
           </div>
 
@@ -312,16 +317,17 @@ function App() {
                 key={e}
                 className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-300 duration-150 overflow-hidden hover:shadow-lg"
                 onClick={() => {
+                  setNftTitle(e);
                   setIsModalOpen(true);
                 }}
-                style={{ width: "165px" }}
+                style={{ width: "200px" }}
               >
-                <NFT date="05 January 2022" day="Friday" />
+                <NFT date={e} />
               </div>
               <div>
                 <span className="p-3 text-sky-600">
                   ◎0.4 <br />
-                  {e}
+                  {/* {e} */}
                 </span>
               </div>
             </div>
