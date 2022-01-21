@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-//import { web3 } from '@project-serum/anchor';
+// import { web3 } from "@project-serum/anchor";
 //import DatePicker from "react-date-picker";
 import Select from "react-select";
 
@@ -20,12 +20,12 @@ import Question from "./Components/Question";
 import moment from "moment";
 
 // assets
-import nftImg from "../assets/nft.png";
-import godImg from "../assets/god.png";
-import hero from "../assets/hero.mp4";
-import moonnft from "../assets/moonnft.png";
-import plane from "../assets/plane.png";
-import picasso from "../assets/picasso.png";
+import nftImg from "./assets/nft.png";
+import godImg from "./assets/god.png";
+import hero from "./assets/hero.mp4";
+import moonnft from "./assets/moonnft.png";
+import plane from "./assets/plane.png";
+import picasso from "./assets/picasso.png";
 import DateFilter from "./Components/Filter";
 import Skin from "./skin";
 
@@ -132,15 +132,16 @@ function App() {
     window.solana.disconnect();
   }
 
-  async function mint() {
-    const solConnection = new web3.Connection(getCluster("devnet"));
-    const walletKeyPair = loadWalletKey("./devnet.json");
-    await mintNFT(
-      solConnection,
-      walletKeyPair,
-      "https://gateway.pinata.cloud/ipfs/QmQmvqpZzxPqUHMzuL32S1Pi2eTkF3LYsncWgWK1k52JAQ?preview=1"
-    );
-  }
+  // async function mint() {
+  //   const solConnection = new web3.Connection(getCluster("devnet"));
+  //   const walletKeyPair = loadWalletKey("./devnet.json");
+  //   await mintNFT(
+  //     solConnection,
+  //     walletKeyPair,
+  //     "https://gateway.pinata.cloud/ipfs/QmQmvqpZzxPqUHMzuL32S1Pi2eTkF3LYsncWgWK1k52JAQ?preview=1"
+  //   );
+  // }
+
   // Unknown Function Ends
 
   // months in a year
