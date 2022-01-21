@@ -15,6 +15,8 @@ import {
 } from "./Components/Icons";
 import Modal from "./Components/Modal";
 import Button from "./Components/Button";
+import Question from "./Components/Question";
+
 import moment from "moment";
 
 // assets
@@ -178,7 +180,7 @@ function App() {
   return (
     <main>
       {/* NavBar */}
-      <nav className="flex items-center justify-between w-full px-6 py-4 md:px-32 sm:px-8">
+      <nav className="flex w-full py-4 px-6 items-center justify-between sm:px-8 md:px-32">
         <a href="#" className="font-medium ">
           <img src={godImg} width="150px" alt="" />
         </a>
@@ -186,20 +188,20 @@ function App() {
         <div>
           <a
             href="#about"
-            className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 md:px-2 sm:px-2 hover:shadow-lg"
+            className="rounded-md m-1 text-sm py-2 px-2 transition-all text-gray-500 duration-500 sm:m-4 sm:px-2 md:px-2 hover:shadow-lg"
           >
             About
           </a>
           <a
             href="#contact"
-            className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 md:px-4 sm:px-2 hover:shadow-lg"
+            className="rounded-md m-1 text-sm py-2 px-2 transition-all text-gray-500 duration-500 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg"
             onClick={sendNft}
           >
             Contact
           </a>
           <a
             href="#"
-            className="px-2 py-2 m-1 text-sm text-blue-500 transition-all duration-500 rounded-md shadow-sm sm:m-4 md:px-4 sm:px-2 hover:text-primary top-2 right-2 hover:shadow-lg"
+            className="rounded-md m-1 shadow-sm text-sm py-2 px-2 transition-all top-2 right-2 text-blue-500 duration-500 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg hover:text-primary"
             onClick={isConnected ? disconnectWallet : connectWallet}
           >
             {isConnected ? "Disconnect" : "Connect"}
@@ -215,14 +217,14 @@ function App() {
       />
 
       {/* Hero */}
-      <section className="px-6 my-6 text-center md:px-28 sm:px-12">
-        <div className="overflow-hidden shadow-xl rounded-xl shadow-gray-300">
+      <section className="my-6 text-center px-6 sm:px-12 md:px-28">
+        <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
           <video
             autoPlay
             muted={true}
             loop
             id="myVideo"
-            className="w-auto min-w-full min-h-full max-w-none"
+            className="min-w-full min-h-full max-w-none w-auto"
           >
             <source src={hero} type="video/mp4" />
             Your browser does not support the video tag.
@@ -232,19 +234,19 @@ function App() {
 
       {/* About */}
       <div id="about"></div>
-      <section className="px-8 my-24 md:px-28 sm:px-16">
-        <h2 className="mt-8 mb-20 text-lg font-medium text-center text-gray-500">
+      <section className="my-24 px-8 sm:px-16 md:px-28">
+        <h2 className="font-medium mt-8 text-lg text-center mb-20 text-gray-500">
           GoOnDate NFT
         </h2>
 
-        <div className="flex flex-wrap justify-center w-full lg:justify-between">
-          <div className="flex items-center justify-center w-full sm:w-8/12 lg:w-2/5 rounded-xl ">
-            <div className="overflow-hidden shadow-lg shadow-gray-300 rounded-xl">
+        <div className="flex flex-wrap w-full justify-center lg:justify-between">
+          <div className="rounded-xl flex w-full items-center justify-center sm:w-8/12 lg:w-2/5 ">
+            <div className="rounded-xl shadow-lg shadow-gray-300 overflow-hidden">
               <img src={nftImg} alt="" />
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center w-full py-16 text-center text-gray-600 md:px-12 md:w-11/12 sm:w-10/12 lg:w-3/5">
+          <div className="flex flex-col text-center w-full py-16 text-gray-600 items-center justify-center sm:w-10/12 md:px-12 md:w-11/12 lg:w-3/5">
             How beautiful is the memory of a loved one! But what remains with
             us? A picture? A date? Do you remember the date when you last saw
             them or when you held your baby in your hands for the first time? We
@@ -258,7 +260,7 @@ function App() {
             to share it with others but keep it just for us. This is the reason
             why we came up with this NFT project.
             <a
-              className="p-2 mt-8 font-semibold text-primary hover:text-secondary"
+              className="font-semibold mt-8 text-primary p-2 hover:text-secondary"
               href="#"
             >
               Know More
@@ -267,9 +269,9 @@ function App() {
         </div>
       </section>
 
-      <section className="px-8 my-16 md:px-28 sm:px-16">
+      <section className="my-16 px-8 sm:px-16 md:px-28">
         {/* Date Filter */}
-        <div className="flex justify-center w-full mb-16">
+        <div className="flex mb-16 w-full justify-center">
           <DateFilter
             placeholder="Select A Month"
             defaultValue={months[new Date().getMonth()]}
@@ -296,7 +298,7 @@ function App() {
           />
         </div>
 
-        <h2 className="my-8 text-2xl font-medium text-center text-gray-500">
+        <h2 className="font-medium my-8 text-center text-2xl text-gray-500">
           Dates
         </h2>
 
@@ -305,7 +307,7 @@ function App() {
             <div>
               <div
                 key={e}
-                className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-300 rounded-xl"
+                className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-300 duration-150 overflow-hidden hover:shadow-lg"
                 onClick={() => {
                   setIsModalOpen(true);
                 }}
@@ -322,7 +324,7 @@ function App() {
           ))}
         </div>
 
-        {/* <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500 sm:mt-16">
+        {/* <h2 className="font-medium mt-8 text-center mb-8 text-2xl text-gray-500 sm:mt-16">
           Special Dates
         </h2>
 
@@ -331,7 +333,7 @@ function App() {
             <div>
               <div
                 key={e}
-                className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-300 rounded-xl"
+                className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-300 duration-150 overflow-hidden hover:shadow-lg"
                 onClick={() => {
                   setIsModalOpen(true);
                 }}
@@ -347,8 +349,8 @@ function App() {
       </section>
 
       {/* Skins - 2 */}
-      <section className="px-8 my-16 md:px-28 sm:px-16">
-        <h2 className="mt-8 mb-8 text-lg font-medium text-center text-gray-500">
+      <section className="my-16 px-8 sm:px-16 md:px-28">
+        <h2 className="font-medium mt-8 text-lg text-center mb-8 text-gray-500">
           Skinned NFTs
         </h2>
 
@@ -358,7 +360,7 @@ function App() {
           <div>
             <div
               key={1}
-              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-400 rounded-xl"
+              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
               onClick={() => {
                 setIsModalOpen(true);
               }}
@@ -372,7 +374,7 @@ function App() {
           <div>
             <div
               key={2}
-              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-400 rounded-xl"
+              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
               onClick={() => {
                 setIsModalOpen(true);
               }}
@@ -386,7 +388,7 @@ function App() {
           <div>
             <div
               key={2}
-              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer hover:shadow-lg shadow-gray-400 rounded-xl"
+              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
               onClick={() => {
                 setIsModalOpen(true);
               }}
@@ -399,7 +401,7 @@ function App() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center text-gray-500">
+        <div className="flex flex-wrap text-gray-500 items-center justify-center">
           <Button className="mt-6">Create Skin</Button>
         </div>
       </section>
@@ -408,71 +410,97 @@ function App() {
 
       {/* contact */}
 
-      <section className="px-8 my-16 md:px-28 sm:px-16">
-        <h2 className="mt-8 mb-4 text-lg font-medium text-center text-gray-500">
+      <section className="my-16 px-8 sm:px-16 md:px-28">
+        <h2 className="font-medium mt-8 text-lg text-center mb-4 text-gray-500">
           Connect With Us
         </h2>
 
         <div className="flex flex-wrap justify-center">
           <a
             href="#"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <TelegramIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <TwitterIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <InstagramIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <LinkedInIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <DiscordIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <RedditIcon className="text-primary" />
           </a>
           <a
             href="#"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <PinterestIcon className="text-primary" />
           </a>
         </div>
       </section>
 
-      <section className="px-8 my-16 md:px-28 sm:px-16">
-        <h2 className="mt-8 mb-4 text-lg font-medium text-center text-gray-500">
+      <section className="my-16 px-8 sm:px-16 md:px-28">
+        <h2 className="font-medium mt-8 text-lg text-center mb-4 text-gray-500">
           Frequently Asked Questions
         </h2>
+
+        <div className="flex flex-wrap justify-center">
+          <Question title="Why NFT are Important and What are they??">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam
+            minima nostrum commodi aut vero assumenda?
+          </Question>
+
+          <Question title="Why NFT are Important and What are they??">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam
+            minima nostrum commodi aut vero assumenda? Lorem ipsum dolor sit,
+            amet consectetur adipisicing elit. Quibusdam minima nostrum commodi
+            aut vero assumenda?
+          </Question>
+
+          <Question title="Why NFT are Important and What are they??">
+            minima nostrum commodi aut vero assumenda? Lorem ipsum dolor sit,
+            amet consectetur adipisicing elit. Quibusdam minima nostrum commodi
+            aut vero assumenda?
+          </Question>
+
+          <Question title="Why NFT are Important and What are they??">
+            minima nostrum commodi aut vero assumenda? Lorem ipsum dolor sit,
+            amet consectetur adipisicing elit. Quibusdam minima nostrum commodi
+            aut vero assumenda? The answer is nn
+          </Question>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="flex flex-wrap items-start justify-center w-full px-8 py-8 my-8 border-t md:px-28 sm:px-16 sm:flex-nowrap ">
-        <div className="flex flex-col items-center w-full mb-8 text-sm sm:mb-0 sm:items-start lg:w-3/6 sm:w-2/4">
+      <footer className="border-t flex flex-wrap my-8 w-full py-8 px-8 items-start justify-center sm:flex-nowrap sm:px-16 md:px-28 ">
+        <div className="flex flex-col text-sm mb-8 w-full items-center sm:mb-0 sm:w-2/4 sm:items-start lg:w-3/6">
           <img src={godImg} width="150px" alt="" />
         </div>
 
-        <div className="flex flex-col items-center w-1/2 text-sm sm:items-start lg:w-1/6 sm:w-1/4">
-          <h3 className="mb-3 text-base font-semibold">Contact With Us</h3>
+        <div className="flex flex-col text-sm w-1/2 items-center sm:w-1/4 sm:items-start lg:w-1/6">
+          <h3 className="font-semibold text-base mb-3">Contact With Us</h3>
           <ul>
             <li className="my-1 text-gray-700">
               <a
@@ -533,8 +561,8 @@ function App() {
           </ul>
         </div>
 
-        <div className="flex flex-col items-center w-1/2 text-sm sm:items-start lg:w-2/6 sm:w-1/4">
-          <h3 className="mb-3 text-base font-semibold">Get To Know Us</h3>
+        <div className="flex flex-col text-sm w-1/2 items-center sm:w-1/4 sm:items-start lg:w-2/6">
+          <h3 className="font-semibold text-base mb-3">Get To Know Us</h3>
           <ul>
             <li className="my-1 text-gray-700">
               <a
@@ -549,7 +577,7 @@ function App() {
       </footer>
 
       {/* Copyright */}
-      <div className="w-full px-16 py-4 text-sm text-gray-700">
+      <div className="text-sm w-full py-4 px-16 text-gray-700">
         © 2022 GoOnDate
       </div>
     </main>
