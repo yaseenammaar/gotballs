@@ -43,6 +43,13 @@ import {
 } from "@solana/spl-token";
 import bs58 from "bs58";
 
+export function buyNFT(date) {
+  var dateStr = date.split(" ");
+  var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
+
+  console.log("Buy NFT from App.jsx", dateFinal);
+}
+
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,7 +61,6 @@ function App() {
     year: 2022,
   });
   var provider;
-  
 
   useEffect(() => {
     console.log(startDate);
@@ -77,8 +83,8 @@ function App() {
 
   // IDK What these functions do
   async function connectWallet() {
-   const provider = await  getProvider();
-   console.log(provider.publicKey);
+    const provider = await getProvider();
+    console.log(provider.publicKey);
   }
 
   function disconnectWallet() {
@@ -88,10 +94,9 @@ function App() {
 
   const getProvider = async () => {
     if ("solana" in window) {
-
       // opens wallet to connect to
-      await window.solana.connect(); 
-      
+      await window.solana.connect();
+
       const provider = window.solana;
       if (provider.isPhantom) {
         console.log("Is Phantom installed?  ", provider.isPhantom);
@@ -102,103 +107,100 @@ function App() {
     }
   };
 
-
   const sendNft = async (dateString) => {
-      const network = "https://api.devnet.solana.com";
-      const connection = new Connection(network);
+    const network = "https://api.devnet.solana.com";
+    const connection = new Connection(network);
 
-     
-      if(!provider) await connectWallet();
-    
-      console.log("provider:"+provider.publicKey.toString())
+    if (!provider) await connectWallet();
 
-    var provider = await getProvider()
+    console.log("provider:" + provider.publicKey.toString());
 
-      const alice = Keypair.fromSecretKey(
-        bs58.decode(
-          "2YQDdnfxiHPKu9GypLX1yXaQTQojvDSPgFkDxrUrzbtchDsZh4B27aM8dfgrfm5DcTn8MJHenKLYRMuAbFeYsuRr"
-        )
-      );
+    var provider = await getProvider();
 
-      const mintPubkey = new PublicKey(
-        "FNFuXbBqsehzxZu9Y9ATLmMWRZhUrvYuCSK6wYBJiJ3h"
-      );
+    const alice = Keypair.fromSecretKey(
+      bs58.decode(
+        "2YQDdnfxiHPKu9GypLX1yXaQTQojvDSPgFkDxrUrzbtchDsZh4B27aM8dfgrfm5DcTn8MJHenKLYRMuAbFeYsuRr"
+      )
+    );
 
-      const mintToken = new Token(
-        connection,
-        mintPubkey,
-        TOKEN_PROGRAM_ID,
-        alice 
-      );
-            
-      const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(
-        alice.publicKey
-      );
+    const mintPubkey = new PublicKey(
+      "FNFuXbBqsehzxZu9Y9ATLmMWRZhUrvYuCSK6wYBJiJ3h"
+    );
 
-      const destPublicKey = provider.publicKey;
+    const mintToken = new Token(
+      connection,
+      mintPubkey,
+      TOKEN_PROGRAM_ID,
+      alice
+    );
 
-      // Get the derived address of the destination wallet which will hold the custom token
-      const associatedDestinationTokenAddr = await Token.getAssociatedTokenAddress(
+    const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(
+      alice.publicKey
+    );
+
+    const destPublicKey = provider.publicKey;
+
+    // Get the derived address of the destination wallet which will hold the custom token
+    const associatedDestinationTokenAddr =
+      await Token.getAssociatedTokenAddress(
         mintToken.associatedProgramId,
         mintToken.programId,
         mintPubkey,
         destPublicKey
       );
 
-      const receiverAccount = await connection.getAccountInfo(associatedDestinationTokenAddr);
-            
-      const instructions = [];  
+    const receiverAccount = await connection.getAccountInfo(
+      associatedDestinationTokenAddr
+    );
 
-      const transaction = new Transaction();
+    const instructions = [];
 
-      if (receiverAccount === null) {
+    const transaction = new Transaction();
 
-        transaction.add(
-          Token.createAssociatedTokenAccountInstruction(
-            mintToken.associatedProgramId,
-            mintToken.programId,
-            mintPubkey,
-            associatedDestinationTokenAddr,
-            destPublicKey,
-            alice.publicKey
-          )
-        )
-
-      }
-
-      console.log(fromTokenAccount.address.toString());
-      console.log(associatedDestinationTokenAddr.toString());
-
-      
+    if (receiverAccount === null) {
       transaction.add(
-        Token.createTransferInstruction(
-          TOKEN_PROGRAM_ID,
-          fromTokenAccount.address,
+        Token.createAssociatedTokenAccountInstruction(
+          mintToken.associatedProgramId,
+          mintToken.programId,
+          mintPubkey,
           associatedDestinationTokenAddr,
-          alice.publicKey,
-          [],
-          1
+          destPublicKey,
+          alice.publicKey
         )
       );
+    }
 
+    console.log(fromTokenAccount.address.toString());
+    console.log(associatedDestinationTokenAddr.toString());
 
-      console.log(`txhash: ${await connection.sendTransaction(transaction, [ alice /* fee payer + owner */])}`);
+    transaction.add(
+      Token.createTransferInstruction(
+        TOKEN_PROGRAM_ID,
+        fromTokenAccount.address,
+        associatedDestinationTokenAddr,
+        alice.publicKey,
+        [],
+        1
+      )
+    );
 
+    console.log(
+      `txhash: ${await connection.sendTransaction(transaction, [
+        alice /* fee payer + owner */,
+      ])}`
+    );
+  };
 
-
-  }
-
- const uploadImage =  async () => {
-   var response = await axios({
+  const uploadImage = async () => {
+    var response = await axios({
       method: "post",
       url: "http://localhost:3000/nft/buy",
       data: {
-        "Date": "Jan 21 2021"
-      }
-    }).catch((error) => console.log("ERROR WHILE CREATING FILE:"+error));
+        Date: "Jan 21 2021",
+      },
+    }).catch((error) => console.log("ERROR WHILE CREATING FILE:" + error));
     console.log(response);
-  } 
-
+  };
 
   // months in a year
   const months = [

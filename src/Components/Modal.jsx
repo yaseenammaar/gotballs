@@ -9,13 +9,7 @@
 
 import Button from "./Button";
 import NFT from "./NFT";
-
-function buyNFT(date) {
-  var dateStr = date.split(" ");
-  var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
-
-  console.log("Buy NFT", dateFinal);
-}
+import { buyNFT } from "../App";
 
 export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
   return (
