@@ -24,6 +24,7 @@ import moment from "moment";
 import nftImg from "./assets/nft.png";
 import godImg from "./assets/god.png";
 import hero from "./assets/hero.mp4";
+import skin from "./assets/skin.mp4";
 import moonnft from "./assets/moonnft.png";
 import plane from "./assets/plane.png";
 import picasso from "./assets/picasso.png";
@@ -233,7 +234,7 @@ function App() {
             muted={true}
             loop
             id="myVideo"
-            className="min-w-full min-h-full max-w-none w-auto"
+            className="min-w-full min-h-full"
           >
             <source src={hero} type="video/mp4" />
             Your browser does not support the video tag.
@@ -368,6 +369,21 @@ function App() {
 
         {/* <Skin /> */}
 
+        <section className="my-2 text-center px-3 sm:px-12 md:px-28">
+          <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
+            <video
+              autoPlay
+              muted={true}
+              loop
+              id="myVideo"
+              className="min-w-full w-auto"
+            >
+              <source src={skin} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </section>
+
         <div className="flex flex-wrap items-center justify-center">
           <div>
             <div
@@ -417,7 +433,7 @@ function App() {
         </div>
 
         <div className="flex flex-wrap text-gray-500 items-center justify-center">
-          <Button className="mt-6 bg-gray-500">Coming Soon</Button>
+          <Button className="mt-6 bg-gray-500">Learn More</Button>
         </div>
       </section>
 
