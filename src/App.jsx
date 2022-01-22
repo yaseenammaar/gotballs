@@ -32,6 +32,7 @@ import wwst from "./assets/wwst.png";
 import wwen from "./assets/wwen.png";
 import DateFilter from "./Components/Filter";
 import Skin from "./skin";
+import axios from "axios";
 
 // solana Imports
 import { Connection, PublicKey, Keypair, Transaction } from "@solana/web3.js";
@@ -52,57 +53,8 @@ function App() {
     month: 1,
     year: 2022,
   });
-
-  const sendNft = async () => {
-    const feePayer = Keypair.fromSecretKey(
-      bs58.decode(
-        "3DdVyZuANr5en2PQymCPmoFBMsfdhjaRHqnk3ejW16zc2YN2CWjyDTAfi6oYcQHuSa5UWFH9s1Nvme6UWprmJSjH"
-      )
-    );
-
-    // G2FAbFQPFa5qKXCetoFZQEvF9BVvCKbvUZvodpVidnoY
-    const alice = Keypair.fromSecretKey(
-      bs58.decode(
-        "2YQDdnfxiHPKu9GypLX1yXaQTQojvDSPgFkDxrUrzbtchDsZh4B27aM8dfgrfm5DcTn8MJHenKLYRMuAbFeYsuRr"
-      )
-    );
-
-    const mintPubkey = new PublicKey(
-      "71Av5YUY8qxvWjKYJvEk4SSwSpBjnyEjpvpKQEXM4Eo1"
-    );
-
-    let ataAlice = await Token.getAssociatedTokenAddress(
-      ASSOCIATED_TOKEN_PROGRAM_ID,
-      TOKEN_PROGRAM_ID,
-      mintPubkey,
-      alice.publicKey
-    );
-
-    let ataFeePayer = await Token.getAssociatedTokenAddress(
-      ASSOCIATED_TOKEN_PROGRAM_ID,
-      TOKEN_PROGRAM_ID,
-      mintPubkey,
-      feePayer.publicKey
-    );
-
-    let tx = new Transaction().add(
-      Token.createTransferCheckedInstruction(
-        TOKEN_PROGRAM_ID,
-        ataAlice,
-        mintPubkey,
-        ataFeePayer,
-        alice.publicKey,
-        [],
-        1,
-        0
-      )
-    );
-
-    const network = "https://api.devnet.solana.com";
-    const connection = new Connection(network);
-    const { signature } = await window.solana.signAndSendTransaction(tx);
-    console.log(await connection.confirmTransaction(signature));
-  };
+  var provider;
+  
 
   useEffect(() => {
     console.log(startDate);
@@ -125,14 +77,8 @@ function App() {
 
   // IDK What these functions do
   async function connectWallet() {
-    try {
-      const resp = await window.solana.connect();
-      resp.publicKey.toString();
-      setIsConnected(true);
-      console.log("Wallet Connected:" + resp.publicKey.toString());
-    } catch (err) {
-      console.log("Error :" + err);
-    }
+   const provider = await  getProvider();
+   console.log(provider.publicKey);
   }
 
   function disconnectWallet() {
@@ -140,17 +86,119 @@ function App() {
     window.solana.disconnect();
   }
 
-  // async function mint() {
-  //   const solConnection = new web3.Connection(getCluster("devnet"));
-  //   const walletKeyPair = loadWalletKey("./devnet.json");
-  //   await mintNFT(
-  //     solConnection,
-  //     walletKeyPair,
-  //     "https://gateway.pinata.cloud/ipfs/QmQmvqpZzxPqUHMzuL32S1Pi2eTkF3LYsncWgWK1k52JAQ?preview=1"
-  //   );
-  // }
+  const getProvider = async () => {
+    if ("solana" in window) {
 
-  // Unknown Function Ends
+      // opens wallet to connect to
+      await window.solana.connect(); 
+      
+      const provider = window.solana;
+      if (provider.isPhantom) {
+        console.log("Is Phantom installed?  ", provider.isPhantom);
+        return provider;
+      }
+    } else {
+      window.open("https://www.phantom.app/", "_blank");
+    }
+  };
+
+
+  const sendNft = async (dateString) => {
+      const network = "https://api.devnet.solana.com";
+      const connection = new Connection(network);
+
+     
+      if(!provider) await connectWallet();
+    
+      console.log("provider:"+provider.publicKey.toString())
+
+    var provider = await getProvider()
+
+      const alice = Keypair.fromSecretKey(
+        bs58.decode(
+          "2YQDdnfxiHPKu9GypLX1yXaQTQojvDSPgFkDxrUrzbtchDsZh4B27aM8dfgrfm5DcTn8MJHenKLYRMuAbFeYsuRr"
+        )
+      );
+
+      const mintPubkey = new PublicKey(
+        "FNFuXbBqsehzxZu9Y9ATLmMWRZhUrvYuCSK6wYBJiJ3h"
+      );
+
+      const mintToken = new Token(
+        connection,
+        mintPubkey,
+        TOKEN_PROGRAM_ID,
+        alice 
+      );
+            
+      const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(
+        alice.publicKey
+      );
+
+      const destPublicKey = provider.publicKey;
+
+      // Get the derived address of the destination wallet which will hold the custom token
+      const associatedDestinationTokenAddr = await Token.getAssociatedTokenAddress(
+        mintToken.associatedProgramId,
+        mintToken.programId,
+        mintPubkey,
+        destPublicKey
+      );
+
+      const receiverAccount = await connection.getAccountInfo(associatedDestinationTokenAddr);
+            
+      const instructions = [];  
+
+      const transaction = new Transaction();
+
+      if (receiverAccount === null) {
+
+        transaction.add(
+          Token.createAssociatedTokenAccountInstruction(
+            mintToken.associatedProgramId,
+            mintToken.programId,
+            mintPubkey,
+            associatedDestinationTokenAddr,
+            destPublicKey,
+            alice.publicKey
+          )
+        )
+
+      }
+
+      console.log(fromTokenAccount.address.toString());
+      console.log(associatedDestinationTokenAddr.toString());
+
+      
+      transaction.add(
+        Token.createTransferInstruction(
+          TOKEN_PROGRAM_ID,
+          fromTokenAccount.address,
+          associatedDestinationTokenAddr,
+          alice.publicKey,
+          [],
+          1
+        )
+      );
+
+
+      console.log(`txhash: ${await connection.sendTransaction(transaction, [ alice /* fee payer + owner */])}`);
+
+
+
+  }
+
+ const uploadImage =  async () => {
+   var response = await axios({
+      method: "post",
+      url: "http://localhost:3000/nft/buy",
+      data: {
+        "Date": "Jan 21 2021"
+      }
+    }).catch((error) => console.log("ERROR WHILE CREATING FILE:"+error));
+    console.log(response);
+  } 
+
 
   // months in a year
   const months = [
@@ -204,7 +252,7 @@ function App() {
           <a
             href="#contact"
             className="rounded-md m-1 text-sm py-2 px-2 transition-all text-gray-500 duration-500 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg"
-            onClick={sendNft}
+            onClick={uploadImage}
           >
             Contact
           </a>
