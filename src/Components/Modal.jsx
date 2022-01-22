@@ -10,6 +10,13 @@
 import Button from "./Button";
 import NFT from "./NFT";
 
+function buyNFT(date) {
+  var dateStr = date.split(" ");
+  var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
+
+  console.log("Buy NFT", dateFinal);
+}
+
 export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
   return (
     <>
@@ -38,7 +45,13 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
                 </span>
               </div>
               <br />
-              <Button>Buy This Date</Button>
+              <Button
+                onClick={() => {
+                  buyNFT(title);
+                }}
+              >
+                Buy This Date
+              </Button>
             </div>
 
             <button
