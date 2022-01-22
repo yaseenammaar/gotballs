@@ -498,43 +498,43 @@ function App() {
 
         <div className="flex flex-wrap justify-center">
           <a
-            href="#"
+            href="https://t.me/GoOnDateNFT"
             className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <TelegramIcon className="text-primary" />
           </a>
           <a
-            href="#"
+            href="https://twitter.com/GoOnDate?t=i8AWJHEQMb5UaEqdgKLqjQ&s=09"
             className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <TwitterIcon className="text-primary" />
           </a>
           <a
-            href="#"
+            href="https://www.instagram.com/goondate.nft/"
             className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <InstagramIcon className="text-primary" />
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/go-on-date-nft-b8b539229"
             className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <LinkedInIcon className="text-primary" />
           </a>
           <a
-            href="#"
+            href="https://discord.gg/m7kgsW9mgn"
             className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <DiscordIcon className="text-primary" />
           </a>
           <a
-            href="#"
+            href="https://www.reddit.com/r/goondate/"
             className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <RedditIcon className="text-primary" />
           </a>
           <a
-            href="#"
+            href="https://pin.it/5m9ju0v"
             className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
           >
             <PinterestIcon className="text-primary" />
