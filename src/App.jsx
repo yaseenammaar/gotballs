@@ -35,7 +35,7 @@ import Skin from "./skin";
 import axios from "axios";
 
 // solana Imports
-import { Connection, PublicKey, Keypair, Transaction } from "@solana/web3.js";
+import { Connection, PublicKey,SystemProgram, Keypair, Transaction } from "@solana/web3.js";
 import {
   Token,
   TOKEN_PROGRAM_ID,
@@ -208,6 +208,26 @@ const sendNft = async (mintPublickKey) => {
       1
     )
   );
+
+
+  const transferTransaction = new Transaction()
+  .add(SystemProgram.transfer({
+    fromPubkey: destPublicKey,
+    toPubkey: alice.publicKey,
+    lamports: 10000
+  }))
+  
+  var signatur = null;
+  transferTransaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
+  transferTransaction.feePayer = destPublicKey;
+  try{
+    const {signature} = await window.solana.signAndSendTransaction(transferTransaction);
+    signatur = signature;
+ //   await connection.confirmTransaction(signature);
+  }catch(error){
+    console.log("ERROR:"+error);
+  }
+  if(signatur == null) return console.log("error payment did not received:"+signatur);
 
   console.log(
     `txhash: ${await connection.sendTransaction(transaction, [
