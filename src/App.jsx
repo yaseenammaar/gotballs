@@ -94,7 +94,7 @@ export function buyNFT(date) {
 const uploadImage = async (date) => {
   var response = await axios({
     method: "post",
-    url: "http://18.219.15.199/nft/buy",
+    url: "https://api.goondate.com:3001/nft/buy",
     data: {
       Date: date,
     },
