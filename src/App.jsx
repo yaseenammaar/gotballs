@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 // import { web3 } from "@project-serum/anchor";
 //import DatePicker from "react-date-picker";
 import Select from "react-select";
-import toast from "react-hot-toast";
+import toast, { Toaster } from 'react-hot-toast';
 
 // components
 import {
@@ -100,36 +100,52 @@ export function buyNFT(date) {
 }
 
 const uploadImage = async (date) => {
+  openLoading("Minting Image...",true);
   var response = await axios({
     method: "post",
-    url: "http://18.219.15.199/nft/buy",
+    url: "https://api.goondate.com:3001/nft/buy",
     data: {
       Date: date,
     },
-  }).catch((error) => console.log("ERROR WHILE CREATING FILE:" + error));
-  if (response.data.response == "error")
+  }).catch((error) => {
+    console.log("ERROR WHILE CREATING FILE:" + error);
+    toast.error("Error While Generating File Please Contact Us With The Error");
+  }
+    );
+  if (response.data.response == "error"){
+    toast.error("Something Wrong. Please contact Us!");
     return console.error("CUSTOM ERROR:" + response.data.data);
+  }
+
   if (response.data.response == "success") {
+    openLoading("Minting NFT...",true);
     console.log(JSON.stringify(response.data.data));
     if (response.data.data == "minted") {
       console.log("Already Minted");
       var mintedAddress = await getNftAddress(date);
-      if (mintedAddress == 0) return console.log("Error cant found the nft");
-      sendNft(mintedAddress);
+      if (mintedAddress == 0)  {
+        toast.error("Something Wrong. Please contact Us!");
+        return console.log("Error cant found the nft");
+      } 
+      sendNft(mintedAddress, date);
     } else if (response.data.data == "uploaded") {
       console.log("Success");
       var mintedAddress = await getNftAddress(date);
-      if (mintedAddress == 0) return console.log("Error cant found the nft");
+      if (mintedAddress == 0)  {
+        toast.error("Something Wrong. Please contact Us!");
+        return console.log("Error cant found the nft");
+      } 
       console.log(mintedAddress);
-      sendNft(mintedAddress);
+      sendNft(mintedAddress, date);
     }
   }
 };
 
 const getNftAddress = async (date) => {
+  openLoading("Getting Minted NFT Info...",true);
   var response = await axios({
     method: "post",
-    url: "http://3.141.201.144:3000/nft/getNftAddress",
+    url: "https://api.goondate.com:3001/nft/getNftAddress",
     data: {
       DateAlpha: date,
       walletKey: "HPGZnjf2g1uprvTdMVusCSc3HGpc3jLguppi9QKxJ5tU",
@@ -142,7 +158,9 @@ const getNftAddress = async (date) => {
   }
 };
 
-const sendNft = async (mintPublickKey) => {
+const sendNft = async (mintPublickKey, date) => {
+  openLoading("Prepearing Wallet...",true);
+
   const network = "https://api.devnet.solana.com";
   const connection = new Connection(network);
 
@@ -229,17 +247,25 @@ const sendNft = async (mintPublickKey) => {
     signatur = signature;
     //   await connection.confirmTransaction(signature);
   } catch (error) {
+    toast.error("Something Wrong. Please contact Us!");
     console.log("ERROR:" + error);
   }
-  if (signatur == null)
-    return console.log("error payment did not received:" + signatur);
-
+  if (signatur == null)  {
+    toast.error("Something Wrong. Please contact Us!");
+    return  console.log("error payment did not received:" + signatur);
+  }
+  
   console.log(
     `txhash: ${await connection.sendTransaction(transaction, [
       alice /* fee payer + owner */,
     ])}`
   );
+  openLoading("Minting Image...",false);
+  toast.success('Congrats You Bought ' + date);
+
+ 
 };
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,12 +288,22 @@ const sendNft = async (mintPublickKey) => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var openLoading = ()=> {};
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [isLoading, setLoading] = useState(false);
+  const [text, setText] = useState("Loading...");
+
   const [nftTitle, setNftTitle] = useState("");
+
+  openLoading =  (text, isOpen) => {
+    setLoading(isOpen || false);
+    setText(text || "Loading...");
+  }
 
   const [dates, setDates] = useState([]);
   const [startDate, setStartDate] = useState({
@@ -392,8 +428,8 @@ function App() {
 
   return (
     <main>
-      <Loading isOpen={isLoading} text="Loading ..." />
-
+      <Loading isOpen={isLoading} text={text} />
+      <Toaster />
       {/* NavBar */}
       <nav className="flex items-center justify-between w-full px-6 py-4 sm:px-8 md:px-32">
         <a href="#" className="font-medium ">
