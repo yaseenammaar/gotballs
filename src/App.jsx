@@ -95,7 +95,6 @@ const getProvider = async () => {
 export function buyNFT(date) {
   var dateStr = date.split(" ");
   var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
-  console.log("THE DATE SENDING:" + dateFinal);
   uploadImage(dateFinal);
 }
 
@@ -109,11 +108,15 @@ const uploadImage = async (date) => {
     },
   }).catch((error) => {
     console.log("ERROR WHILE CREATING FILE:" + error);
-    toast.error("Error While Generating File Please Contact Us With The Error");
+    toast.error("Something Wrong! Please Contact Us");
+  openLoading("Minting Image...",false);
+
   }
     );
   if (response.data.response == "error"){
     toast.error("Something Wrong. Please contact Us!");
+  openLoading("Minting Image...",false);
+
     return console.error("CUSTOM ERROR:" + response.data.data);
   }
 
@@ -125,6 +128,8 @@ const uploadImage = async (date) => {
       var mintedAddress = await getNftAddress(date);
       if (mintedAddress == 0)  {
         toast.error("Something Wrong. Please contact Us!");
+  openLoading("Minting Image...",false);
+
         return console.log("Error cant found the nft");
       } 
       sendNft(mintedAddress, date);
@@ -132,6 +137,8 @@ const uploadImage = async (date) => {
       console.log("Success");
       var mintedAddress = await getNftAddress(date);
       if (mintedAddress == 0)  {
+  openLoading("Minting Image...",false);
+
         toast.error("Something Wrong. Please contact Us!");
         return console.log("Error cant found the nft");
       } 
@@ -248,10 +255,14 @@ const sendNft = async (mintPublickKey, date) => {
     //   await connection.confirmTransaction(signature);
   } catch (error) {
     toast.error("Something Wrong. Please contact Us!");
+  openLoading("Minting Image...",false);
+
     console.log("ERROR:" + error);
   }
   if (signatur == null)  {
     toast.error("Something Wrong. Please contact Us!");
+  openLoading("Minting Image...",false);
+
     return  console.log("error payment did not received:" + signatur);
   }
   
