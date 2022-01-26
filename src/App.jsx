@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 // import { web3 } from "@project-serum/anchor";
 //import DatePicker from "react-date-picker";
 import Select from "react-select";
+import toast from "react-hot-toast";
 
 // components
 import {
@@ -17,6 +18,8 @@ import Modal from "./Components/Modal";
 import Button from "./Components/Button";
 import Question from "./Components/Question";
 import NFT from "./Components/NFT";
+import DateFilter from "./Components/Filter";
+import Loading from "./Components/Loading";
 
 import moment from "moment";
 
@@ -30,12 +33,18 @@ import plane from "./assets/plane.png";
 import picasso from "./assets/picasso.png";
 import wwst from "./assets/wwst.png";
 import wwen from "./assets/wwen.png";
-import DateFilter from "./Components/Filter";
 import Skin from "./skin";
 import axios from "axios";
+import info from "./assets/info.json";
 
 // solana Imports
-import { Connection, PublicKey,SystemProgram, Keypair, Transaction } from "@solana/web3.js";
+import {
+  Connection,
+  PublicKey,
+  SystemProgram,
+  Keypair,
+  Transaction,
+} from "@solana/web3.js";
 import {
   Token,
   TOKEN_PROGRAM_ID,
@@ -68,7 +77,6 @@ import bs58 from "bs58";
 var connectWallet;
 var provider;
 
-
 const getProvider = async () => {
   if ("solana" in window) {
     // opens wallet to connect to
@@ -87,33 +95,33 @@ const getProvider = async () => {
 export function buyNFT(date) {
   var dateStr = date.split(" ");
   var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
-  console.log("THE DATE SENDING:"+dateFinal);
+  console.log("THE DATE SENDING:" + dateFinal);
   uploadImage(dateFinal);
 }
 
 const uploadImage = async (date) => {
   var response = await axios({
     method: "post",
-    url: "https://api.goondate.com:3001/nft/buy",
+    url: "http://18.219.15.199/nft/buy",
     data: {
       Date: date,
     },
   }).catch((error) => console.log("ERROR WHILE CREATING FILE:" + error));
-  if(response.data.response == "error") return console.error("CUSTOM ERROR:"+ response.data.data);
-  if(response.data.response == "success"){
+  if (response.data.response == "error")
+    return console.error("CUSTOM ERROR:" + response.data.data);
+  if (response.data.response == "success") {
     console.log(JSON.stringify(response.data.data));
-    if(response.data.data == "minted"){
+    if (response.data.data == "minted") {
       console.log("Already Minted");
-     var mintedAddress = await getNftAddress(date);
-     if(mintedAddress == 0) return console.log("Error cant found the nft");
-     sendNft(mintedAddress);
-    }else if(response.data.data == "uploaded"){
+      var mintedAddress = await getNftAddress(date);
+      if (mintedAddress == 0) return console.log("Error cant found the nft");
+      sendNft(mintedAddress);
+    } else if (response.data.data == "uploaded") {
       console.log("Success");
-      var mintedAddress =   await getNftAddress(date);
-     if(mintedAddress == 0) return console.log("Error cant found the nft");
-      console.log(mintedAddress)
-     sendNft(mintedAddress);
-
+      var mintedAddress = await getNftAddress(date);
+      if (mintedAddress == 0) return console.log("Error cant found the nft");
+      console.log(mintedAddress);
+      sendNft(mintedAddress);
     }
   }
 };
@@ -121,18 +129,18 @@ const uploadImage = async (date) => {
 const getNftAddress = async (date) => {
   var response = await axios({
     method: "post",
-    url: "https://api.goondate.com:3001/nft/getNftAddress",
+    url: "http://3.141.201.144:3000/nft/getNftAddress",
     data: {
       DateAlpha: date,
-      walletKey: "HPGZnjf2g1uprvTdMVusCSc3HGpc3jLguppi9QKxJ5tU"
+      walletKey: "HPGZnjf2g1uprvTdMVusCSc3HGpc3jLguppi9QKxJ5tU",
     },
   }).catch((error) => console.log("ERROR WHILE getting address:" + error));
   console.log(response.data);
-  if(response.data.response == "error") return 0;
-  else if(response.data.response == "success"){
-      return response.data.data;
+  if (response.data.response == "error") return 0;
+  else if (response.data.response == "success") {
+    return response.data.data;
   }
-}
+};
 
 const sendNft = async (mintPublickKey) => {
   const network = "https://api.devnet.solana.com";
@@ -150,16 +158,9 @@ const sendNft = async (mintPublickKey) => {
     )
   );
 
-  const mintPubkey = new PublicKey(
-    mintPublickKey
-  );
+  const mintPubkey = new PublicKey(mintPublickKey);
 
-  const mintToken = new Token(
-    connection,
-    mintPubkey,
-    TOKEN_PROGRAM_ID,
-    alice
-  );
+  const mintToken = new Token(connection, mintPubkey, TOKEN_PROGRAM_ID, alice);
 
   const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(
     alice.publicKey
@@ -168,13 +169,12 @@ const sendNft = async (mintPublickKey) => {
   const destPublicKey = provider.publicKey;
 
   // Get the derived address of the destination wallet which will hold the custom token
-  const associatedDestinationTokenAddr =
-    await Token.getAssociatedTokenAddress(
-      mintToken.associatedProgramId,
-      mintToken.programId,
-      mintPubkey,
-      destPublicKey
-    );
+  const associatedDestinationTokenAddr = await Token.getAssociatedTokenAddress(
+    mintToken.associatedProgramId,
+    mintToken.programId,
+    mintPubkey,
+    destPublicKey
+  );
 
   const receiverAccount = await connection.getAccountInfo(
     associatedDestinationTokenAddr
@@ -209,25 +209,30 @@ const sendNft = async (mintPublickKey) => {
     )
   );
 
+  const transferTransaction = new Transaction().add(
+    SystemProgram.transfer({
+      fromPubkey: destPublicKey,
+      toPubkey: alice.publicKey,
+      lamports: 10000,
+    })
+  );
 
-  const transferTransaction = new Transaction()
-  .add(SystemProgram.transfer({
-    fromPubkey: destPublicKey,
-    toPubkey: alice.publicKey,
-    lamports: 10000
-  }))
-  
   var signatur = null;
-  transferTransaction.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
+  transferTransaction.recentBlockhash = (
+    await connection.getRecentBlockhash()
+  ).blockhash;
   transferTransaction.feePayer = destPublicKey;
-  try{
-    const {signature} = await window.solana.signAndSendTransaction(transferTransaction);
+  try {
+    const { signature } = await window.solana.signAndSendTransaction(
+      transferTransaction
+    );
     signatur = signature;
- //   await connection.confirmTransaction(signature);
-  }catch(error){
-    console.log("ERROR:"+error);
+    //   await connection.confirmTransaction(signature);
+  } catch (error) {
+    console.log("ERROR:" + error);
   }
-  if(signatur == null) return console.log("error payment did not received:"+signatur);
+  if (signatur == null)
+    return console.log("error payment did not received:" + signatur);
 
   console.log(
     `txhash: ${await connection.sendTransaction(transaction, [
@@ -236,8 +241,6 @@ const sendNft = async (mintPublickKey) => {
   );
 };
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -259,11 +262,11 @@ const sendNft = async (mintPublickKey) => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [nftTitle, setNftTitle] = useState("");
 
   const [dates, setDates] = useState([]);
@@ -273,6 +276,24 @@ function App() {
   });
 
   useEffect(() => {
+    var date = "Jan 04 2022";
+
+    {
+      info
+        .filter((val) => {
+          if (date == "") {
+            return val;
+          } else if (val.date.toLowerCase().includes(date.toLowerCase())) {
+            return val;
+          }
+        })
+        .map((val, key) => {
+          console.log("Found!");
+        });
+    }
+
+    console.log("info.json", info);
+
     console.log(startDate);
     var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
     setDates(dateList);
@@ -291,18 +312,49 @@ function App() {
     return dates;
   }
 
- 
- // IDK What these functions do
- connectWallet = async  () => {
-   provider = await getProvider();
-  console.log(provider.publicKey);
-}
+  // IDK What these functions do
+  connectWallet = async () => {
+    provider = await getProvider();
+    console.log(provider.publicKey);
+  };
 
-function disconnectWallet() {
-  setIsConnected(false);
-  window.solana.disconnect();
-}
-  
+  function disconnectWallet() {
+    setIsConnected(false);
+    window.solana.disconnect();
+  }
+
+  function dateIsSold(e) {
+    e = e.slice(4);
+    console.log("Search string", e);
+    var found = 0;
+
+    info
+      .filter((val) => {
+        if (e == "") {
+          return val;
+        } else if (val.date.toLowerCase().includes(e.toLowerCase())) {
+          return val;
+        }
+      })
+      .map((val, key) => {
+        console.log("Found!");
+        found = 1;
+      });
+    if (found === 0) {
+      console.log("Not Found!");
+      return (
+        <span className="p-3 text-sky-600">
+          ◎0.4 <br />
+        </span>
+      );
+    } else {
+      return (
+        <span className="p-3 text-red-600">
+          Sold <br />
+        </span>
+      );
+    }
+  }
 
   // months in a year
   const months = [
@@ -340,8 +392,10 @@ function disconnectWallet() {
 
   return (
     <main>
+      <Loading isOpen={isLoading} text="Loading ..." />
+
       {/* NavBar */}
-      <nav className="flex w-full py-4 px-6 items-center justify-between sm:px-8 md:px-32">
+      <nav className="flex items-center justify-between w-full px-6 py-4 sm:px-8 md:px-32">
         <a href="#" className="font-medium ">
           <img src={godImg} width="150px" alt="" />
         </a>
@@ -349,20 +403,20 @@ function disconnectWallet() {
         <div>
           <a
             href="#about"
-            className="rounded-md m-1 text-sm py-2 px-2 transition-all text-gray-500 duration-500 sm:m-4 sm:px-2 md:px-2 hover:shadow-lg"
+            className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 sm:px-2 md:px-2 hover:shadow-lg"
           >
             About
           </a>
           <a
             href="#contact"
-            className="rounded-md m-1 text-sm py-2 px-2 transition-all text-gray-500 duration-500 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg"
+            className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 sm:px-2 md:px-4 hover:shadow-lg"
             onClick={uploadImage}
           >
             Contact
           </a>
           <a
             href="#"
-            className="rounded-md m-1 shadow-sm text-sm py-2 px-2 transition-all top-2 right-2 text-blue-500 duration-500 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg hover:text-primary"
+            className="px-2 py-2 m-1 text-sm text-blue-500 transition-all duration-500 rounded-md shadow-sm top-2 right-2 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg hover:text-primary"
             onClick={isConnected ? disconnectWallet : connectWallet}
           >
             {isConnected ? "Disconnect" : "Connect"}
@@ -379,8 +433,8 @@ function disconnectWallet() {
       />
 
       {/* Hero */}
-      <section className="my-6 text-center px-6 sm:px-12 md:px-28">
-        <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
+      <section className="px-6 my-6 text-center sm:px-12 md:px-28">
+        <div className="overflow-hidden shadow-xl rounded-xl shadow-gray-300">
           <video
             autoPlay
             muted={true}
@@ -396,20 +450,20 @@ function disconnectWallet() {
 
       {/* About */}
       <div id="about"></div>
-      <section className="my-24 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-lg text-center mb-20 text-gray-500">
+      <section className="px-8 my-24 sm:px-16 md:px-28">
+        <h2 className="mt-8 mb-20 text-lg font-medium text-center text-gray-500">
           GoOnDate NFT
         </h2>
 
-        <div className="flex flex-wrap w-full justify-center lg:justify-between">
-          <div className="rounded-xl flex w-full items-center justify-center sm:w-8/12 lg:w-2/5 ">
-            <div className="rounded-xl shadow-lg shadow-gray-300 overflow-hidden">
+        <div className="flex flex-wrap justify-center w-full lg:justify-between">
+          <div className="flex items-center justify-center w-full rounded-xl sm:w-8/12 lg:w-2/5 ">
+            <div className="overflow-hidden shadow-lg rounded-xl shadow-gray-300">
               {/* <img src={nftImg} alt="" /> */}
               <NFT date="Mon Jan 01 2022" />
             </div>
           </div>
 
-          <div className="flex flex-col text-center w-full py-16 text-gray-600 items-center justify-center sm:w-10/12 md:px-12 md:w-11/12 lg:w-3/5">
+          <div className="flex flex-col items-center justify-center w-full py-16 text-center text-gray-600 sm:w-10/12 md:px-12 md:w-11/12 lg:w-3/5">
             How beautiful is the memory of a loved one! But what remains with
             us? A picture? A date? Do you remember the date when you last saw
             them or when you held your baby in your hands for the first time? We
@@ -423,7 +477,7 @@ function disconnectWallet() {
             to share it with others but keep it just for us. This is the reason
             why we came up with this NFT project.
             <a
-              className="font-semibold mt-8 text-primary p-2 hover:text-secondary"
+              className="p-2 mt-8 font-semibold text-primary hover:text-secondary"
               href="#"
             >
               Know More
@@ -432,9 +486,9 @@ function disconnectWallet() {
         </div>
       </section>
 
-      <section className="my-16 px-8 sm:px-16 md:px-28">
+      <section className="px-8 my-16 sm:px-16 md:px-28">
         {/* Date Filter */}
-        <div className="flex mb-16 w-full justify-center">
+        <div className="flex justify-center w-full mb-16">
           <DateFilter
             placeholder="Select A Month"
             defaultValue={months[new Date().getMonth()]}
@@ -461,7 +515,7 @@ function disconnectWallet() {
           />
         </div>
 
-        <h2 className="font-medium my-8 text-center text-2xl text-gray-500">
+        <h2 className="my-8 text-2xl font-medium text-center text-gray-500">
           Dates
         </h2>
 
@@ -470,7 +524,7 @@ function disconnectWallet() {
             <div>
               <div
                 key={e}
-                className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-300 duration-150 overflow-hidden hover:shadow-lg"
+                className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-300 hover:shadow-lg"
                 onClick={() => {
                   setNftTitle(e);
                   setIsModalOpen(true);
@@ -479,17 +533,12 @@ function disconnectWallet() {
               >
                 <NFT date={e} />
               </div>
-              <div>
-                <span className="p-3 text-sky-600">
-                  ◎0.4 <br />
-                  {/* {e} */}
-                </span>
-              </div>
+              <div>{dateIsSold(e)}</div>
             </div>
           ))}
         </div>
 
-        {/* <h2 className="font-medium mt-8 text-center mb-8 text-2xl text-gray-500 sm:mt-16">
+        {/* <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500 sm:mt-16">
           Special Dates
         </h2>
 
@@ -498,7 +547,7 @@ function disconnectWallet() {
             <div>
               <div
                 key={e}
-                className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-300 duration-150 overflow-hidden hover:shadow-lg"
+                className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-300 hover:shadow-lg"
                 onClick={() => {
                   setIsModalOpen(true);
                 }}
@@ -514,21 +563,21 @@ function disconnectWallet() {
       </section>
 
       {/* Skins - 2 */}
-      <section className="my-16 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-2xl text-center mb-8 text-gray-500">
+      <section className="px-8 my-16 sm:px-16 md:px-28">
+        <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500">
           Skinned NFTs - Coming Soon!
         </h2>
 
         {/* <Skin /> */}
 
-        <section className="my-2 text-center px-3 sm:px-12 md:px-28">
-          <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
+        <section className="px-3 my-2 text-center sm:px-12 md:px-28">
+          <div className="overflow-hidden shadow-xl rounded-xl shadow-gray-300">
             <video
               autoPlay
               muted={true}
               loop
               id="myVideo"
-              className="min-w-full w-auto"
+              className="w-auto min-w-full"
             >
               <source src={skin} type="video/mp4" />
               Your browser does not support the video tag.
@@ -540,7 +589,7 @@ function disconnectWallet() {
           <div>
             <div
               key={1}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
+              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-400 hover:shadow-lg"
               onClick={() => {}}
             >
               <img style={{ width: "200px" }} src={moonnft} alt="" />
@@ -549,7 +598,7 @@ function disconnectWallet() {
           <div>
             <div
               key={2}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
+              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-400 hover:shadow-lg"
               onClick={() => {}}
             >
               <img style={{ width: "200px" }} src={plane} alt="" />
@@ -558,7 +607,7 @@ function disconnectWallet() {
           <div>
             <div
               key={2}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
+              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-400 hover:shadow-lg"
               onClick={() => {}}
             >
               <img style={{ width: "200px" }} src={picasso} alt="" />
@@ -567,7 +616,7 @@ function disconnectWallet() {
           <div>
             <div
               key={2}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
+              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-400 hover:shadow-lg"
               onClick={() => {}}
             >
               <img style={{ width: "200px" }} src={wwst} alt="" />
@@ -576,7 +625,7 @@ function disconnectWallet() {
           <div>
             <div
               key={2}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
+              className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-400 hover:shadow-lg"
               onClick={() => {}}
             >
               <img style={{ width: "200px" }} src={wwen} alt="" />
@@ -584,7 +633,7 @@ function disconnectWallet() {
           </div>
         </div>
 
-        <div className="flex flex-wrap text-gray-500 items-center justify-center">
+        <div className="flex flex-wrap items-center justify-center text-gray-500">
           <Button className="mt-6 bg-gray-500">Learn More</Button>
         </div>
       </section>
@@ -593,59 +642,59 @@ function disconnectWallet() {
 
       {/* contact */}
 
-      <section className="my-16 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-lg text-center mb-4 text-gray-500">
+      <section className="px-8 my-16 sm:px-16 md:px-28">
+        <h2 className="mt-8 mb-4 text-lg font-medium text-center text-gray-500">
           Connect With Us
         </h2>
 
         <div className="flex flex-wrap justify-center">
           <a
             href="https://t.me/GoOnDateNFT"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <TelegramIcon className="text-primary" />
           </a>
           <a
             href="https://twitter.com/GoOnDate?t=i8AWJHEQMb5UaEqdgKLqjQ&s=09"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <TwitterIcon className="text-primary" />
           </a>
           <a
             href="https://www.instagram.com/goondate.nft/"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <InstagramIcon className="text-primary" />
           </a>
           <a
             href="https://www.linkedin.com/in/go-on-date-nft-b8b539229"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <LinkedInIcon className="text-primary" />
           </a>
           <a
             href="https://discord.gg/m7kgsW9mgn"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <DiscordIcon className="text-primary" />
           </a>
           <a
             href="https://www.reddit.com/r/goondate/"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <RedditIcon className="text-primary" />
           </a>
           <a
             href="https://pin.it/5m9ju0v"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
           >
             <PinterestIcon className="text-primary" />
           </a>
         </div>
       </section>
 
-      <section className="my-16 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-lg text-center mb-4 text-gray-500">
+      <section className="px-8 my-16 sm:px-16 md:px-28">
+        <h2 className="mt-8 mb-4 text-lg font-medium text-center text-gray-500">
           Frequently Asked Questions
         </h2>
 
@@ -677,13 +726,13 @@ function disconnectWallet() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t flex flex-wrap my-8 w-full py-8 px-8 items-start justify-center sm:flex-nowrap sm:px-16 md:px-28 ">
-        <div className="flex flex-col text-sm mb-8 w-full items-center sm:mb-0 sm:w-2/4 sm:items-start lg:w-3/6">
+      <footer className="flex flex-wrap items-start justify-center w-full px-8 py-8 my-8 border-t sm:flex-nowrap sm:px-16 md:px-28 ">
+        <div className="flex flex-col items-center w-full mb-8 text-sm sm:mb-0 sm:w-2/4 sm:items-start lg:w-3/6">
           <img src={godImg} width="150px" alt="" />
         </div>
 
-        <div className="flex flex-col text-sm w-1/2 items-center sm:w-1/4 sm:items-start lg:w-1/6">
-          <h3 className="font-semibold text-base mb-3">Contact With Us</h3>
+        <div className="flex flex-col items-center w-1/2 text-sm sm:w-1/4 sm:items-start lg:w-1/6">
+          <h3 className="mb-3 text-base font-semibold">Contact With Us</h3>
           <ul>
             <li className="my-1 text-gray-700">
               <a
@@ -744,8 +793,8 @@ function disconnectWallet() {
           </ul>
         </div>
 
-        <div className="flex flex-col text-sm w-1/2 items-center sm:w-1/4 sm:items-start lg:w-2/6">
-          <h3 className="font-semibold text-base mb-3">Get To Know Us</h3>
+        <div className="flex flex-col items-center w-1/2 text-sm sm:w-1/4 sm:items-start lg:w-2/6">
+          <h3 className="mb-3 text-base font-semibold">Get To Know Us</h3>
           <ul>
             <li className="my-1 text-gray-700">
               <a
@@ -760,7 +809,7 @@ function disconnectWallet() {
       </footer>
 
       {/* Copyright */}
-      <div className="text-sm w-full py-4 px-16 text-gray-700">
+      <div className="w-full px-16 py-4 text-sm text-gray-700">
         © 2022 GoOnDate
       </div>
     </main>
