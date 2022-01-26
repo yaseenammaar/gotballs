@@ -361,7 +361,6 @@ function App() {
 
   function dateIsSold(e) {
     e = e.slice(4);
-    console.log("Search string", e);
     var found = 0;
 
     info
@@ -373,11 +372,9 @@ function App() {
         }
       })
       .map((val, key) => {
-        console.log("Found!");
         found = 1;
       });
     if (found === 0) {
-      console.log("Not Found!");
       return (
         <span className="p-3 text-sky-600">
           ◎0.4 <br />
