@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 // import { web3 } from "@project-serum/anchor";
 //import DatePicker from "react-date-picker";
 import Select from "react-select";
+import ReactGA from 'react-ga';
 import toast, { Toaster } from 'react-hot-toast';
 
 // components
@@ -20,6 +21,7 @@ import Question from "./Components/Question";
 import NFT from "./Components/NFT";
 import DateFilter from "./Components/Filter";
 import Loading from "./Components/Loading";
+
 
 import moment from "moment";
 
@@ -313,6 +315,8 @@ function App() {
   const [text, setText] = useState("Loading...");
 
   const [nftTitle, setNftTitle] = useState("");
+
+ReactGA.initialize('300900016');
 
   setConnected = (bool) => {
     if(bool) setIsConnected(true);
