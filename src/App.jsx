@@ -85,6 +85,8 @@ const getProvider = async () => {
     const provider = window.solana;
     if (provider.isPhantom) {
       console.log("Is Phantom installed?  ", provider.isPhantom);
+      toast.success("Wallet Connected!");
+      setConnected(true);
       return provider;
     }
   } else {
@@ -301,6 +303,7 @@ const sendNft = async (mintPublickKey, date) => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var openLoading = ()=> {};
+var setConnected = () => {};
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -310,6 +313,11 @@ function App() {
   const [text, setText] = useState("Loading...");
 
   const [nftTitle, setNftTitle] = useState("");
+
+  setConnected = (bool) => {
+    if(bool) setIsConnected(true);
+    else setConnected(false); 
+  }
 
   openLoading =  (text, isOpen) => {
     setLoading(isOpen || false);
@@ -368,6 +376,8 @@ function App() {
   function disconnectWallet() {
     setIsConnected(false);
     window.solana.disconnect();
+    toast.success("Wallet Disconnected!");
+
   }
 
   function dateIsSold(e) {
@@ -454,14 +464,14 @@ function App() {
           <a
             href="#contact"
             className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 sm:px-2 md:px-4 hover:shadow-lg"
-            onClick={uploadImage}
+            onClick={getProvider}
           >
             Contact
           </a>
           <a
             href="#"
             className="px-2 py-2 m-1 text-sm text-blue-500 transition-all duration-500 rounded-md shadow-sm top-2 right-2 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg hover:text-primary"
-            onClick={isConnected ? disconnectWallet : connectWallet}
+            onClick={isConnected ? disconnectWallet : getProvider}
           >
             {isConnected ? "Disconnect" : "Connect"}
           </a>
