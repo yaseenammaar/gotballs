@@ -11,6 +11,106 @@ import Button from "./Button";
 import NFT from "./NFT";
 import { buyNFT } from "../App";
 
+function getAttributes(title) {
+  var t = title.split(" ");
+
+  switch (t[1]) {
+    case "Jan":
+      t[1] = "January";
+      break;
+    case "Feb":
+      t[1] = "February";
+      break;
+    case "Mar":
+      t[1] = "March";
+      break;
+    case "Apr":
+      t[1] = "April";
+      break;
+    case "May":
+      t[1] = "May";
+      break;
+    case "Jun":
+      t[1] = "June";
+      break;
+    case "Jul":
+      t[1] = "July";
+      break;
+    case "Aug":
+      t[1] = "August";
+      break;
+    case "Sep":
+      t[1] = "September";
+      break;
+    case "Oct":
+      t[1] = "October";
+      break;
+    case "Nov":
+      t[1] = "November";
+      break;
+    case "Dec":
+      t[1] = "December";
+      break;
+    default:
+      t[1] = "";
+      break;
+  }
+  switch (t[0]) {
+    case "Mon":
+      t[0] = "Monday";
+      break;
+    case "Tue":
+      t[0] = "Tuesday";
+      break;
+    case "Wed":
+      t[0] = "Wednesday";
+      break;
+    case "Thu":
+      t[0] = "Thursday";
+      break;
+    case "Fri":
+      t[0] = "Friday";
+      break;
+    case "Sat":
+      t[0] = "Satuday";
+      break;
+    case "Sun":
+      t[0] = "Sunday";
+      break;
+    default:
+      t[0] = "";
+      break;
+  }
+
+  var month = t[1];
+  var day = t[0];
+  var date = t[2];
+  var year = t[3];
+
+  return (
+    <div>
+      <br />
+      <span className="text-gray-500 px-2 rounded-lg py-4 my-3">
+        Attributes
+      </span>
+      <br />
+
+      <span className="text-sky-500 border-solid border-2 py-2 px-2 rounded-lg m-2">
+        <span className="text-gray-500 text-sm">Year</span> {year}
+      </span>
+      <span className="text-sky-500 border-solid border-2 py-2 px-2 rounded-lg m-2">
+        <span className="text-gray-500 text-sm">Month</span> {month}
+      </span>
+      <span className="text-sky-500 border-solid border-2 py-2 px-2 rounded-lg m-2">
+        <span className="text-gray-500 text-sm">Date</span> {date}
+      </span>
+      <span className="text-sky-500 border-solid border-2 py-2 px-2 rounded-lg m-2">
+        <span className="text-gray-500 text-sm">Day</span> {day}
+      </span>
+    </div>
+  );
+}
+
 export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
   return (
     <>
@@ -33,11 +133,13 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
             <div class="md:w-auto w-full mt-6 lg:mt-0 md:p-8 p-4">
               <p class="text-2xl">{title}</p>
               <div>
-                <span className="text-sky-600">
+                <span className="text-sky-500 text-2xl">
                   ◎0.4 <br />
                   {/* {e} */}
                 </span>
               </div>
+
+              {getAttributes(title)}
               <br />
               <Button
                 onClick={() => {

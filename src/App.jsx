@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 // import { web3 } from "@project-serum/anchor";
 //import DatePicker from "react-date-picker";
 import Select from "react-select";
-import ReactGA from 'react-ga';
-import toast, { Toaster } from 'react-hot-toast';
+import ReactGA from "react-ga";
+import toast, { Toaster } from "react-hot-toast";
 
 // components
 import {
@@ -21,7 +21,6 @@ import Question from "./Components/Question";
 import NFT from "./Components/NFT";
 import DateFilter from "./Components/Filter";
 import Loading from "./Components/Loading";
-
 
 import moment from "moment";
 
@@ -103,7 +102,7 @@ export function buyNFT(date) {
 }
 
 const uploadImage = async (date) => {
-  openLoading("Minting Image...",true);
+  openLoading("Minting NFT...", true);
   var response = await axios({
     method: "post",
     url: "https://api.goondate.com:3001/nft/buy",
@@ -113,39 +112,37 @@ const uploadImage = async (date) => {
   }).catch((error) => {
     console.log("ERROR WHILE CREATING FILE:" + error);
     toast.error("Something Wrong! Please Contact Us");
-  openLoading("Minting Image...",false);
-
-  }
-    );
-  if (response.data.response == "error"){
+    openLoading("Minting NFT...", false);
+  });
+  if (response.data.response == "error") {
     toast.error("Something Wrong. Please contact Us!");
-  openLoading("Minting Image...",false);
+    openLoading("Minting NFT...", false);
 
     return console.error("CUSTOM ERROR:" + response.data.data);
   }
 
   if (response.data.response == "success") {
-    openLoading("Minting NFT...",true);
+    openLoading("Minting NFT...", true);
     console.log(JSON.stringify(response.data.data));
     if (response.data.data == "minted") {
       console.log("Already Minted");
       var mintedAddress = await getNftAddress(date);
-      if (mintedAddress == 0)  {
+      if (mintedAddress == 0) {
         toast.error("Something Wrong. Please contact Us!");
-  openLoading("Minting Image...",false);
+        openLoading("Minting NFT...", false);
 
         return console.log("Error cant found the nft");
-      } 
+      }
       sendNft(mintedAddress, date);
     } else if (response.data.data == "uploaded") {
       console.log("Success");
       var mintedAddress = await getNftAddress(date);
-      if (mintedAddress == 0)  {
-  openLoading("Minting Image...",false);
+      if (mintedAddress == 0) {
+        openLoading("Minting NFT...", false);
 
         toast.error("Something Wrong. Please contact Us!");
         return console.log("Error cant found the nft");
-      } 
+      }
       console.log(mintedAddress);
       sendNft(mintedAddress, date);
     }
@@ -153,7 +150,7 @@ const uploadImage = async (date) => {
 };
 
 const getNftAddress = async (date) => {
-  openLoading("Getting Minted NFT Info...",true);
+  openLoading("Getting Minted NFT Info...", true);
   var response = await axios({
     method: "post",
     url: "https://api.goondate.com:3001/nft/getNftAddress",
@@ -170,7 +167,7 @@ const getNftAddress = async (date) => {
 };
 
 const sendNft = async (mintPublickKey, date) => {
-  openLoading("Prepearing Wallet...",true);
+  openLoading("Preparing Wallet...", true);
 
   const network = "https://api.devnet.solana.com";
   const connection = new Connection(network);
@@ -259,29 +256,26 @@ const sendNft = async (mintPublickKey, date) => {
     //   await connection.confirmTransaction(signature);
   } catch (error) {
     toast.error("Something Wrong. Please contact Us!");
-  openLoading("Minting Image...",false);
+    openLoading("Minting Image...", false);
 
     console.log("ERROR:" + error);
   }
-  if (signatur == null)  {
+  if (signatur == null) {
     toast.error("Something Wrong. Please contact Us!");
-  openLoading("Minting Image...",false);
+    openLoading("Minting Image...", false);
 
-    return  console.log("error payment did not received:" + signatur);
+    return console.log("error payment did not received:" + signatur);
   }
-  
+
   console.log(
     `txhash: ${await connection.sendTransaction(transaction, [
       alice /* fee payer + owner */,
     ])}`
   );
-  openLoading("Minting Image...",false);
-  toast.success('Congrats You Bought ' + date);
-
- 
+  openLoading("Minting Image...", false);
+  toast.success("Congrats You Bought " + date);
 };
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,7 +298,7 @@ const sendNft = async (mintPublickKey, date) => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-var openLoading = ()=> {};
+var openLoading = () => {};
 var setConnected = () => {};
 
 function App() {
@@ -316,17 +310,17 @@ function App() {
 
   const [nftTitle, setNftTitle] = useState("");
 
-ReactGA.initialize('300900016');
+  ReactGA.initialize("300900016");
 
   setConnected = (bool) => {
-    if(bool) setIsConnected(true);
-    else setConnected(false); 
-  }
+    if (bool) setIsConnected(true);
+    else setConnected(false);
+  };
 
-  openLoading =  (text, isOpen) => {
+  openLoading = (text, isOpen) => {
     setLoading(isOpen || false);
     setText(text || "Loading...");
-  }
+  };
 
   const [dates, setDates] = useState([]);
   const [startDate, setStartDate] = useState({
@@ -381,7 +375,6 @@ ReactGA.initialize('300900016');
     setIsConnected(false);
     window.solana.disconnect();
     toast.success("Wallet Disconnected!");
-
   }
 
   function dateIsSold(e) {

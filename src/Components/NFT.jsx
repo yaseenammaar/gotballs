@@ -14,7 +14,7 @@ export default function NFT({ date }) {
         d[1] = "January";
         break;
       case "Feb":
-        d[1] = "Febuary";
+        d[1] = "February";
         break;
       case "Mar":
         d[1] = "March";
