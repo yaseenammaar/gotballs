@@ -169,7 +169,7 @@ const getNftAddress = async (date) => {
 const sendNft = async (mintPublickKey, date) => {
   openLoading("Preparing Wallet...", true);
 
-  const network = "https://api.devnet.solana.com";
+  const network = "https://solana-mainnet.phantom.tech";
   const connection = new Connection(network);
 
   if (!provider) await connectWallet();
