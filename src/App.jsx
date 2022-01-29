@@ -102,50 +102,56 @@ export function buyNFT(date) {
 }
 
 const uploadImage = async (date) => {
-  openLoading("Minting NFT...", true);
-  var response = await axios({
-    method: "post",
-    url: "https://api.goondate.com:3001/nft/buy",
-    data: {
-      Date: date,
-    },
-  }).catch((error) => {
-    console.log("ERROR WHILE CREATING FILE:" + error);
-    toast.error("Something Wrong! Please Contact Us");
-    openLoading("Minting NFT...", false);
-  });
-  if (response.data.response == "error") {
-    toast.error("Something Wrong. Please contact Us!");
-    openLoading("Minting NFT...", false);
-
-    return console.error("CUSTOM ERROR:" + response.data.data);
-  }
-
-  if (response.data.response == "success") {
+  const address = await getNftAddress(date);
+  if(address == 0){
     openLoading("Minting NFT...", true);
-    console.log(JSON.stringify(response.data.data));
-    if (response.data.data == "minted") {
-      console.log("Already Minted");
-      var mintedAddress = await getNftAddress(date);
-      if (mintedAddress == 0) {
-        toast.error("Something Wrong. Please contact Us!");
-        openLoading("Minting NFT...", false);
+    var response = await axios({
+      method: "post",
+      url: "https://api.goondate.com:3001/nft/buy",
+      data: {
+        Date: date,
+      },
+    }).catch((error) => {
+      console.log("ERROR WHILE CREATING FILE:" + error);
+      toast.error("Something Wrong! Please Contact Us");
+      openLoading("Minting NFT...", false);
+    });
+    if (response.data.response == "error") {
+      toast.error("Something Wrong. Please contact Us!");
+      openLoading("Minting NFT...", false);
 
-        return console.log("Error cant found the nft");
-      }
-      sendNft(mintedAddress, date);
-    } else if (response.data.data == "uploaded") {
-      console.log("Success");
-      var mintedAddress = await getNftAddress(date);
-      if (mintedAddress == 0) {
-        openLoading("Minting NFT...", false);
-
-        toast.error("Something Wrong. Please contact Us!");
-        return console.log("Error cant found the nft");
-      }
-      console.log(mintedAddress);
-      sendNft(mintedAddress, date);
+      return console.error("CUSTOM ERROR:" + response.data.data);
     }
+
+    if (response.data.response == "success") {
+      openLoading("Minting NFT...", true);
+      console.log(JSON.stringify(response.data.data));
+      if (response.data.data == "minted") {
+        console.log("Already Minted");
+        console.log(date);
+        var mintedAddress = await getNftAddress(date);
+        if (mintedAddress == 0) {
+          toast.error("Something Wrong. Please contact Us!");
+          openLoading("Minting NFT...", false);
+
+          return console.log("Error cant found the nft");
+        }
+        sendNft(mintedAddress, date);
+      } else if (response.data.data == "uploaded") {
+        console.log("Success");
+        var mintedAddress = await getNftAddress(date);
+        if (mintedAddress == 0) {
+          openLoading("Minting NFT...", false);
+
+          toast.error("Something Wrong. Please contact Us!");
+          return console.log("Error cant found the nft");
+        }
+        console.log(mintedAddress);
+        sendNft(mintedAddress, date);
+      }
+    }
+  }else{
+    sendNft(address, date);
   }
 };
 
