@@ -103,8 +103,7 @@ export function buyNFT(date) {
 
 const uploadImage = async (date) => {
   const address = await getNftAddress(date);
-  console.log(address);
-  return;
+  console.log("ALREADY MINTED:"+address);
   if(address == 0){
     openLoading("Minting NFT...", true);
     var response = await axios({
