@@ -103,6 +103,8 @@ export function buyNFT(date) {
 
 const uploadImage = async (date) => {
   const address = await getNftAddress(date);
+  console.log(address);
+  return;
   if(address == 0){
     openLoading("Minting NFT...", true);
     var response = await axios({
@@ -126,18 +128,7 @@ const uploadImage = async (date) => {
     if (response.data.response == "success") {
       openLoading("Minting NFT...", true);
       console.log(JSON.stringify(response.data.data));
-      if (response.data.data == "minted") {
-        console.log("Already Minted");
-        console.log(date);
-        var mintedAddress = await getNftAddress(date);
-        if (mintedAddress == 0) {
-          toast.error("Something Wrong. Please contact Us!");
-          openLoading("Minting NFT...", false);
-
-          return console.log("Error cant found the nft");
-        }
-        sendNft(mintedAddress, date);
-      } else if (response.data.data == "uploaded") {
+      if (response.data.data == "uploaded") {
         console.log("Success");
         var mintedAddress = await getNftAddress(date);
         if (mintedAddress == 0) {
@@ -151,6 +142,7 @@ const uploadImage = async (date) => {
       }
     }
   }else{
+    console.log("Image Minted");
     sendNft(address, date);
   }
 };
