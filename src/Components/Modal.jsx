@@ -88,30 +88,38 @@ function getAttributes(title) {
   var year = t[3];
 
   return (
-    <div>
+    <div className="flex flex-col">
       <br />
-      <span className="text-gray-500 px-2 rounded-lg py-4 my-3">
+      <span className="px-2 py-4 mt-3 mb-2 text-gray-500 rounded-lg">
         Attributes
       </span>
-      <br />
 
-      <span className="text-sky-500 border-solid border-2 py-2 px-2 rounded-lg m-2">
-        <span className="text-gray-500 text-sm">Year</span> {year}
-      </span>
-      <span className="text-sky-500 border-solid border-2 py-2 px-2 rounded-lg m-2">
-        <span className="text-gray-500 text-sm">Month</span> {month}
-      </span>
-      <span className="text-sky-500 border-solid border-2 py-2 px-2 rounded-lg m-2">
-        <span className="text-gray-500 text-sm">Date</span> {date}
-      </span>
-      <span className="text-sky-500 border-solid border-2 py-2 px-2 rounded-lg m-2">
-        <span className="text-gray-500 text-sm">Day</span> {day}
-      </span>
+      <div className="flex flex-wrap">
+        <span className="px-2 py-2 m-2 border-2 border-solid rounded-lg text-sky-500">
+          <span className="text-sm text-gray-500">Year</span> {year}
+        </span>
+        <span className="px-2 py-2 m-2 border-2 border-solid rounded-lg text-sky-500">
+          <span className="text-sm text-gray-500">Month</span> {month}
+        </span>
+        <span className="px-2 py-2 m-2 border-2 border-solid rounded-lg text-sky-500">
+          <span className="text-sm text-gray-500">Date</span> {date}
+        </span>
+        <span className="px-2 py-2 m-2 border-2 border-solid rounded-lg text-sky-500">
+          <span className="text-sm text-gray-500">Day</span> {day}
+        </span>
+      </div>
     </div>
   );
 }
 
-export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
+export default function Modal({
+  imgSrc,
+  alt,
+  isOpen,
+  setIsOpen,
+  title,
+  isNFTAvailable = false,
+}) {
   return (
     <>
       {isOpen && (
@@ -123,9 +131,8 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
           className="fixed top-0 z-50 flex items-center justify-center w-full min-h-full bg-black bg-opacity-80 backdrop-blur-md "
         >
           <div class="lg:w-8/12 md:w-2/5 sm:w-1/2 w-3/5 p-2 relative rounded-xl lg:max-h-auto max-h-[75vh] lg:overflow-y-hidden overflow-y-auto mx-auto flex flex-col lg:flex-row bg-white">
-            <div className="rounded-xl flex w-full items-center justify-center sm:w-8/12 lg:w-2/5 ">
-              <div className="rounded-xl shadow-lg shadow-gray-300 overflow-hidden">
-                {/* <img src={nftImg} alt="" /> */}
+            <div className="flex items-center justify-center w-full max-w-5xl rounded-xl">
+              <div className="overflow-hidden shadow-lg rounded-xl shadow-gray-300">
                 <NFT date={title} />
               </div>
             </div>
@@ -133,7 +140,7 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
             <div class="md:w-auto w-full mt-6 lg:mt-0 md:p-8 p-4">
               <p class="text-2xl">{title}</p>
               <div>
-                <span className="text-sky-500 text-2xl">
+                <span className="text-2xl text-sky-500">
                   ◎0.4 <br />
                   {/* {e} */}
                 </span>
@@ -142,6 +149,7 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
               {getAttributes(title)}
               <br />
               <Button
+                disabled={isNFTAvailable}
                 onClick={() => {
                   buyNFT(title);
                 }}
@@ -156,12 +164,12 @@ export default function Modal({ imgSrc, alt, isOpen, setIsOpen, title }) {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
+                className="w-4 h-4"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                   clip-rule="evenodd"
                 />

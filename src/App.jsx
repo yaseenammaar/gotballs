@@ -30,6 +30,7 @@ import godImg from "./assets/god.png";
 import hero from "./assets/hero.mp4";
 import skin from "./assets/skin.mp4";
 import moonnft from "./assets/moonnft.png";
+import roadmap from "./assets/roadmap.png";
 import plane from "./assets/plane.png";
 import picasso from "./assets/picasso.png";
 import wwst from "./assets/wwst.png";
@@ -103,8 +104,8 @@ export function buyNFT(date) {
 
 const uploadImage = async (date) => {
   const address = await getNftAddress(date);
-  console.log("ALREADY MINTED:"+address);
-  if(address == 0){
+  console.log("ALREADY MINTED:" + address);
+  if (address == 0) {
     openLoading("Minting NFT...", true);
     var response = await axios({
       method: "post",
@@ -140,7 +141,7 @@ const uploadImage = async (date) => {
         sendNft(mintedAddress, date);
       }
     }
-  }else{
+  } else {
     console.log("Image Minted");
     sendNft(address, date);
   }
@@ -321,7 +322,7 @@ function App() {
 
   const [dates, setDates] = useState([]);
   const [startDate, setStartDate] = useState({
-    month: 1,
+    month: 0,
     year: 2022,
   });
 
@@ -458,9 +459,14 @@ function App() {
           <a
             href="#contact"
             className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 sm:px-2 md:px-4 hover:shadow-lg"
-            onClick={getProvider}
           >
             Contact
+          </a>
+          <a
+            href="#roadmap"
+            className="px-2 py-2 m-1 text-sm text-gray-500 transition-all duration-500 rounded-md sm:m-4 sm:px-2 md:px-2 hover:shadow-lg"
+          >
+            Roadmap
           </a>
           <a
             href="#"
@@ -499,7 +505,7 @@ function App() {
       {/* About */}
       <div id="about"></div>
       <section className="px-8 my-24 sm:px-16 md:px-28">
-        <h2 className="mt-8 mb-20 text-lg font-medium text-center text-gray-500">
+        <h2 className="mt-8 mb-20 text-2xl font-medium text-center text-gray-500">
           GoOnDate NFT
         </h2>
 
@@ -534,8 +540,66 @@ function App() {
         </div>
       </section>
 
+      <div id="contact"></div>
+
+      <section className="px-8 my-16 sm:px-16 md:px-28">
+        <h2 className="mt-8 mb-4 text-2xl font-medium text-center text-gray-500">
+          Connect With Us
+        </h2>
+
+        <div className="flex flex-wrap justify-center">
+          <a
+            href="https://t.me/GoOnDateNFT"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+          >
+            <TelegramIcon className="text-primary" />
+          </a>
+          <a
+            href="https://twitter.com/GoOnDate?t=i8AWJHEQMb5UaEqdgKLqjQ&s=09"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+          >
+            <TwitterIcon className="text-primary" />
+          </a>
+          <a
+            href="https://www.instagram.com/goondate.nft/"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+          >
+            <InstagramIcon className="text-primary" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/go-on-date-nft-b8b539229"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+          >
+            <LinkedInIcon className="text-primary" />
+          </a>
+          <a
+            href="https://discord.gg/m7kgsW9mgn"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+          >
+            <DiscordIcon className="text-primary" />
+          </a>
+          <a
+            href="https://www.reddit.com/r/goondate/"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+          >
+            <RedditIcon className="text-primary" />
+          </a>
+          <a
+            href="https://pin.it/5m9ju0v"
+            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
+          >
+            <PinterestIcon className="text-primary" />
+          </a>
+        </div>
+      </section>
+
       <section className="px-8 my-16 sm:px-16 md:px-28">
         {/* Date Filter */}
+
+        <h2 className="my-8 text-2xl font-medium text-center text-gray-500">
+          Buy Dates
+        </h2>
+
         <div className="flex justify-center w-full mb-16">
           <DateFilter
             placeholder="Select A Month"
@@ -562,10 +626,6 @@ function App() {
             options={years}
           />
         </div>
-
-        <h2 className="my-8 text-2xl font-medium text-center text-gray-500">
-          Dates
-        </h2>
 
         <div className="flex flex-wrap items-center justify-center">
           {dates.map((e) => (
@@ -684,92 +744,36 @@ function App() {
         <div className="flex flex-wrap items-center justify-center text-gray-500">
           <Button className="mt-6 bg-gray-500">Learn More</Button>
         </div>
+        <div id="roadmap"></div>
       </section>
 
-      <div id="contact"></div>
+      <section className="px-8 my-16 sm:px-16 md:px-28">
+        <h2 className="mt-8 mb-8 text-2xl font-medium text-center text-gray-500">
+          Roadmap
+        </h2>
+
+        {/* <Skin /> */}
+
+        <section className="px-3 my-2 text-center sm:px-12 md:px-28">
+          <div className="overflow-hidden shadow-xl rounded-xl shadow-gray-300">
+            <img src={roadmap} />
+          </div>
+        </section>
+      </section>
 
       {/* contact */}
 
       <section className="px-8 my-16 sm:px-16 md:px-28">
-        <h2 className="mt-8 mb-4 text-lg font-medium text-center text-gray-500">
-          Connect With Us
-        </h2>
-
-        <div className="flex flex-wrap justify-center">
-          <a
-            href="https://t.me/GoOnDateNFT"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
-          >
-            <TelegramIcon className="text-primary" />
-          </a>
-          <a
-            href="https://twitter.com/GoOnDate?t=i8AWJHEQMb5UaEqdgKLqjQ&s=09"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
-          >
-            <TwitterIcon className="text-primary" />
-          </a>
-          <a
-            href="https://www.instagram.com/goondate.nft/"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
-          >
-            <InstagramIcon className="text-primary" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/go-on-date-nft-b8b539229"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
-          >
-            <LinkedInIcon className="text-primary" />
-          </a>
-          <a
-            href="https://discord.gg/m7kgsW9mgn"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
-          >
-            <DiscordIcon className="text-primary" />
-          </a>
-          <a
-            href="https://www.reddit.com/r/goondate/"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
-          >
-            <RedditIcon className="text-primary" />
-          </a>
-          <a
-            href="https://pin.it/5m9ju0v"
-            className="p-2 mx-4 transition-all duration-500 rounded-xl hover:shadow-xl"
-          >
-            <PinterestIcon className="text-primary" />
-          </a>
-        </div>
-      </section>
-
-      <section className="px-8 my-16 sm:px-16 md:px-28">
-        <h2 className="mt-8 mb-4 text-lg font-medium text-center text-gray-500">
+        <h2 className="mt-8 mb-4 text-2xl font-medium text-center text-gray-500">
           Frequently Asked Questions
         </h2>
 
         <div className="flex flex-wrap justify-center">
-          <Question title="Why NFT are Important and What are they??">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam
-            minima nostrum commodi aut vero assumenda?
+          <Question title="On which blockchain this project is in?">
+            Solana Blockchain
           </Question>
 
-          <Question title="Why NFT are Important and What are they??">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam
-            minima nostrum commodi aut vero assumenda? Lorem ipsum dolor sit,
-            amet consectetur adipisicing elit. Quibusdam minima nostrum commodi
-            aut vero assumenda?
-          </Question>
-
-          <Question title="Why NFT are Important and What are they??">
-            minima nostrum commodi aut vero assumenda? Lorem ipsum dolor sit,
-            amet consectetur adipisicing elit. Quibusdam minima nostrum commodi
-            aut vero assumenda?
-          </Question>
-
-          <Question title="Why NFT are Important and What are they??">
-            minima nostrum commodi aut vero assumenda? Lorem ipsum dolor sit,
-            amet consectetur adipisicing elit. Quibusdam minima nostrum commodi
-            aut vero assumenda? The answer is nn
-          </Question>
+          <Question title="Will this platform provide auction?">Yes</Question>
         </div>
       </section>
 
