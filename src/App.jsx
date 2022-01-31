@@ -105,17 +105,30 @@ export function buyNFT(date) {
 }
 
 var info = [];
+var soldNfts = [];
 var infoIsLoaded = false;
+var isSoldListLoaded = false;
 
  function loadMintedNfts(){
   axios({
     method: "post",
-    url: "https://api.goondate.com:3001/nft/mintedList"
+    url: "http://localhost:3001/nft/mintedList"
   }).then((mintedLista) => {
     info = mintedLista.data 
     
     console.log("SS"+JSON.stringify(info))
     infoIsLoaded = true;
+  })
+  .catch((error) => console.log("ERROR WHILE getting address:" + error));
+}
+
+function loadSoldNfts(){
+  axios({
+    method: "post",
+    url: "http://localhost:3001/nft/soldList"
+  }).then((mintedLista) => {
+    soldNfts = mintedLista.data 
+    isSoldListLoaded = true;
   })
   .catch((error) => console.log("ERROR WHILE getting address:" + error));
 }
@@ -184,6 +197,23 @@ const getNftAddress = async (date) => {
 
 const sendNft = async (mintPublickKey, date) => {
   openLoading("Preparing Wallet...", true);
+  if(!isSoldListLoaded) await loadMintedNfts()
+    var isMinted = false;
+    var inWallet = false;
+
+    info.forEach((nft) => {
+      if(nft.Date == date) isMinted = true;
+    })
+    const ndtAddress = await getNftAddress(date);
+    if(ndtAddress != 0) inWallet = true;
+
+    console.log("============="+isMinted+"========"+inWallet)
+
+    if(isMinted && !inWallet) {
+      openLoading("Loading...", false);
+      toast.error("Error NFT Sold ALready");
+      return;
+    }
 
   const network = "https://solana-mainnet.phantom.tech";
   const connection = new Connection(network);
@@ -328,7 +358,7 @@ function App() {
 
   ReactGA.initialize("300900016");
   loadMintedNfts()
-  console.log("INFO"+info)
+  loadSoldNfts()
  
   setConnected = (bool) => {
     if (bool) setIsConnected(true);
