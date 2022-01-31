@@ -112,7 +112,7 @@ var isSoldListLoaded = false;
  function loadMintedNfts(){
   axios({
     method: "post",
-    url: "http://localhost:3001/nft/mintedList"
+    url: "https://api.goondate.com:3001/nft/mintedList"
   }).then((mintedLista) => {
     info = mintedLista.data 
     
@@ -125,7 +125,7 @@ var isSoldListLoaded = false;
 function loadSoldNfts(){
   axios({
     method: "post",
-    url: "http://localhost:3001/nft/soldList"
+    url: "https://api.goondate.com:3001/nft/soldList"
   }).then((mintedLista) => {
     soldNfts = mintedLista.data 
     isSoldListLoaded = true;
