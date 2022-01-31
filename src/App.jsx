@@ -37,7 +37,7 @@ import wwst from "./assets/wwst.png";
 import wwen from "./assets/wwen.png";
 import Skin from "./skin";
 import axios from "axios";
-import info from "./assets/info.json";
+
 
 // solana Imports
 import {
@@ -79,6 +79,7 @@ import bs58 from "bs58";
 var connectWallet;
 var provider;
 
+
 const getProvider = async () => {
   if ("solana" in window) {
     // opens wallet to connect to
@@ -99,7 +100,22 @@ const getProvider = async () => {
 export function buyNFT(date) {
   var dateStr = date.split(" ");
   var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
+ 
   uploadImage(dateFinal);
+}
+
+var info = [];
+
+ function loadMintedNfts(){
+  axios({
+    method: "post",
+    url: "https://api.goondate.com:3001/nft/mintedList"
+  }).then((mintedLista) => {
+    info = mintedLista.data;
+    console.log(mintedLista.data[0].Date)
+    console.log("WW"+JSON.parse(info))
+  })
+  .catch((error) => console.log("ERROR WHILE getting address:" + error));
 }
 
 const uploadImage = async (date) => {
@@ -309,7 +325,9 @@ function App() {
   const [nftTitle, setNftTitle] = useState("");
 
   ReactGA.initialize("300900016");
-
+  loadMintedNfts()
+  console.log("INFO"+info)
+ 
   setConnected = (bool) => {
     if (bool) setIsConnected(true);
     else setConnected(false);
@@ -328,7 +346,8 @@ function App() {
 
   useEffect(() => {
     var date = "Jan 04 2022";
-
+    console.log("info.json", info);
+    
     {
       info
         .filter((val) => {
@@ -343,7 +362,6 @@ function App() {
         });
     }
 
-    console.log("info.json", info);
 
     console.log(startDate);
     var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
@@ -378,7 +396,7 @@ function App() {
   function dateIsSold(e) {
     e = e.slice(4);
     var found = 0;
-
+  console.log(info)
     info
       .filter((val) => {
         if (e == "") {
