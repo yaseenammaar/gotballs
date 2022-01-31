@@ -105,15 +105,17 @@ export function buyNFT(date) {
 }
 
 var info = [];
+var infoIsLoaded = false;
 
  function loadMintedNfts(){
   axios({
     method: "post",
     url: "https://api.goondate.com:3001/nft/mintedList"
   }).then((mintedLista) => {
-    info = mintedLista.data;
-    console.log(mintedLista.data[0].Date)
-    console.log("WW"+JSON.parse(info))
+    info = mintedLista.data 
+    
+    console.log("SS"+JSON.stringify(info))
+    infoIsLoaded = true;
   })
   .catch((error) => console.log("ERROR WHILE getting address:" + error));
 }
@@ -345,6 +347,8 @@ function App() {
   });
 
   useEffect(() => {
+    if(infoIsLoaded)
+    {
     var date = "Jan 04 2022";
     console.log("info.json", info);
     
@@ -353,7 +357,7 @@ function App() {
         .filter((val) => {
           if (date == "") {
             return val;
-          } else if (val.date.toLowerCase().includes(date.toLowerCase())) {
+          } else if (val.Date.toLowerCase().includes(date.toLowerCase())) {
             return val;
           }
         })
@@ -366,6 +370,7 @@ function App() {
     console.log(startDate);
     var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
     setDates(dateList);
+    }
   }, [startDate]);
 
   function getAllDaysInMonth(year, month) {
@@ -394,14 +399,16 @@ function App() {
   }
 
   function dateIsSold(e) {
+    if(infoIsLoaded){
     e = e.slice(4);
     var found = 0;
   console.log(info)
     info
       .filter((val) => {
+        console.log(val.Date)
         if (e == "") {
           return val;
-        } else if (val.date.toLowerCase().includes(e.toLowerCase())) {
+        } else if (val.Date.toLowerCase().includes(e.toLowerCase())) {
           return val;
         }
       })
@@ -421,6 +428,7 @@ function App() {
         </span>
       );
     }
+  }
   }
 
   // months in a year
