@@ -372,14 +372,14 @@ function App() {
 
   const [dates, setDates] = useState([]);
   const [startDate, setStartDate] = useState({
-    month: new Date().getMonth() + 1,
+    month: new Date().getMonth(),
     year: 2022,
   });
 
   useEffect(() => {
     if (infoIsLoaded) {
       var date = "Jan 04 2022";
-      console.log("info.json", info);
+      // console.log("info.json", info);
 
       {
         info
@@ -431,7 +431,16 @@ function App() {
     if (infoIsLoaded) {
       e = e.slice(4);
       var found = 0;
-      console.log(info);
+      console.log("year = ", e);
+      if (!e.includes("2021")) {
+        return (
+          <span className="p-3 text-sm text-red-500">
+            Coming Soon
+            <br />
+          </span>
+        );
+      }
+
       info
         .filter((val) => {
           console.log(val.Date);
@@ -660,7 +669,7 @@ function App() {
         <div className="flex justify-center w-full mb-16">
           <DateFilter
             placeholder="Select A Month"
-            defaultValue={months[new Date().getMonth()]}
+            defaultValue={months[0]}
             onChange={(e) => {
               setStartDate({ ...startDate, month: +e.value });
               getAllDaysInMonth(startDate.year, startDate.month);
