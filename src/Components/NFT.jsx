@@ -83,7 +83,7 @@ export default function NFT({ date }) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
 
-    ctx.font = "30px 'Josefin Sans'";
+    ctx.font = "30px Josefin Sans";
     ctx.fontStyle = "white";
     ctx.textAlign = "center";
 
@@ -93,7 +93,7 @@ export default function NFT({ date }) {
       canvas.width / 2,
       canvas.height / 2 + 10
     );
-    ctx.font = "22px 'Josefin Sans'";
+    ctx.font = "22px Josefin Sans";
 
     ctx.fillText(d[0], canvas.width - 100, canvas.height - 48);
   }, []);

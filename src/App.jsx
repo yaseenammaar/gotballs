@@ -38,7 +38,6 @@ import wwen from "./assets/wwen.png";
 import Skin from "./skin";
 import axios from "axios";
 
-
 // solana Imports
 import {
   Connection,
@@ -79,7 +78,6 @@ import bs58 from "bs58";
 var connectWallet;
 var provider;
 
-
 const getProvider = async () => {
   if ("solana" in window) {
     // opens wallet to connect to
@@ -100,7 +98,7 @@ const getProvider = async () => {
 export function buyNFT(date) {
   var dateStr = date.split(" ");
   var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
- 
+
   uploadImage(dateFinal);
 }
 
@@ -109,28 +107,30 @@ var soldNfts = [];
 var infoIsLoaded = false;
 var isSoldListLoaded = false;
 
- function loadMintedNfts(){
+function loadMintedNfts() {
   axios({
     method: "post",
-    url: "https://api.goondate.com:3001/nft/mintedList"
-  }).then((mintedLista) => {
-    info = mintedLista.data 
-    
-    console.log("SS"+JSON.stringify(info))
-    infoIsLoaded = true;
+    url: "https://api.goondate.com:3001/nft/mintedList",
   })
-  .catch((error) => console.log("ERROR WHILE getting address:" + error));
+    .then((mintedLista) => {
+      info = mintedLista.data;
+
+      console.log("SS" + JSON.stringify(info));
+      infoIsLoaded = true;
+    })
+    .catch((error) => console.log("ERROR WHILE getting address:" + error));
 }
 
-function loadSoldNfts(){
+function loadSoldNfts() {
   axios({
     method: "post",
-    url: "https://api.goondate.com:3001/nft/soldList"
-  }).then((mintedLista) => {
-    soldNfts = mintedLista.data 
-    isSoldListLoaded = true;
+    url: "https://api.goondate.com:3001/nft/soldList",
   })
-  .catch((error) => console.log("ERROR WHILE getting address:" + error));
+    .then((mintedLista) => {
+      soldNfts = mintedLista.data;
+      isSoldListLoaded = true;
+    })
+    .catch((error) => console.log("ERROR WHILE getting address:" + error));
 }
 
 const uploadImage = async (date) => {
@@ -197,23 +197,23 @@ const getNftAddress = async (date) => {
 
 const sendNft = async (mintPublickKey, date) => {
   openLoading("Preparing Wallet...", true);
-  if(!isSoldListLoaded) await loadMintedNfts()
-    var isMinted = false;
-    var inWallet = false;
+  if (!isSoldListLoaded) await loadMintedNfts();
+  var isMinted = false;
+  var inWallet = false;
 
-    info.forEach((nft) => {
-      if(nft.Date == date) isMinted = true;
-    })
-    const ndtAddress = await getNftAddress(date);
-    if(ndtAddress != 0) inWallet = true;
+  info.forEach((nft) => {
+    if (nft.Date == date) isMinted = true;
+  });
+  const ndtAddress = await getNftAddress(date);
+  if (ndtAddress != 0) inWallet = true;
 
-    console.log("============="+isMinted+"========"+inWallet)
+  console.log("=============" + isMinted + "========" + inWallet);
 
-    if(isMinted && !inWallet) {
-      openLoading("Loading...", false);
-      toast.error("Error NFT Sold ALready");
-      return;
-    }
+  if (isMinted && !inWallet) {
+    openLoading("Loading...", false);
+    toast.error("Error NFT Sold ALready");
+    return;
+  }
 
   const network = "https://solana-mainnet.phantom.tech";
   const connection = new Connection(network);
@@ -357,9 +357,9 @@ function App() {
   const [nftTitle, setNftTitle] = useState("");
 
   ReactGA.initialize("300900016");
-  loadMintedNfts()
-  loadSoldNfts()
- 
+  loadMintedNfts();
+  loadSoldNfts();
+
   setConnected = (bool) => {
     if (bool) setIsConnected(true);
     else setConnected(false);
@@ -372,34 +372,33 @@ function App() {
 
   const [dates, setDates] = useState([]);
   const [startDate, setStartDate] = useState({
-    month: 0,
+    month: new Date().getMonth() + 1,
     year: 2022,
   });
 
   useEffect(() => {
-    if(infoIsLoaded)
-    {
-    var date = "Jan 04 2022";
-    console.log("info.json", info);
-    
-    {
-      info
-        .filter((val) => {
-          if (date == "") {
-            return val;
-          } else if (val.Date.toLowerCase().includes(date.toLowerCase())) {
-            return val;
-          }
-        })
-        .map((val, key) => {
-          console.log("Found!");
-        });
-    }
+    if (infoIsLoaded) {
+      var date = "Jan 04 2022";
+      console.log("info.json", info);
 
+      {
+        info
+          .filter((val) => {
+            if (date == "") {
+              return val;
+            } else if (val.Date.toLowerCase().includes(date.toLowerCase())) {
+              return val;
+            }
+          })
+          .map((val, key) => {
+            console.log("Found!");
+          });
+      }
 
-    console.log(startDate);
-    var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
-    setDates(dateList);
+      console.log(startDate);
+      var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
+      console.log(dateList);
+      setDates(dateList);
     }
   }, [startDate]);
 
@@ -429,36 +428,36 @@ function App() {
   }
 
   function dateIsSold(e) {
-    if(infoIsLoaded){
-    e = e.slice(4);
-    var found = 0;
-  console.log(info)
-    info
-      .filter((val) => {
-        console.log(val.Date)
-        if (e == "") {
-          return val;
-        } else if (val.Date.toLowerCase().includes(e.toLowerCase())) {
-          return val;
-        }
-      })
-      .map((val, key) => {
-        found = 1;
-      });
-    if (found === 0) {
-      return (
-        <span className="p-3 text-sky-600">
-          ◎0.4 <br />
-        </span>
-      );
-    } else {
-      return (
-        <span className="p-3 text-red-600">
-          Sold <br />
-        </span>
-      );
+    if (infoIsLoaded) {
+      e = e.slice(4);
+      var found = 0;
+      console.log(info);
+      info
+        .filter((val) => {
+          console.log(val.Date);
+          if (e == "") {
+            return val;
+          } else if (val.Date.toLowerCase().includes(e.toLowerCase())) {
+            return val;
+          }
+        })
+        .map((val, key) => {
+          found = 1;
+        });
+      if (found === 0) {
+        return (
+          <span className="p-3 text-sky-600">
+            ◎0.4 <br />
+          </span>
+        );
+      } else {
+        return (
+          <span className="p-3 text-red-600">
+            Sold <br />
+          </span>
+        );
+      }
     }
-  }
   }
 
   // months in a year
@@ -487,12 +486,14 @@ function App() {
       tempYears.push({ label: `${date + 1700}`, value: `${date + 1700}` });
     }
 
-    var dateList = getAllDaysInMonth(startDate.year, startDate.month);
+    var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
     setDates(dateList);
     console.log(dates);
     setYears(tempYears);
-    console.log("startdate month ", startDate.year);
-    // console.log("years", years);
+
+    console.log(
+      `App.jsx line 494 startdate month ${startDate.month}, year ${startDate.year}`
+    );
   }, []);
 
   return (
@@ -675,7 +676,7 @@ function App() {
               label: `${new Date().getFullYear()}`,
             }}
             onChange={(e) => {
-              setStartDate({ ...startDate, year: e.value });
+              setStartDate({ ...startDate, year: +e.value });
               getAllDaysInMonth(startDate.year, startDate.month);
             }}
             className="mx-2 w-36"
@@ -685,9 +686,8 @@ function App() {
 
         <div className="flex flex-wrap items-center justify-center">
           {dates.map((e) => (
-            <div>
+            <div key={e}>
               <div
-                key={e}
                 className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-300 hover:shadow-lg"
                 onClick={() => {
                   setNftTitle(e);
