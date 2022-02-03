@@ -508,7 +508,7 @@ function App() {
   return (
     <main>
       <Loading isOpen={isLoading} text={text} />
-      <Toaster />
+      <Toaster position="top-right" reverseOrder={false} />
       {/* NavBar */}
       <nav className="flex items-center justify-between w-full px-6 py-4 sm:px-8 md:px-32">
         <a href="#" className="font-medium ">
