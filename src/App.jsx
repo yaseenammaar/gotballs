@@ -699,8 +699,13 @@ function App() {
               <div
                 className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-300 hover:shadow-lg"
                 onClick={() => {
-                  setNftTitle(e);
-                  setIsModalOpen(true);
+                  console.log("e = ", e, "Conidton", e.includes("2021"));
+                  if (e.includes("2021")) {
+                    setNftTitle(e);
+                    setIsModalOpen(true);
+                  } else {
+                    toast("NFT Coming Soon!", { icon: "🤘" });
+                  }
                 }}
                 style={{ width: "160px" }}
               >
