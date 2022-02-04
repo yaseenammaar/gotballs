@@ -119,6 +119,7 @@ export default function Modal({
   setIsOpen,
   title,
   isNFTAvailable = false,
+  price,
 }) {
   return (
     <>
@@ -141,7 +142,7 @@ export default function Modal({
               <p class="text-2xl">{title}</p>
               <div>
                 <span className="text-2xl text-sky-500">
-                  ◎0.4 <br />
+                  ◎{price} <br />
                   {/* {e} */}
                 </span>
               </div>
