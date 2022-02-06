@@ -10,6 +10,18 @@
 import Button from "./Button";
 import NFT from "./NFT";
 import { buyNFT } from "../App";
+import SpecialDate from "../specialDates.json";
+
+function getPrice(t) {
+  var priceNFT = 0;
+  for (var i = 0; i < 365; i++) {
+    if (t == SpecialDate["dates"][i].date) {
+      priceNFT = SpecialDate["dates"][i].price;
+    }
+    // console.log("test: ", SpecialDate["dates"][i].date);
+  }
+  return priceNFT;
+}
 
 function getAttributes(title) {
   var t = title.split(" ");
@@ -142,7 +154,7 @@ export default function Modal({
               <p class="text-2xl">{title}</p>
               <div>
                 <span className="text-2xl text-sky-500">
-                  ◎{price} <br />
+                  ◎{getPrice(title)} <br />
                   {/* {e} */}
                 </span>
               </div>
