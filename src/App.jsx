@@ -824,9 +824,8 @@ function App() {
         );
       }
 
-      info
+      soldNfts
         .filter((val) => {
-          // console.log(val.Date);
           if (e == "") {
             return val;
           } else if (val.Date.toLowerCase().includes(e.toLowerCase())) {
