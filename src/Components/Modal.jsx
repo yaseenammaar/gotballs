@@ -164,7 +164,7 @@ export default function Modal({
               <Button
                 disabled={isNFTAvailable}
                 onClick={() => {
-                  buyNFT(title);
+                  buyNFT(title, getPrice(title));
                 }}
               >
                 Buy This Date

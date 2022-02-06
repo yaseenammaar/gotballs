@@ -95,11 +95,11 @@ const getProvider = async () => {
   }
 };
 
-export function buyNFT(date) {
+export function buyNFT(date, price) {
   var dateStr = date.split(" ");
   var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
 
-  uploadImage(dateFinal);
+  uploadImage(dateFinal, price);
 }
 
 var info = [];
@@ -133,7 +133,7 @@ function loadSoldNfts() {
     .catch((error) => console.log("ERROR WHILE getting address:" + error));
 }
 
-const uploadImage = async (date) => {
+const uploadImage = async (date, price) => {
   const address = await getNftAddress(date);
   if (address == 0) {
     openLoading("Minting NFT...", true);
