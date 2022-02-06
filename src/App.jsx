@@ -86,7 +86,6 @@ const getProvider = async () => {
 
     const provider = window.solana;
     if (provider.isPhantom) {
-      console.log("Is Phantom installed?  ", provider.isPhantom);
       toast.success("Wallet Connected!");
       setConnected(true);
       return provider;
@@ -136,7 +135,6 @@ function loadSoldNfts() {
 
 const uploadImage = async (date) => {
   const address = await getNftAddress(date);
-  console.log("ALREADY MINTED:" + address);
   if (address == 0) {
     openLoading("Minting NFT...", true);
     var response = await axios({
@@ -159,9 +157,7 @@ const uploadImage = async (date) => {
 
     if (response.data.response == "success") {
       openLoading("Minting NFT...", true);
-      console.log(JSON.stringify(response.data.data));
       if (response.data.data == "uploaded") {
-        console.log("Success");
         var mintedAddress = await getNftAddress(date);
         if (mintedAddress == 0) {
           openLoading("Minting NFT...", false);
@@ -169,7 +165,6 @@ const uploadImage = async (date) => {
           toast.error("Something Wrong, Try Again!");
           return console.log("Error cant found the nft");
         }
-        console.log(mintedAddress);
         sendNft(mintedAddress, date);
       }
     }
@@ -208,7 +203,6 @@ const sendNft = async (mintPublickKey, date) => {
   const ndtAddress = await getNftAddress(date);
   if (ndtAddress != 0) inWallet = true;
 
-  console.log("=============" + isMinted + "========" + inWallet);
 
   if (isMinted && !inWallet) {
     openLoading("Loading...", false);
@@ -221,7 +215,6 @@ const sendNft = async (mintPublickKey, date) => {
 
   if (!provider) await connectWallet();
 
-  console.log("provider:" + provider.publicKey.toString());
 
   provider = await getProvider();
 
@@ -268,8 +261,6 @@ const sendNft = async (mintPublickKey, date) => {
     );
   }
 
-  console.log(fromTokenAccount.address.toString());
-  console.log(associatedDestinationTokenAddr.toString());
 
   transaction.add(
     Token.createTransferInstruction(
@@ -379,26 +370,7 @@ function App() {
 
   useEffect(() => {
     if (infoIsLoaded) {
-      var date = "Jan 04 2022";
-      // console.log("info.json", info);
-
-      {
-        info
-          .filter((val) => {
-            if (date == "") {
-              return val;
-            } else if (val.Date.toLowerCase().includes(date.toLowerCase())) {
-              return val;
-            }
-          })
-          .map((val, key) => {
-            console.log("Found!");
-          });
-      }
-
-      console.log(startDate);
       var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
-      console.log(dateList);
       setDates(dateList);
     }
   }, [startDate]);
@@ -793,7 +765,6 @@ function App() {
       // console.log("JSON", json);
       // console.log('mm["dates"]', mm["dates"]);
     }
-    console.log("add all dates : ", JSON.parse(mm["dates"][3]).date);
 
     return dates;
   }
@@ -801,7 +772,6 @@ function App() {
   // IDK What these functions do
   connectWallet = async () => {
     provider = await getProvider();
-    console.log(provider.publicKey);
   };
 
   function disconnectWallet() {
@@ -814,7 +784,6 @@ function App() {
     if (infoIsLoaded) {
       e = e.slice(4);
       var found = 0;
-      // console.log("year = ", e);
       if (!e.includes("2021")) {
         return (
           <span className="p-3 text-sm text-red-500">
@@ -879,13 +848,9 @@ function App() {
 
     var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
     setDates(dateList);
-    console.log(dates);
     setYears(tempYears);
 
-    console
-      .log
-      // `App.jsx line 494 startdate month ${startDate.month}, year ${startDate.year}`
-      ();
+    
   }, []);
 
   return (
@@ -1084,7 +1049,6 @@ function App() {
               <div
                 className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-300 hover:shadow-lg"
                 onClick={() => {
-                  console.log("e = ", e, "Conidton", e.includes("2021"));
                   if (e.includes("2021")) {
                     setNftTitle(e);
                     setIsModalOpen(true);
