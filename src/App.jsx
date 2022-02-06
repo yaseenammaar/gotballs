@@ -793,8 +793,7 @@ function App() {
       // console.log("JSON", json);
       // console.log('mm["dates"]', mm["dates"]);
     }
-    console.log("add all dates : ", JSON.parse(mm["dates"][3]).date);
-
+    // console.log("add all dates : ", JSON.parse(mm["dates"]));
     return dates;
   }
 
