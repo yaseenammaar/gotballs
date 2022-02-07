@@ -783,9 +783,9 @@ function App() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center text-gray-500">
+        {/* <div className="flex flex-wrap items-center justify-center text-gray-500">
           <Button className="mt-6 bg-gray-500">Learn More</Button>
-        </div>
+        </div> */}
         <div id="roadmap"></div>
       </section>
 
