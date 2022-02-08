@@ -580,12 +580,12 @@ function App() {
             to share it with others but keep it just for us. We feel the same
             way and it's our desire that you never loose the memory which you
             value, which is close to your heart !
-            <a
+            {/* <a
               className="p-2 mt-8 font-semibold text-primary hover:text-secondary"
               href="#"
             >
               Know More
-            </a>
+            </a> */}
           </div>
         </div>
       </section>
@@ -823,8 +823,8 @@ function App() {
 
         <div className="flex flex-wrap justify-center">
           <Question title="What is GoOnDate?">
-            GoOnDate is an Solana based NFT project, composite of everyday's NFT
-            since 1700 till today, year before 1700 will be added soon!
+            GoOnDate is a Solana based NFT project, composite of everyday's NFT
+            since 1700 till today, years before 1700 will be added soon!
           </Question>
           <Question title="What is the purpose of this platform?">
             To buy and sell GoOnDate NFT and get updates of upcoming events
