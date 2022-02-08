@@ -5,14 +5,14 @@
 
 /* vietnamese */
 @font-face {
-  font-family: "Josefin Sans";
+  font-family: 'Josefin Sans';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(../public/font.woff2) format("woff2");
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
-    U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+  src: url(../public/font.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
 }
+
 
 canvas {
   font-family: Georgia, "Times New Roman", Times, serif !important;
