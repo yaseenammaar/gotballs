@@ -143,15 +143,15 @@ export default function Modal({
           }}
           className="fixed top-0 z-50 flex items-center justify-center w-full min-h-full bg-black bg-opacity-80 backdrop-blur-md "
         >
-          <div class="lg:w-8/12 md:w-2/5 sm:w-1/2 w-3/5 p-2 relative rounded-xl lg:max-h-auto max-h-[75vh] lg:overflow-y-hidden overflow-y-auto mx-auto flex flex-col lg:flex-row bg-white">
+          <div className="lg:w-8/12 md:w-2/5 sm:w-1/2 w-3/5 p-2 relative rounded-xl lg:max-h-auto max-h-[75vh] lg:overflow-y-hidden overflow-y-auto mx-auto flex flex-col lg:flex-row bg-white">
             <div className="flex items-center justify-center w-full max-w-5xl rounded-xl">
               <div className="overflow-hidden shadow-lg rounded-xl shadow-gray-300">
                 <NFT date={title} />
               </div>
             </div>
 
-            <div class="md:w-auto w-full mt-6 lg:mt-0 md:p-8 p-4">
-              <p class="text-2xl">{title}</p>
+            <div className="w-full p-4 mt-6 md:w-auto lg:mt-0 md:p-8">
+              <p className="text-2xl">{title}</p>
               <div>
                 <span className="text-2xl text-sky-500">
                   ◎{getPrice(title)} <br />
@@ -184,7 +184,7 @@ export default function Modal({
                 <path
                   fillRule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </button>

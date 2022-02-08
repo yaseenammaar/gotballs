@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 // import { web3 } from "@project-serum/anchor";
 //import DatePicker from "react-date-picker";
 import Select from "react-select";
@@ -107,7 +107,7 @@ var soldNfts = [];
 var infoIsLoaded = false;
 var isSoldListLoaded = false;
 
-function loadMintedNfts() {
+function loadMintedNfts(setState, passed=false) {
   axios({
     method: "post",
     url: "https://api.goondate.com:3001/nft/mintedList",
@@ -116,6 +116,8 @@ function loadMintedNfts() {
       info = mintedLista.data;
 
       // console.log("SS" + JSON.stringify(info));
+
+      passed && setState(true)
       infoIsLoaded = true;
     })
     .catch((error) => console.log("ERROR WHILE getting address:" + error));
@@ -165,7 +167,7 @@ const uploadImage = async (date, price) => {
           toast.error("Something Wrong, Try Again!");
           return console.log("Error cant found the nft");
         }
-        sendNft(mintedAddress, date, price);
+        sendNft(mintedAddress,date,price);
       }
     }
   } else {
@@ -307,7 +309,6 @@ const sendNft = async (mintPublickKey, date, price) => {
       alice /* fee payer + owner */,
     ])}`
   );
-  console.log(date)
   axios({
     method: "post",
     url: "https://api.goondate.com:3001/nft/nftSold",
@@ -352,9 +353,11 @@ function App() {
   const [text, setText] = useState("Loading...");
 
   const [nftTitle, setNftTitle] = useState("");
+  // remove below
+  const [isInfoLoaded, setIsInfoLoaded] = useState(false);
 
   ReactGA.initialize("300900016");
-  loadMintedNfts();
+  loadMintedNfts(setIsInfoLoaded, true);
   loadSoldNfts();
 
   setConnected = (bool) => {
@@ -373,12 +376,15 @@ function App() {
     year: 2020,
   });
 
+
   useEffect(() => {
     if (infoIsLoaded) {
       var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
       setDates(dateList);
+      setIsInfoLoaded(true);
     }
   }, [startDate]);
+
 
   function getAllDaysInMonth(year, month) {
     const date = new Date(year, month, 1);
@@ -402,10 +408,7 @@ function App() {
     toast.success("Wallet Disconnected!");
   }
 
-  // console.log("test: ", SpecialDate["dates"]);
-
   function dateIsSold(e) {
-    // console.log("LOL : ", SpecialDate["dates"]);
     var price = 0;
     for (var i = 0; i < 365; i++) {
       if (e == SpecialDate["dates"][i].date) {
@@ -473,6 +476,8 @@ function App() {
   const [years, setYears] = useState([]);
 
   useEffect(() => {
+    loadMintedNfts(setIsInfoLoaded, true);
+
     const tempYears = [];
 
     for (let date = 2022; date >= 1700; date--) {
@@ -691,7 +696,7 @@ function App() {
               >
                 <NFT date={e} />
               </div>
-              <div>{dateIsSold(e)}</div>
+              {isInfoLoaded && <div>{dateIsSold(e)}</div>}
             </div>
           ))}
         </div>
