@@ -165,12 +165,12 @@ const uploadImage = async (date, price) => {
           toast.error("Something Wrong, Try Again!");
           return console.log("Error cant found the nft");
         }
-        sendNft(mintedAddress, date);
+        sendNft(mintedAddress, date, price);
       }
     }
   } else {
     console.log("Image Minted");
-    sendNft(address, date);
+    sendNft(address, date, price);
   }
 };
 
@@ -307,6 +307,14 @@ const sendNft = async (mintPublickKey, date, price) => {
       alice /* fee payer + owner */,
     ])}`
   );
+  console.log(date)
+  axios({
+    method: "post",
+    url: "https://api.goondate.com:3001/nft/nftSold",
+    data: {
+      Date: date
+    },
+  }).catch((error) => console.log("Error" + error));
   openLoading("Minting Image...", false);
   toast.success("Congrats You Bought " + date);
 };
