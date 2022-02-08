@@ -107,7 +107,7 @@ var soldNfts = [];
 var infoIsLoaded = false;
 var isSoldListLoaded = false;
 
-function loadMintedNfts(setState, passed=false) {
+function loadMintedNfts(setState, passed = false) {
   axios({
     method: "post",
     url: "https://api.goondate.com:3001/nft/mintedList",
@@ -117,7 +117,7 @@ function loadMintedNfts(setState, passed=false) {
 
       // console.log("SS" + JSON.stringify(info));
 
-      passed && setState(true)
+      passed && setState(true);
       infoIsLoaded = true;
     })
     .catch((error) => console.log("ERROR WHILE getting address:" + error));
@@ -167,7 +167,7 @@ const uploadImage = async (date, price) => {
           toast.error("Something Wrong, Try Again!");
           return console.log("Error cant found the nft");
         }
-        sendNft(mintedAddress,date,price);
+        sendNft(mintedAddress, date, price);
       }
     }
   } else {
@@ -313,7 +313,7 @@ const sendNft = async (mintPublickKey, date, price) => {
     method: "post",
     url: "https://api.goondate.com:3001/nft/nftSold",
     data: {
-      Date: date
+      Date: date,
     },
   }).catch((error) => console.log("Error" + error));
   openLoading("Minting Image...", false);
@@ -376,7 +376,6 @@ function App() {
     year: 2020,
   });
 
-
   useEffect(() => {
     if (infoIsLoaded) {
       var dateList = getAllDaysInMonth(startDate.year, startDate.month - 1);
@@ -384,7 +383,6 @@ function App() {
       setIsInfoLoaded(true);
     }
   }, [startDate]);
-
 
   function getAllDaysInMonth(year, month) {
     const date = new Date(year, month, 1);
@@ -420,7 +418,7 @@ function App() {
     if (infoIsLoaded) {
       e = e.slice(4);
       var found = 0;
-      if (!e.includes("2021")) {
+      if (!e.includes("2021xxx")) {
         return (
           <span className="p-3 text-sm text-red-500">
             Coming Soon
@@ -685,7 +683,7 @@ function App() {
               <div
                 className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-300 hover:shadow-lg"
                 onClick={() => {
-                  if (e.includes("2021")) {
+                  if (e.includes("2021xxx")) {
                     setNftTitle(e);
                     setIsModalOpen(true);
                   } else {
@@ -824,11 +822,41 @@ function App() {
         </h2>
 
         <div className="flex flex-wrap justify-center">
-          <Question title="On which blockchain this project is in?">
-            Solana Blockchain
+          <Question title="What is GoOnDate?">
+            GoOnDate is an Solana based NFT project, composite of everyday's NFT
+            since 1700 till today, year before 1700 will be added soon!
           </Question>
-
-          <Question title="Will this platform provide auction?">Yes</Question>
+          <Question title="What is the purpose of this platform?">
+            To buy and sell GoOnDate NFT and get updates of upcoming events
+          </Question>
+          <Question title="Why should I buy these NFTs?">
+            Every date is unique, no copies can be produced, every NFT is
+            extremely rare. Capture your special date or dates you find
+            important for mankind and trade for higher prices!
+          </Question>
+          <Question title="What are the perks of these NFTs?">
+            Access to premium chats, communities, GOD exclusive physical clubs,
+            and much more
+          </Question>
+          <Question title="Where can I sell these NFTs?">
+            You can sell on GoOnDate.com or on any other Solana NFTs marketplace
+          </Question>
+          <Question title="On which blockchain this project is on?">
+            This NFT project is on Solana Blockchain
+          </Question>
+          <Question title="Will this platform provide auction?">
+            Yes, daily one NFT will be generated of that day and will be
+            auctioned.
+          </Question>
+          <Question title="Can I buy future dates NFTs?">
+            No, you can't buy future dates, everyday a date will be released
+          </Question>
+          <Question title="Where can I contact in case of any issue regarding GOD NFTs?">
+            You can DM on any social media listed on this site
+          </Question>
+          <Question title="What are GoOnDate NFT Skins?">
+            GoOnDate Skins will allow you to customize your GoOnDate NFTs!
+          </Question>
         </div>
       </section>
 
@@ -843,7 +871,7 @@ function App() {
           <ul>
             <li className="my-1 text-gray-700">
               <a
-                href="#"
+                href="https://www.instagram.com/goondate.nft/"
                 className="p-1 transition duration-150 hover:text-primary"
               >
                 Instagram
@@ -851,7 +879,7 @@ function App() {
             </li>
             <li className="my-1 text-gray-700">
               <a
-                href="#"
+                href="https://twitter.com/GoOnDate?t=i8AWJHEQMb5UaEqdgKLqjQ&s=09"
                 className="p-1 transition duration-150 hover:text-primary"
               >
                 Twitter
@@ -859,7 +887,7 @@ function App() {
             </li>
             <li className="my-1 text-gray-700">
               <a
-                href="#"
+                href="https://www.linkedin.com/in/go-on-date-nft-b8b539229"
                 className="p-1 transition duration-150 hover:text-primary"
               >
                 LinkedIn
@@ -867,7 +895,7 @@ function App() {
             </li>
             <li className="my-1 text-gray-700">
               <a
-                href="#"
+                href="https://discord.gg/m7kgsW9mgn"
                 className="p-1 transition duration-150 hover:text-primary"
               >
                 Discord
@@ -875,7 +903,7 @@ function App() {
             </li>
             <li className="my-1 text-gray-700">
               <a
-                href="#"
+                href="https://pin.it/5m9ju0v"
                 className="p-1 transition duration-150 hover:text-primary"
               >
                 Pintrest
@@ -883,7 +911,7 @@ function App() {
             </li>
             <li className="my-1 text-gray-700">
               <a
-                href="#"
+                href="https://t.me/GoOnDateNFT"
                 className="p-1 transition duration-150 hover:text-primary"
               >
                 Telegram
@@ -891,7 +919,7 @@ function App() {
             </li>
             <li className="my-1 text-gray-700">
               <a
-                href="#"
+                href="https://www.reddit.com/r/goondate/"
                 className="p-1 transition duration-150 hover:text-primary"
               >
                 Reddit
