@@ -569,15 +569,13 @@ function App() {
           <div className="flex flex-col items-center justify-center w-full py-16 text-center text-gray-600 sm:w-10/12 md:px-12 md:w-11/12 lg:w-3/5">
             How beautiful is the memory of a loved one! But what remains with
             us? A picture? A date? Do you remember the date when you last saw
-            them or when you held your baby in your hands for the first time? We
-            feel the same way and it's our desire that you never get loose of
-            the memory that keeps value to you, that is close to your heart.
+            them or when you held your baby in your hands for the first time?
             Let's capture those dates together!
             <br />
             <br />
             There are some dates in our life that are so important that we want
-            to cherish them forever and own it just for ourselves. We don't want
-            to share it with others but keep it just for us. We feel the same
+            to cherish them forever and own it just for ourselves. We want
+            to share it with others but also own it forever. We feel the same
             way and it's our desire that you never loose the memory which you
             value, which is close to your heart !
             {/* <a
