@@ -418,7 +418,7 @@ function App() {
     if (infoIsLoaded) {
       e = e.slice(4);
       var found = 0;
-      if (!e.includes("2021xxx")) {
+      if (!e.includes("2021")) {
         return (
           <span className="p-3 text-sm text-red-500">
             Coming Soon
@@ -681,7 +681,7 @@ function App() {
               <div
                 className="mx-1 my-2 overflow-hidden transition duration-150 shadow cursor-pointer rounded-xl shadow-gray-300 hover:shadow-lg"
                 onClick={() => {
-                  if (e.includes("2021xxx")) {
+                  if (e.includes("2021")) {
                     setNftTitle(e);
                     setIsModalOpen(true);
                   } else {
