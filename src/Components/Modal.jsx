@@ -102,21 +102,21 @@ function getAttributes(title) {
   return (
     <div className="flex flex-col">
       <br />
-      <span className="px-2 py-4 mt-3 mb-2 text-gray-500 rounded-lg">
+      <span className="rounded-lg mt-3 mb-2 py-4 px-2 text-gray-500">
         Attributes
       </span>
 
       <div className="flex flex-wrap">
-        <span className="px-2 py-2 m-2 border-2 border-solid rounded-lg text-sky-500">
+        <span className="border-solid rounded-lg border-2 m-2 py-2 px-2 text-sky-500">
           <span className="text-sm text-gray-500">Year</span> {year}
         </span>
-        <span className="px-2 py-2 m-2 border-2 border-solid rounded-lg text-sky-500">
+        <span className="border-solid rounded-lg border-2 m-2 py-2 px-2 text-sky-500">
           <span className="text-sm text-gray-500">Month</span> {month}
         </span>
-        <span className="px-2 py-2 m-2 border-2 border-solid rounded-lg text-sky-500">
+        <span className="border-solid rounded-lg border-2 m-2 py-2 px-2 text-sky-500">
           <span className="text-sm text-gray-500">Date</span> {date}
         </span>
-        <span className="px-2 py-2 m-2 border-2 border-solid rounded-lg text-sky-500">
+        <span className="border-solid rounded-lg border-2 m-2 py-2 px-2 text-sky-500">
           <span className="text-sm text-gray-500">Day</span> {day}
         </span>
       </div>
@@ -125,13 +125,10 @@ function getAttributes(title) {
 }
 
 export default function Modal({
-  imgSrc,
-  alt,
   isOpen,
   setIsOpen,
   title,
-  isNFTAvailable = false,
-  price,
+   isNFTSold = false,
 }) {
   return (
     <>
@@ -141,16 +138,16 @@ export default function Modal({
           onClick={(e) => {
             e.target.id === "modal-bg" && setIsOpen(false);
           }}
-          className="fixed top-0 z-50 flex items-center justify-center w-full min-h-full bg-black bg-opacity-80 backdrop-blur-md "
+          className="bg-black flex min-h-full bg-opacity-80 w-full top-0 z-50 fixed items-center justify-center backdrop-blur-md "
         >
-          <div className="lg:w-8/12 md:w-2/5 sm:w-1/2 w-3/5 p-2 relative rounded-xl lg:max-h-auto max-h-[75vh] lg:overflow-y-hidden overflow-y-auto mx-auto flex flex-col lg:flex-row bg-white">
-            <div className="flex items-center justify-center w-full max-w-5xl rounded-xl">
-              <div className="overflow-hidden shadow-lg rounded-xl shadow-gray-300">
+          <div className="bg-white rounded-xl flex flex-col mx-auto max-h-[75vh] p-2 w-3/5 relative overflow-y-auto sm:w-1/2 md:w-2/5 lg:flex-row lg:max-h-auto lg:w-8/12 lg:overflow-y-hidden">
+            <div className="rounded-xl flex w-full max-w-5xl items-center justify-center">
+              <div className="rounded-xl shadow-lg shadow-gray-300 overflow-hidden">
                 <NFT date={title} />
               </div>
             </div>
 
-            <div className="w-full p-4 mt-6 md:w-auto lg:mt-0 md:p-8">
+            <div className="mt-6 w-full p-4 md:w-auto md:p-8 lg:mt-0">
               <p className="text-2xl">{title}</p>
               <div>
                 <span className="text-2xl text-sky-500">
@@ -162,7 +159,12 @@ export default function Modal({
               {getAttributes(title)}
               <br />
               <Button
-                disabled={isNFTAvailable}
+                style={
+                  isNFTSold
+                    ? { backgroundColor: "gray" }
+                    : { backgroundColor: "#0284FE" }
+                }
+                disabled={isNFTSold}
                 onClick={() => {
                   buyNFT(title, getPrice(title));
                 }}
@@ -173,11 +175,11 @@ export default function Modal({
 
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute p-1 text-xs text-white transition-all duration-300 bg-gray-800 rounded-md shadow-sm top-2 right-2 hover:shadow-lg "
+              className="rounded-md bg-gray-800 shadow-sm text-xs text-white p-1 transition-all top-2 right-2 duration-300 absolute hover:shadow-lg "
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
+                className="h-4 w-4"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
