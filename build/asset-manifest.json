@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8c555a0d.css",
+    "main.js": "/static/js/main.d202fc20.js",
+    "static/media/skin.mp4": "/static/media/skin.951e85beaf548b2df00d.mp4",
+    "static/media/hero.mp4": "/static/media/hero.f6eb4b7cde9990cf6cff.mp4",
+    "static/media/wwen.png": "/static/media/wwen.b56d4a2b981db3b1346a.png",
+    "static/media/picasso.png": "/static/media/picasso.07ecee398dcfed863a04.png",
+    "static/media/plane.png": "/static/media/plane.94becd6704fb535385b3.png",
+    "static/media/wwst.png": "/static/media/wwst.a106865d1b746fccc3d3.png",
+    "static/media/roadmap.png": "/static/media/roadmap.7af52520e712d978f4cb.png",
+    "static/media/moonnft.png": "/static/media/moonnft.b207db74a4c221ed2115.png",
+    "static/media/font.woff2": "/static/media/font.27695fdd77510b1392a6.woff2",
+    "static/media/nft.png": "/static/media/nft.0f59341bb70430af680e.png",
+    "index.html": "/index.html",
+    "main.8c555a0d.css.map": "/static/css/main.8c555a0d.css.map",
+    "main.d202fc20.js.map": "/static/js/main.d202fc20.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8c555a0d.css",
+    "static/js/main.d202fc20.js"
+  ]
+}

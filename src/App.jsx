@@ -78,6 +78,7 @@ import bs58 from "bs58";
 
 var connectWallet;
 var provider;
+var isWalletConnected = false;
 
 const getProvider = async () => {
   if ("solana" in window) {
@@ -86,8 +87,6 @@ const getProvider = async () => {
 
     const provider = window.solana;
     if (provider.isPhantom) {
-      toast.success("Wallet Connected!");
-      setConnected(true);
       return provider;
     }
   } else {
@@ -95,7 +94,18 @@ const getProvider = async () => {
   }
 };
 
+window.solana.on("connect", () => {
+  toast.success("Wallet Connected!");
+  isWalletConnected = true;
+  setConnected(true);
+})
+
 export function buyNFT(date, price) {
+  if(!isWalletConnected) {
+  toast.error("Wallet Not  Connected!");
+
+    return getProvider()}
+
   var dateStr = date.split(" ");
   var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
 
@@ -416,17 +426,18 @@ function App() {
       // console.log("test: ", SpecialDate["dates"][i].date);
     }
 
-    if (infoIsLoaded) {
-      e = e.slice(4);
-      var found = 0;
-      if (!e.includes("2021")) {
-        return (
-          <span className="text-sm p-3 text-red-500">
-            Coming Soon
-            <br />
-          </span>
-        );
-      }
+      if (infoIsLoaded) {
+      
+        e = e.slice(4);
+        var found = 0;
+        if (!e.includes("2021")) {
+          return (
+            <span className="text-sm p-3 text-red-500">
+              Coming Soon
+              <br />
+            </span>
+          );
+        }
 
       soldNfts
         .filter((val) => {
@@ -453,6 +464,7 @@ function App() {
         );
       }
     }
+    
   }
 
   function dateIsSoldForModal(e) {
