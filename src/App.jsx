@@ -427,8 +427,7 @@ function App() {
       // console.log("test: ", SpecialDate["dates"][i].date);
     }
 
-      if (infoIsLoaded) {
-      
+      // if (infoIsLoaded) {
         e = e.slice(4);
         var found = 0;
         if (!e.includes("2021")) {
@@ -464,7 +463,7 @@ function App() {
           </span>
         );
       }
-    }
+    // }
     
   }
 
