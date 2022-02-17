@@ -94,11 +94,14 @@ const getProvider = async () => {
   }
 };
 
-window.solana.on("connect", () => {
-  toast.success("Wallet Connected!");
-  isWalletConnected = true;
-  setConnected(true);
-})
+if(window.solana){
+  window.solana.on("connect", () => {
+    toast.success("Wallet Connected!");
+    isWalletConnected = true;
+    setConnected(true);
+  })
+}
+
 
 export function buyNFT(date, price) {
   if(!isWalletConnected) {
