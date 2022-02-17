@@ -620,12 +620,12 @@ function App() {
             share it with others but also own it forever. We feel the same way
             and it's our desire that you never loose the memory which you value,
             which is close to your heart !
-            <a
+            {/* <a
               className="font-semibold mt-8 text-primary p-2 hover:text-secondary"
               href="#"
             >
               Know More
-            </a>
+            </a> */}
           </div>
         </div>
       </section>
