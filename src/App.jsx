@@ -99,7 +99,7 @@ if(window.solana){
     toast.success("Wallet Connected!");
     isWalletConnected = true;
     setConnected(true);
-  })
+  })  
 }
 
 
@@ -327,7 +327,12 @@ const sendNft = async (mintPublickKey, date, price) => {
     url: "https://api.goondate.com:3001/nft/nftSold",
     data: {
       Date: date,
-      Signature: signatur
+      Signature: signatur,
+      BuyerWalletAddress: provider.publicKey,
+      BuyingPrice: price,
+      Skinned: false,
+      Status: true,
+      Sold: false
     },
   }).catch((error) => console.log("Error" + error));
   openLoading("Minting Image...", false);
