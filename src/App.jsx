@@ -330,9 +330,7 @@ const sendNft = async (mintPublickKey, date, price) => {
       Signature: signatur,
       BuyerWalletAddress: provider.publicKey,
       BuyingPrice: price,
-      Skinned: false,
-      Status: true,
-      Sold: false
+      Skinned: false
     },
   }).catch((error) => console.log("Error" + error));
   openLoading("Minting Image...", false);
