@@ -374,7 +374,7 @@ function App() {
   // remove below
   const [isInfoLoaded, setIsInfoLoaded] = useState(false);
 
-  ReactGA.initialize("UA-221469498-1");
+  ReactGA.initialize("UA-221469498-2");
   loadMintedNfts(setIsInfoLoaded, true);
   loadSoldNfts();
 
