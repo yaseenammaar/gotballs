@@ -1,7 +1,6 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 // import { web3 } from "@project-serum/anchor";
 //import DatePicker from "react-date-picker";
-import Select from "react-select";
 import ReactGA from "react-ga";
 import toast, { Toaster } from "react-hot-toast";
 import SpecialDate from "./specialDates.json";
@@ -23,10 +22,7 @@ import NFT from "./Components/NFT";
 import DateFilter from "./Components/Filter";
 import Loading from "./Components/Loading";
 
-import moment from "moment";
-
 // assets
-import nftImg from "./assets/nft.png";
 import godImg from "./assets/god.png";
 import hero from "./assets/hero.mp4";
 import skin from "./assets/skin.mp4";
@@ -53,6 +49,7 @@ import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 import bs58 from "bs58";
+import TopBar from "./Components/TopBar";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,20 +91,20 @@ const getProvider = async () => {
   }
 };
 
-if(window.solana){
+if (window.solana) {
   window.solana.on("connect", () => {
     toast.success("Wallet Connected!");
     isWalletConnected = true;
     setConnected(true);
-  })  
+  });
 }
 
-
 export function buyNFT(date, price) {
-  if(!isWalletConnected) {
-  toast.error("Wallet Not  Connected!");
+  if (!isWalletConnected) {
+    toast.error("Wallet Not  Connected!");
 
-    return getProvider()}
+    return getProvider();
+  }
 
   var dateStr = date.split(" ");
   var dateFinal = dateStr[1] + " " + dateStr[2] + " " + dateStr[3];
@@ -330,7 +327,7 @@ const sendNft = async (mintPublickKey, date, price) => {
       Signature: signatur,
       BuyerWalletAddress: provider.publicKey,
       BuyingPrice: price,
-      Skinned: false
+      Skinned: false,
     },
   }).catch((error) => console.log("Error" + error));
   openLoading("Minting Image...", false);
@@ -374,10 +371,9 @@ function App() {
   // remove below
   const [isInfoLoaded, setIsInfoLoaded] = useState(false);
 
-    ReactGA.initialize('UA-221469498-1');
-    ReactGA.pageview('/');
+  ReactGA.initialize("UA-221469498-1");
+  ReactGA.pageview("/");
 
-  
   loadMintedNfts(setIsInfoLoaded, true);
   loadSoldNfts();
 
@@ -436,44 +432,43 @@ function App() {
       // console.log("test: ", SpecialDate["dates"][i].date);
     }
 
-      // if (infoIsLoaded) {
-        e = e.slice(4);
-        var found = 0;
-        if (!e.includes("2021")) {
-          return (
-            <span className="text-sm p-3 text-red-500">
-              Coming Soon
-              <br />
-            </span>
-          );
-        }
+    // if (infoIsLoaded) {
+    e = e.slice(4);
+    var found = 0;
+    if (!e.includes("2021")) {
+      return (
+        <span className="text-sm p-3 text-red-500">
+          Coming Soon
+          <br />
+        </span>
+      );
+    }
 
-      soldNfts
-        .filter((val) => {
-          if (e == "") {
-            return val;
-          } else if (val.Date.toLowerCase().includes(e.toLowerCase())) {
-            return val;
-          }
-        })
-        .map((val, key) => {
-          found = 1;
-        });
-      if (found === 0) {
-        return (
-          <span className="p-3 text-sky-600">
-            ◎{price} <br />
-          </span>
-        );
-      } else {
-        return (
-          <span className="p-3 text-red-600">
-            Sold <br />
-          </span>
-        );
-      }
+    soldNfts
+      .filter((val) => {
+        if (e == "") {
+          return val;
+        } else if (val.Date.toLowerCase().includes(e.toLowerCase())) {
+          return val;
+        }
+      })
+      .map((val, key) => {
+        found = 1;
+      });
+    if (found === 0) {
+      return (
+        <span className="p-3 text-sky-600">
+          ◎{price} <br />
+        </span>
+      );
+    } else {
+      return (
+        <span className="p-3 text-red-600">
+          Sold <br />
+        </span>
+      );
+    }
     // }
-    
   }
 
   function dateIsSoldForModal(e) {
@@ -539,6 +534,8 @@ function App() {
 
   return (
     <main>
+      <TopBar title="Hurry" />
+
       <Loading isOpen={isLoading} text={text} />
       <Toaster position="top-right" reverseOrder={false} />
       {/* NavBar */}
