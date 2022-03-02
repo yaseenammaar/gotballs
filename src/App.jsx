@@ -390,7 +390,7 @@ function App() {
   const [dates, setDates] = useState([]);
   const [startDate, setStartDate] = useState({
     month: new Date().getMonth(),
-    year: 2020,
+    year: 2021,
   });
 
   useEffect(() => {
@@ -708,8 +708,8 @@ function App() {
           <DateFilter
             placeholder="Select A Year"
             defaultValue={{
-              value: `2020`,
-              label: `2020`,
+              value: `2021`,
+              label: `2021`,
             }}
             onChange={(e) => {
               setStartDate({ ...startDate, year: +e.value });
