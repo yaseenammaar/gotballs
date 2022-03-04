@@ -14,7 +14,8 @@
     "react-scripts": "5.0.0",
     "react-select": "^5.2.2",
     "web-vitals": "^2.1.0",
-    "web3": "^1.6.1"
+    "web3": "^1.6.1",
+    "wouter": "^2.8.0-alpha.2"
   },
   "scripts": {
     "dev": "react-scripts start",
