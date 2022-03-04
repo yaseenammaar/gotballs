@@ -1,11 +1,35 @@
 import React from "react";
+import { Link } from "wouter";
 
 const WarDates = () => {
   return (
     <section className="my-24 bg-white px-6 sm:px-16 md:px-28 ">
-      <div className="mb-20">
-        <h2 className="mt-8 text-center text-4xl font-bold">War Dates</h2>
-        <p className="mt-4 text-gray-600 text-center text-sm">War Dates</p>
+      <div className="mb-20 text-center ">
+        <h2 className="mt-8 text-4xl font-bold">War Dates</h2>
+        <p className="mt-4 text-gray-600 text-sm">
+          These are special dates that represents War between Russia & Ukrain
+        </p>
+
+        <Link
+          to="/"
+          className="p-1 text-gray-600 hover:text-gray-900 my-4 transition-all duration-300 inline-flex items-center "
+        >
+          <svg
+            class="w-4 h-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            ></path>
+          </svg>
+          <span>Go Back</span>
+        </Link>
       </div>
 
       <div className="flex justify-center  flex-wrap">

@@ -10,7 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Switch>
       <Route exact path="/" component={App} />
-      <Route exact path="/wardates">
+      <Route exact path="/war-dates">
         <Suspense
           fallback={
             <div class="w-screen h-screen flex items-center justify-center">
