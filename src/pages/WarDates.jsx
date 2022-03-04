@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "wouter";
 
 const WarDates = () => {
   return (
@@ -10,8 +9,8 @@ const WarDates = () => {
           These are special dates that represents War between Russia & Ukrain
         </p>
 
-        <Link
-          to="/"
+        <a
+          href="/"
           className="p-1 text-gray-600 hover:text-gray-900 my-4 transition-all duration-300 inline-flex items-center "
         >
           <svg
@@ -29,7 +28,7 @@ const WarDates = () => {
             ></path>
           </svg>
           <span>Go Back</span>
-        </Link>
+        </a>
       </div>
 
       <div className="flex justify-center  flex-wrap">
