@@ -533,15 +533,17 @@ function App() {
   }, []);
 
   return (
-    <main>
-      <TopBar title="Hurry" />
+    <main class="bg-[#041C32]">
+
+
+      {/*<TopBar title="Hurry" />*/}
 
       <Loading isOpen={isLoading} text={text} />
       <Toaster position="top-right" reverseOrder={false} />
       {/* NavBar */}
       <nav className="flex w-full py-4 px-6 items-center justify-between sm:px-8 md:px-32">
         <a href="#" className="font-medium ">
-          <img src={godImg} width="150px" alt="" />
+          
         </a>
 
         <div>
@@ -572,345 +574,66 @@ function App() {
           </a>
         </div>
       </nav>
+         <div id="about" class="flex flex-wrap place-content-center p-2">
 
-      <Modal
-        isNFTSold={isSelectedNftSold}
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-        title={nftTitle}
-      />
+        <p class="text-2xl text-[#ECB365]">
+        Got Balls?
+        </p>
 
-      {/* Hero */}
-      <section className="my-6 text-center px-6 sm:px-12 md:px-28">
-        <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
-          <video
-            autoPlay
-            muted={true}
-            loop
-            id="myVideo"
-            className="min-w-full min-h-full"
-          >
-            <source src={hero} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
         </div>
-      </section>
+        <div id="about" class="flex flex-wrap place-content-center p-2">
+        <p class="text-2xl text-[#ECB365]">
+        Connect Wallet
+        </p>
+        </div>
+        <div id="about" class="flex flex-wrap place-content-center p-2">
+
+        <p class="text-2xl text-[#ECB365]">
+        Hold atleast One NFT to play
+        </p>
+
+        </div>
+
 
       {/* About */}
-      <div id="about"></div>
-      <section className="my-24 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-center mb-20 text-2xl text-gray-500">
-          GoOnDate NFT
-        </h2>
+      <div id="about" class="flex flex-wrap place-content-center p-10">
 
-        <div className="flex flex-wrap w-full justify-center lg:justify-between">
-          <div className="rounded-xl flex w-full items-center justify-center sm:w-8/12 lg:w-2/5 ">
-            <div className="rounded-xl shadow-lg shadow-gray-300 overflow-hidden">
-              {/* <img src={nftImg} alt="" /> */}
-              <NFT date="Mon Jan 01 2022" />
-            </div>
-          </div>
+        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-red-400 rounded-full"></div>
 
-          <div className="flex flex-col text-center w-full py-16 text-gray-600 items-center justify-center sm:w-10/12 md:px-12 md:w-11/12 lg:w-3/5">
-            How beautiful is the memory of a loved one! But what remains with
-            us? A picture? A date? Do you remember the date when you last saw
-            them or when you held your baby in your hands for the first time?
-            Let's capture those dates together!
-            <br />
-            <br />
-            There are some dates in our life that are so important that we want
-            to cherish them forever and own it just for ourselves. We want to
-            share it with others but also own it forever. We feel the same way
-            and it's our desire that you never loose the memory which you value,
-            which is close to your heart !
-            {/* <a
-              className="font-semibold mt-8 text-primary p-2 hover:text-secondary"
-              href="#"
-            >
-              Know More
-            </a> */}
-          </div>
+        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-green-200 rounded-full"></div>
+        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-blue-400 rounded-full"></div>
+        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-red-400 rounded-full"></div>
+        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-blue-300 rounded-full"></div>
+        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-indigo-700 rounded-full"></div>
+        
+
+      </div>
+       <div id="about" class="flex flex-wrap place-content-center p-2">
+        <a
+            href="#"
+            className="rounded-md m-1 shadow-sm text-sm py-2 px-2 transition-all top-2 right-2 text-blue-500 duration-500 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg hover:text-primary"
+          >
+            Buy NFT
+          </a>
+          <a
+            href="#"
+            className="rounded-md m-1 shadow-sm text-sm py-2 px-2 transition-all top-2 right-2 text-blue-500 duration-500 sm:m-4 sm:px-2 md:px-4 hover:shadow-lg hover:text-primary"
+          >
+            Play
+          </a>
         </div>
-      </section>
+
 
       <div id="contact"></div>
 
-      <section className="my-16 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-center mb-4 text-2xl text-gray-500">
-          Connect With Us
-        </h2>
-
-        <div className="flex flex-wrap justify-center">
-          <a
-            href="https://t.me/GoOnDateNFT"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
-          >
-            <TelegramIcon className="text-primary" />
-          </a>
-          <a
-            href="https://twitter.com/GoOnDate?t=i8AWJHEQMb5UaEqdgKLqjQ&s=09"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
-          >
-            <TwitterIcon className="text-primary" />
-          </a>
-          <a
-            href="https://www.instagram.com/goondate.nft/"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
-          >
-            <InstagramIcon className="text-primary" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/go-on-date-nft-b8b539229"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
-          >
-            <LinkedInIcon className="text-primary" />
-          </a>
-          <a
-            href="https://discord.gg/m7kgsW9mgn"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
-          >
-            <DiscordIcon className="text-primary" />
-          </a>
-          <a
-            href="https://www.reddit.com/r/goondate/"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
-          >
-            <RedditIcon className="text-primary" />
-          </a>
-          <a
-            href="https://pin.it/5m9ju0v"
-            className="rounded-xl mx-4 p-2 transition-all duration-500 hover:shadow-xl"
-          >
-            <PinterestIcon className="text-primary" />
-          </a>
-        </div>
-      </section>
-
-      <section className="my-16 px-8 sm:px-16 md:px-28">
-        {/* Date Filter */}
-
-        <h2 className="font-medium my-8 text-center text-2xl text-gray-500">
-          Buy Dates
-        </h2>
-
-        <div className="flex mb-16 w-full justify-center">
-          <DateFilter
-            placeholder="Select A Month"
-            defaultValue={months[0]}
-            onChange={(e) => {
-              setStartDate({ ...startDate, month: +e.value });
-              getAllDaysInMonth(startDate.year, startDate.month);
-            }}
-            className="mx-2 w-36"
-            options={months}
-          />
-
-          <DateFilter
-            placeholder="Select A Year"
-            defaultValue={{
-              value: `2021`,
-              label: `2021`,
-            }}
-            onChange={(e) => {
-              setStartDate({ ...startDate, year: +e.value });
-              getAllDaysInMonth(startDate.year, startDate.month);
-            }}
-            className="mx-2 w-36"
-            options={years}
-          />
-        </div>
-
-        <div className="flex flex-wrap items-center justify-center">
-          {dates.map((e) => (
-            <div key={e}>
-              <div
-                className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-300 duration-150 overflow-hidden hover:shadow-lg"
-                onClick={() => {
-                  if (e.includes("2021")) {
-                    setNftTitle(e);
-                    setIsModalOpen(true);
-                  } else {
-                    toast("NFT Coming Soon!", { icon: "🤘" });
-                  }
-
-                  setIsSelectedNftSold(
-                    dateIsSoldForModal(e) === true ? true : false
-                  );
-                }}
-                style={{ width: "160px" }}
-              >
-                <NFT date={e} />
-              </div>
-              {isInfoLoaded && <div>{dateIsSold(e)}</div>}
-            </div>
-          ))}
-        </div>
-
-        {/* <h2 className="font-medium mt-8 text-center mb-8 text-2xl text-gray-500 sm:mt-16">
-          Special Dates
-        </h2>
-
-        <div className="flex flex-wrap items-center justify-center">
-          {new Array(7).fill(1).map((e) => (
-            <div>
-              <div
-                key={e}
-                className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-300 duration-150 overflow-hidden hover:shadow-lg"
-                onClick={() => {
-                  setIsModalOpen(true);
-                }}
-              >
-                <img style={{ width: "150px" }} src={nftImg} alt="" />
-              </div>
-              <div>
-                <span className="p-3 text-sky-600">◎5 </span>
-              </div>
-            </div>
-          ))}
-        </div> */}
-      </section>
-
-      {/* Skins - 2 */}
-      <section className="my-16 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-center mb-8 text-2xl text-gray-500">
-          Skinned NFTs - Coming Soon!
-        </h2>
-
-        {/* <Skin /> */}
-
-        <section className="my-2 text-center px-3 sm:px-12 md:px-28">
-          <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
-            <video
-              autoPlay
-              muted={true}
-              loop
-              id="myVideo"
-              className="min-w-full w-auto"
-            >
-              <source src={skin} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </section>
-
-        <div className="flex flex-wrap items-center justify-center">
-          <div>
-            <div
-              key={1}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
-              onClick={() => {}}
-            >
-              <img style={{ width: "200px" }} src={moonnft} alt="" />
-            </div>
-          </div>
-          <div>
-            <div
-              key={2}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
-              onClick={() => {}}
-            >
-              <img style={{ width: "200px" }} src={plane} alt="" />
-            </div>
-          </div>
-          <div>
-            <div
-              key={2}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
-              onClick={() => {}}
-            >
-              <img style={{ width: "200px" }} src={picasso} alt="" />
-            </div>
-          </div>
-          <div>
-            <div
-              key={2}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
-              onClick={() => {}}
-            >
-              <img style={{ width: "200px" }} src={wwst} alt="" />
-            </div>
-          </div>
-          <div>
-            <div
-              key={2}
-              className="rounded-xl cursor-pointer shadow my-2 mx-1 transition shadow-gray-400 duration-150 overflow-hidden hover:shadow-lg"
-              onClick={() => {}}
-            >
-              <img style={{ width: "200px" }} src={wwen} alt="" />
-            </div>
-          </div>
-        </div>
-
-        {/* <div className="flex flex-wrap text-gray-500 items-center justify-center">
-          <Button className="bg-gray-500 mt-6">Learn More</Button>
-        </div> */}
-        <div id="roadmap"></div>
-      </section>
-
-      <section className="my-16 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-center mb-8 text-2xl text-gray-500">
-          Roadmap
-        </h2>
-
-        {/* <Skin /> */}
-
-        <section className="my-2 text-center px-3 sm:px-12 md:px-28">
-          <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
-            <img src={roadmap} />
-          </div>
-        </section>
-      </section>
 
       {/* contact */}
 
-      <section className="my-16 px-8 sm:px-16 md:px-28">
-        <h2 className="font-medium mt-8 text-center mb-4 text-2xl text-gray-500">
-          Frequently Asked Questions
-        </h2>
-
-        <div className="flex flex-wrap justify-center">
-          <Question title="What is GoOnDate?">
-            GoOnDate is a Solana based NFT project, composite of everyday's NFT
-            since 1700 till today, years before 1700 will be added soon!
-          </Question>
-          <Question title="What is the purpose of this platform?">
-            To buy and sell GoOnDate NFT and get updates of upcoming events
-          </Question>
-          <Question title="Why should I buy these NFTs?">
-            Every date is unique, no copies can be produced, every NFT is
-            extremely rare. Capture your special date or dates you find
-            important for mankind and trade for higher prices!
-          </Question>
-          <Question title="What are the perks of these NFTs?">
-            Access to premium chats, communities, GOD exclusive physical clubs,
-            and much more
-          </Question>
-          <Question title="Where can I sell these NFTs?">
-            You can sell on GoOnDate.com or on any other Solana NFTs marketplace
-          </Question>
-          <Question title="On which blockchain this project is on?">
-            This NFT project is on Solana Blockchain
-          </Question>
-          <Question title="Will this platform provide auction?">
-            Yes, daily one NFT will be generated of that day and will be
-            auctioned.
-          </Question>
-          <Question title="Can I buy future dates NFTs?">
-            No, you can't buy future dates, everyday a date will be released
-          </Question>
-          <Question title="Where can I contact in case of any issue regarding GOD NFTs?">
-            You can DM on any social media listed on this site
-          </Question>
-          <Question title="What are GoOnDate NFT Skins?">
-            GoOnDate Skins will allow you to customize your GoOnDate NFTs!
-          </Question>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="border-t flex flex-wrap my-8 w-full py-8 px-8 items-start justify-center sm:flex-nowrap sm:px-16 md:px-28 ">
         <div className="flex flex-col text-sm mb-8 w-full items-center sm:mb-0 sm:w-2/4 sm:items-start lg:w-3/6">
-          <img src={godImg} width="150px" alt="" />
+          {/*<img src={godImg} width="150px" alt="" />*/}
         </div>
 
         <div className="flex flex-col text-sm w-1/2 items-center sm:w-1/4 sm:items-start lg:w-1/6">
@@ -992,7 +715,7 @@ function App() {
 
       {/* Copyright */}
       <div className="text-sm w-full py-4 px-16 text-gray-700">
-        © 2022 GoOnDate
+        © 2022 Ball Game NFT
       </div>
     </main>
   );
