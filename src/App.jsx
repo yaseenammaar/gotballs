@@ -23,11 +23,12 @@ import DateFilter from "./Components/Filter";
 import Loading from "./Components/Loading";
 
 // assets
-import godImg from "./assets/god.png";
+import godImg from "./assets/gotballslogo.png";
 import hero from "./assets/hero.mp4";
 import skin from "./assets/skin.mp4";
 import moonnft from "./assets/moonnft.png";
-import roadmap from "./assets/roadmap.png";
+import process from "./assets/process.png";
+import rule from "./assets/rule.png";
 import plane from "./assets/plane.png";
 import picasso from "./assets/picasso.png";
 import wwst from "./assets/wwst.png";
@@ -533,7 +534,7 @@ function App() {
   }, []);
 
   return (
-    <main class="bg-[#041C32]">
+    <main>
 
 
       {/*<TopBar title="Hurry" />*/}
@@ -543,7 +544,7 @@ function App() {
       {/* NavBar */}
       <nav className="flex w-full py-4 px-6 items-center justify-between sm:px-8 md:px-32">
         <a href="#" className="font-medium ">
-          
+          <img src={godImg} width="150px" alt="" /> 
         </a>
 
         <div>
@@ -576,21 +577,6 @@ function App() {
       </nav>
          <div id="about" class="flex flex-wrap place-content-center p-2">
 
-        <p class="text-2xl text-[#ECB365]">
-        Got Balls?
-        </p>
-
-        </div>
-        <div id="about" class="flex flex-wrap place-content-center p-2">
-        <p class="text-2xl text-[#ECB365]">
-        Connect Wallet
-        </p>
-        </div>
-        <div id="about" class="flex flex-wrap place-content-center p-2">
-
-        <p class="text-2xl text-[#ECB365]">
-        Hold atleast One NFT to play
-        </p>
 
         </div>
 
@@ -598,14 +584,13 @@ function App() {
       {/* About */}
       <div id="about" class="flex flex-wrap place-content-center p-10">
 
-        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-red-400 rounded-full"></div>
 
-        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-green-200 rounded-full"></div>
-        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-blue-400 rounded-full"></div>
-        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-red-400 rounded-full"></div>
-        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-blue-300 rounded-full"></div>
-        <div class="animate-spin m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-indigo-700 rounded-full"></div>
+        <div class="animate-bounce m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-[#5CBBEF] rounded-full"></div>
+        <div class="animate-bounce m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-[#FFDE59] rounded-full"></div>
+        <div class="animate-bounce m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-[#7ED957] rounded-full"></div>
+        <div class="animate-bounce m-2 cursor-pointer drop-shadow-md border-2 w-12 h-12 bg-[#FF1616] rounded-full"></div>
         
+         
 
       </div>
        <div id="about" class="flex flex-wrap place-content-center p-2">
@@ -626,14 +611,28 @@ function App() {
 
       <div id="contact"></div>
 
+      <section className="my-16 px-8 sm:px-16 md:px-28">
+   
 
+        {/* <Skin /> */}
+
+        <section className="my-2 text-center px-3 sm:px-12 md:px-28">
+          <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
+            <img src={rule} />
+          </div>
+        </section>
+      </section>
+
+
+      
       {/* contact */}
 
 
       {/* Footer */}
       <footer className="border-t flex flex-wrap my-8 w-full py-8 px-8 items-start justify-center sm:flex-nowrap sm:px-16 md:px-28 ">
         <div className="flex flex-col text-sm mb-8 w-full items-center sm:mb-0 sm:w-2/4 sm:items-start lg:w-3/6">
-          {/*<img src={godImg} width="150px" alt="" />*/}
+        <img src={godImg} width="150px" alt="" /> 
+
         </div>
 
         <div className="flex flex-col text-sm w-1/2 items-center sm:w-1/4 sm:items-start lg:w-1/6">
@@ -715,7 +714,7 @@ function App() {
 
       {/* Copyright */}
       <div className="text-sm w-full py-4 px-16 text-gray-700">
-        © 2022 Ball Game NFT
+        © 2022 Got Balls? | Play2Earn NFT Game
       </div>
     </main>
   );
